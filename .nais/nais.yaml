@@ -1,0 +1,41 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ appName }}{{ dashEnv }}
+  namespace: raptus
+  labels:
+    team: raptus
+spec:
+  image: {{image}}
+  port: 8080
+  secureLogs:
+    enabled: true
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
+  liveness:
+    path: /api/isAlive
+    initialDelay: 10
+  readiness:
+    path: /api/isReady
+    initialDelay: 10
+  prometheus:
+    enabled: false
+  replicas:
+    min: 2
+    max: 4
+  webproxy: true
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  envFrom:
+    - secret: {{ appName }}{{ dashEnv }}
+  accessPolicy:
+    outbound:
+      rules:
+        - application: dp-rapp-api{{ dashEnv }}

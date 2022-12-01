@@ -1,0 +1,3 @@
+dashEnv: -q2
+ingresses:
+  - "https://dp-rapp-frontend-q2.dev.nav.no"
