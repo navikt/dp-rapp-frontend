@@ -1,65 +1,62 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext, DocumentInitialProps } from 'next/document'
-import { JSDOM } from "jsdom";
-import { ReactElement } from "react";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+import {
+  Components as DecoratorComponents,
+  Env,
+  fetchDecoratorReact,
+  Props as DecoratorProps,
+} from '@navikt/nav-dekoratoren-moduler/ssr';
 
-type DocumentProps = DocumentInitialProps & {
-  dStyles: ReactElement;
-  dScripts: ReactElement;
-  dHeader: ReactElement;
-  dFooter: ReactElement;
+
+const dekoratorEnv = process.env.DEKORATOR_ENV as Exclude<Env, "localhost">;
+
+const dekoratorProps: DecoratorProps = {
+  env: dekoratorEnv,
+  enforceLogin: (!process.env.DEVELOPMENT_MODE),
+  redirectToApp: true,
+  chatbotVisible: true
 }
 
-class MyDocument extends Document<DocumentProps> {
-  static createElement(dom: JSDOM, elementId: string): ReactElement {
-    return <div dangerouslySetInnerHTML={{ __html: dom.window.document.getElementById(elementId)?.innerHTML || '' }} />
-  }
 
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentProps> {
-    const originalRenderPage = ctx.renderPage
+class MyDocument extends Document<DecoratorComponents> {
 
-    const response = await fetch("https://www.dev.nav.no/dekoratoren/");
-    const text = await response.text();
-    const dom = new JSDOM(text);
+  static async getInitialProps(ctx: DocumentContext) {
 
-    const dStyles = this.createElement(dom, "styles");
-    const dScripts = this.createElement(dom, "scripts");
-    const dHeader = this.createElement(dom, "header-withmenu");
-    const dFooter = this.createElement(dom, "footer-withmenu");
+    const initialProps = await Document.getInitialProps(ctx);
 
-    // Run the React rendering logic synchronously
-    ctx.renderPage = () =>
-      originalRenderPage({
-        // Useful for wrapping the whole react tree
-        enhanceApp: (App) => (props) => <App {...props} />,
-        // Useful for wrapping in a per-page basis
-        enhanceComponent: (Component) => Component,
-      });
+    const Dekorator: DecoratorComponents = await fetchDecoratorReact({
+      ...dekoratorProps
+    }).catch((err) => {
+      console.error(err);
+      const empty = () => <></>;
 
-    // Run the parent `getInitialProps`, it now includes the custom `renderPage`
-    const initialProps = await Document.getInitialProps(ctx)
+      return {
+        Footer: empty,
+        Header: empty,
+        Scripts: empty,
+        Styles: empty,
+      };
+    });
 
-    // return initialProps + additional props
     return {
       ...initialProps,
-      dStyles,
-      dScripts,
-      dHeader,
-      dFooter
-    }
+      ...Dekorator
+    };
   }
 
   render() {
+    const { Styles, Scripts, Header, Footer } = this.props;
+
     return (
       <Html>
         <Head>
-          {this.props.dStyles}
-          {this.props.dScripts}
+          <Styles />
+          <Scripts />
         </Head>
         <body>
-        {this.props.dHeader}
-        <Main />
-        <NextScript />
-        {this.props.dFooter}
+          <Header />
+          <Main />
+          <Footer />
+          <NextScript />
         </body>
       </Html>
     )
