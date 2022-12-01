@@ -45,6 +45,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Read version from package.json
         id: packageVersion
@@ -80,7 +81,9 @@ jobs:
           mv package.json.new package.json
 
       - name: Install npm packages
-        run: npm ci --legacy-peer-deps
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Build application
         run: npm run build
