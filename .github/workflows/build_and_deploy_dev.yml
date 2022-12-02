@@ -46,8 +46,6 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://npm.pkg.github.com'
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Read version from package.json
         id: packageVersion
@@ -96,6 +94,8 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ steps.setVars.outputs.image }} .
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
