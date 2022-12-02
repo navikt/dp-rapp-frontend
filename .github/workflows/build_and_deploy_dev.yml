@@ -55,7 +55,7 @@ jobs:
         id: snapshotTimestamp
         if: github.event.inputs.bump_patch != 'bump'
         run: |
-          echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
+          echo "timestamp=$(date +'%Y%m%d%H%M%S')" >>$GITHUB_OUTPUT
 
       # Version blir eksisterende versjon fra package.json uten -SNAPSHOT
       # For release:  eks 1.0.1
@@ -73,7 +73,7 @@ jobs:
       - name: Set vars
         id: setVars
         run: |
-          echo "::set-output name=image::ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ steps.releaseVersion.outputs.version }}"
+          echo "image=ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ steps.releaseVersion.outputs.version }}" >>$GITHUB_OUTPUT
 
       - name: Set release version in package.json
         run: |
