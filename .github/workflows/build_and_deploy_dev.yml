@@ -47,8 +47,6 @@ jobs:
           node-version: 18
           registry-url: 'https://npm.pkg.github.com'
 
-      - run: echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
-
       - name: Read version from package.json
         id: packageVersion
         uses: martinbeentjes/npm-get-version-action@master
@@ -95,6 +93,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
           docker build -t ${{ steps.setVars.outputs.image }} .
 
       - name: Log in to the Container registry
