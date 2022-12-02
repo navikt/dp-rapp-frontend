@@ -47,7 +47,7 @@ jobs:
           node-version: 18
           registry-url: 'https://npm.pkg.github.com'
 
-      - run: cp $NPM_CONFIG_USERCONFIG .npmrc
+      - run: echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
 
       - name: Read version from package.json
         id: packageVersion
