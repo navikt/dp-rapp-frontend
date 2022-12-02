@@ -89,11 +89,10 @@ jobs:
         run: npm run build
 
       - name: Test application
-        run: npm test
+        run: npm run test
 
       - name: Build Docker image
         run: |
-          npm run build
           docker build -t ${{ steps.setVars.outputs.image }} .
 
       - name: Log in to the Container registry
