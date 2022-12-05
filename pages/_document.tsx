@@ -10,11 +10,12 @@ import {
 const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
 
 const dekoratorProps: DecoratorProps = {
-  env: 'dev',
+  env: dekoratorEnv,
   enforceLogin: (!process.env.DEVELOPMENT_MODE),
   redirectToApp: false,
   chatbotVisible: true
 }
+console.log("##############1" + dekoratorProps.env);
 
 
 class MyDocument extends Document<DecoratorComponents> {
@@ -23,6 +24,7 @@ class MyDocument extends Document<DecoratorComponents> {
 
     const initialProps = await Document.getInitialProps(ctx);
 
+    console.log("##############2" + dekoratorProps.env);
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps
     }).catch((err) => {

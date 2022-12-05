@@ -84,6 +84,7 @@ jobs:
         run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+          NAV_DEKORATOREN_ENV: ${{ navDekoratorenEnv }}
 
       - name: Build application
         run: npm run build
