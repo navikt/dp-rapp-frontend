@@ -8,6 +8,7 @@ import {
 
 
 const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
+console.log("################ " + dekoratorEnv)
 
 const dekoratorProps: DecoratorProps = {
   env: dekoratorEnv,
