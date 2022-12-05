@@ -7,7 +7,7 @@ import {
 } from '@navikt/nav-dekoratoren-moduler/ssr';
 
 
-const dekoratorEnv = process.env.DEKORATOR_ENV as Exclude<Env, "localhost">;
+const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
 
 const dekoratorProps: DecoratorProps = {
   env: dekoratorEnv,

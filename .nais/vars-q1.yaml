@@ -1,3 +1,4 @@
 dashEnv: -q1
 ingresses:
   - "https://dp-rapp-frontend-q1.dev.nav.no"
+navDekoratorenEnv: dev

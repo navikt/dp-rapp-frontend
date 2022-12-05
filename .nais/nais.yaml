@@ -33,6 +33,9 @@ spec:
     requests:
       cpu: 500m
       memory: 512Mi
+  env:
+    - name: NAV_DEKORATOREN_ENV
+      value: '{{ navDekoratorenEnv }}'
   #envFrom:
   #  - secret: {{ appName }}{{ dashEnv }}
   accessPolicy:
