@@ -10,7 +10,6 @@ const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost"
 
 const dekoratorProps: DecoratorProps = {
   env: 'dev', // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
-  enforceLogin: (!process.env.DEVELOPMENT_MODE),
   redirectToApp: true,
   chatbotVisible: true
 }
