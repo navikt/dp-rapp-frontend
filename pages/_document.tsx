@@ -7,24 +7,21 @@ import {
 } from '@navikt/nav-dekoratoren-moduler/ssr';
 
 
-const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
-
-const dekoratorProps: DecoratorProps = {
-  env: dekoratorEnv,
-  enforceLogin: (!process.env.DEVELOPMENT_MODE),
-  redirectToApp: false,
-  chatbotVisible: true
-}
-console.log("##############1" + dekoratorProps.env);
-
-
 class MyDocument extends Document<DecoratorComponents> {
 
   static async getInitialProps(ctx: DocumentContext) {
 
     const initialProps = await Document.getInitialProps(ctx);
 
-    console.log("##############2" + dekoratorProps.env);
+    const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
+
+    const dekoratorProps: DecoratorProps = {
+      env: dekoratorEnv,
+      enforceLogin: (!process.env.DEVELOPMENT_MODE),
+      redirectToApp: false,
+      chatbotVisible: true
+    }
+
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps
     }).catch((err) => {
