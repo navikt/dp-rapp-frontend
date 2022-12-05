@@ -8,10 +8,9 @@ import {
 
 
 const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
-console.log("################ " + dekoratorEnv)
 
 const dekoratorProps: DecoratorProps = {
-  env: dekoratorEnv,
+  env: 'dev',
   enforceLogin: (!process.env.DEVELOPMENT_MODE),
   redirectToApp: false,
   chatbotVisible: true
