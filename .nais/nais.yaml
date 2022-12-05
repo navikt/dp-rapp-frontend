@@ -33,8 +33,8 @@ spec:
     requests:
       cpu: 500m
       memory: 512Mi
-  envFrom:
-    - secret: {{ appName }}{{ dashEnv }}
+  #envFrom:
+  #  - secret: {{ appName }}{{ dashEnv }}
   accessPolicy:
     outbound:
       rules:
