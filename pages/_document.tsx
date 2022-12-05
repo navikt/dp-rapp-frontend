@@ -7,10 +7,9 @@ import {
 } from '@navikt/nav-dekoratoren-moduler/ssr';
 
 const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
-console.log(process.env);
 
 const dekoratorProps: DecoratorProps = {
-  env: 'dev',
+  env: 'dev', // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
   enforceLogin: (!process.env.DEVELOPMENT_MODE),
   redirectToApp: false,
   chatbotVisible: true

@@ -38,6 +38,8 @@ spec:
       value: '{{ navDekoratorenEnv }}'
   #envFrom:
   #  - secret: {{ appName }}{{ dashEnv }}
+  idporten:
+    enabled: true
   accessPolicy:
     outbound:
       rules:
