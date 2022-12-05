@@ -40,6 +40,10 @@ spec:
   #  - secret: {{ appName }}{{ dashEnv }}
   idporten:
     enabled: true
+    sidecar:
+      enabled: true
+      level: Level3
+      autoLogin: true
   accessPolicy:
     outbound:
       rules:
