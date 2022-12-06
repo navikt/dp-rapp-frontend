@@ -1,7 +1,6 @@
 import { Button } from "@navikt/ds-react";
 import { kallRappApiBak } from "./api/rapp";
-import getConfig from "next/config";
-import { Env } from "@navikt/nav-dekoratoren-moduler/ssr";
+import { dekoratorEnv } from "./_document";
 
 export default function Page() {
   const kallApi = () =>
@@ -12,11 +11,7 @@ export default function Page() {
     kallRappApiBak()
       .then((response) => response.json())
       .then((data) => console.log(data));
-  const { publicRuntimeConfig } = getConfig();
-  const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV as Exclude<
-    Env,
-    "localhost"
-  >;
+
   return (
     <main>
       <h1>Hello, Next.js!</h1>

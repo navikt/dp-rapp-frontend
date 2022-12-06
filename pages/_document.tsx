@@ -14,7 +14,7 @@ import {
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 
 const { publicRuntimeConfig } = getConfig();
-const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV as Exclude<
+export const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV as Exclude<
   Env,
   "localhost"
 >;
