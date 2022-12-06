@@ -1,5 +1,4 @@
 import { Button } from "@navikt/ds-react";
-import { kallRappApiBak } from "./api/rapp";
 
 export default function Page() {
   const kallApi = () =>
@@ -7,7 +6,7 @@ export default function Page() {
       .then((response) => response.json())
       .then((data) => console.log(data));
   const kallRappApi = () =>
-    kallRappApiBak()
+    fetch("/api/rapp")
       .then((response) => response.json())
       .then((data) => console.log(data));
 

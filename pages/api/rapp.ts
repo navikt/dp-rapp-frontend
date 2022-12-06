@@ -4,13 +4,19 @@ import type {
   NextApiRequest,
   NextApiResponse,
 } from "next";
+import getConfig from "next/config";
 
 type Data = {
   name: string;
 };
-const dpRappApiUrl = process.env.DP_RAPP_API_URL;
 
-export async function kallRappApiBak() {
+const { serverRuntimeConfig } = getConfig();
+const dpRappApiUrl = serverRuntimeConfig.DP_RAPP_API_URL;
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
   //const { token } = await getSession(req);
 
   //const callId = uuid();
@@ -25,10 +31,3 @@ export async function kallRappApiBak() {
     },
   });
 }
-
-/*export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: "John Doe" });
-}*/

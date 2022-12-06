@@ -6,6 +6,9 @@ const nextConfig = {
   publicRuntimeConfig: {
     NAV_DEKORATOREN_ENV: process.env.NAV_DEKORATOREN_ENV || "prod",
   },
+  serverRuntimeConfig: {
+    DP_RAPP_API_URL: process.env.DP_RAPP_API_URL,
+  },
 };
 
 module.exports = nextConfig;
