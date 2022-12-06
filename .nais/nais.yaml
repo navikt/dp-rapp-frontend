@@ -36,6 +36,8 @@ spec:
   env:
     - name: NAV_DEKORATOREN_ENV
       value: '{{ navDekoratorenEnv }}'
+    - name: DP_RAPP_API_URL
+      value: '{{ dpRappApiUrl }}'
   #envFrom:
   #  - secret: {{ appName }}{{ dashEnv }}
   idporten:
@@ -47,4 +49,4 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: dp-rapp-api{{ dashEnv }}
+        - application: dp-rapp-api
