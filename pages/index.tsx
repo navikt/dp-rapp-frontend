@@ -6,12 +6,15 @@ export default function Page() {
     fetch("/api/hello")
       .then((response) => response.json())
       .then((data) => console.log(data));
-  const kallRappApi = () => console.log("du kommer ikke lengre enn hit");
+  const kallRappApi = () =>
+    kallRappApiBak()
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   return (
     <main>
       <h1>Hello, Next.js!</h1>
       <Button onClick={() => kallApi()}> kall hello api </Button>
-      <Button onClick={() => kallRappApiBak()}> kall dp-rapp-api </Button>
+      <Button onClick={() => kallRappApi()}> kall dp-rapp-api </Button>
     </main>
   );
 }
