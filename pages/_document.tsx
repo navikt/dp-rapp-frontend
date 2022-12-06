@@ -13,21 +13,16 @@ import {
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 
-const { publicRuntimeConfig } = getConfig();
-export const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV as Exclude<
-  Env,
-  "localhost"
->;
-
-const dekoratorProps: DecoratorProps = {
-  env: dekoratorEnv, // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
-  redirectToApp: true,
-  chatbotVisible: true,
-};
-
 class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
+    const { publicRuntimeConfig } = getConfig();
+    const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV;
+
+    const dekoratorProps: DecoratorProps = {
+      env: dekoratorEnv, // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
+      chatbotVisible: true,
+    };
 
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps,

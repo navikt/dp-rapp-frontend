@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   output: "standalone",
   publicRuntimeConfig: {
-    NAV_DEKORATOREN_ENV: process.env.NAV_DEKORATOREN_ENV,
+    NAV_DEKORATOREN_ENV: process.env.NAV_DEKORATOREN_ENV || "prod",
   },
 };
 
