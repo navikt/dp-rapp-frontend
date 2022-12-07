@@ -2,4 +2,4 @@ dashEnv: -q2
 ingresses:
   - "https://dp-rapp-frontend-q2.dev.nav.no"
 navDekoratorenEnv: dev
-dpRappApiUrl: "https://dp-rapp-api.dev.intern.nav.no"
+dpRappApiUrl: "http://dp-rapp-api"
