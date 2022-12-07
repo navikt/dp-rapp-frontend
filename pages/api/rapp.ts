@@ -1,25 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type {
-  GetServerSidePropsContext,
-  NextApiRequest,
-  NextApiResponse,
-} from "next";
+import type { GetServerSidePropsContext } from "next";
 import getConfig from "next/config";
 
 type Data = {
   name: string;
 };
 
-const { serverRuntimeConfig } = getConfig();
-const dpRappApiUrl = serverRuntimeConfig.DP_RAPP_API_URL;
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+export default async function handler({ req }: GetServerSidePropsContext) {
   //const { token } = await getSession(req);
 
   //const callId = uuid();
+  const dpRappApiUrl = process.env.DP_RAPP_API_URL;
   const url = `${dpRappApiUrl}/api/v1/ping`;
 
   return await fetch(url, {
