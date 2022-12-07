@@ -12,7 +12,7 @@ export default function Page(dekoratorEnv: string) {
   return (
     <main>
       <h1>Hello, Next.js!</h1>
-      <p>dekoratoren env er: ukjent</p>
+      <p>dekoratoren env er: hardkodet til dev</p>
       <Button onClick={() => kallApi()}> kall hello api </Button>
       <Button onClick={() => kallRappApi()}> kall dp-rapp-api </Button>
     </main>
