@@ -18,8 +18,9 @@ export default async function handler(
   //const callId = uuid();
   const dpRappApiUrl = process.env.DP_RAPP_API_URL;
   const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
+  const authHeader = req.headers.authorization || "";
   const response = await fetch(url, {
-    headers: { Authorization: req.headers.authorization },
+    headers: { Authorization: authHeader },
   });
   return res.json(response);
 }
