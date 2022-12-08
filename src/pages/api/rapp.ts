@@ -13,27 +13,28 @@ export default async function handler(
   res: NextApiResponse
 ) {
   //const { token } = await getSession(req);
+  console.log("fått kall");
   try {
+    console.log("prøver å hente session");
     const session = await getSession(req);
 
     if (!session) {
       return res.status(401).end();
     }
-
+    console.log("lager obo token");
     const onBehalfOfToken = await session.apiToken(audienceRappApi);
     //const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
     const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
-    const authHeader = req.headers.authorization || "";
+    console.log("pinger rapp-api");
     const response = await fetch(url, {
       method: "Get",
       headers: { Authorization: `Bearer ${onBehalfOfToken}` },
     });
-
+    console.log("fått respons fra api: " + response.statusText);
     if (!response.ok) {
       throw new Error(`unexpected response ${response.statusText}`);
     }
-
     return res.json(response);
   } catch (error) {
     return res.status(500).send(error);
