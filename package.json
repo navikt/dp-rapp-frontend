@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@navikt/dp-auth": "^0.3.0",
     "@navikt/ds-react": "^2.0.6",
     "@navikt/nav-dekoratoren-moduler": "^1.8.1",
     "next": "13.0.5",
