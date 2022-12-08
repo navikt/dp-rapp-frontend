@@ -21,8 +21,8 @@ export default async function handler(
     if (!session) {
       return res.status(401).end();
     }
-    console.log("3: lager obo token");
-    const onBehalfOfToken = await session.apiToken(audienceRappApi);
+    //console.log("3: lager obo token");
+    //const onBehalfOfToken = await session.apiToken(audienceRappApi);
     //const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
     const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
@@ -32,7 +32,7 @@ export default async function handler(
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer TEST`,
+        Authorization: `Bearer ${"oboToken-funker-ikke"}`,
       },
     });
     console.log("5: fått respons fra api: " + response.statusText);
