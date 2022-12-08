@@ -19,6 +19,7 @@ export default async function handler(
   const dpRappApiUrl = process.env.DP_RAPP_API_URL;
   const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
   const authHeader = req.headers.authorization || "";
+  console.log("authHeader test: " + authHeader);
   const response = await fetch(url, {
     headers: { Authorization: authHeader },
   });
