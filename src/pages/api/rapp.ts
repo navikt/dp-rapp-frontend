@@ -13,25 +13,25 @@ export default async function handler(
   res: NextApiResponse
 ) {
   //const { token } = await getSession(req);
-  console.log("fått kall");
+  console.log("1: fått kall");
   try {
-    console.log("prøver å hente session");
+    console.log("2: prøver å hente session");
     const session = await getSession(req);
 
     if (!session) {
       return res.status(401).end();
     }
-    console.log("lager obo token");
-    const onBehalfOfToken = await session.apiToken(audienceRappApi);
+    //console.log("3: lager obo token");
+    //const onBehalfOfToken = await session.apiToken(audienceRappApi);
     //const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
     const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
-    console.log("pinger rapp-api");
+    console.log("4: pinger rapp-api");
     const response = await fetch(url, {
       method: "Get",
-      headers: { Authorization: `Bearer ${onBehalfOfToken}` },
+      headers: { Authorization: `Bearer TEST` },
     });
-    console.log("fått respons fra api: " + response.statusText);
+    console.log("5: fått respons fra api: " + response.statusText);
     if (!response.ok) {
       throw new Error(`unexpected response ${response.statusText}`);
     }
