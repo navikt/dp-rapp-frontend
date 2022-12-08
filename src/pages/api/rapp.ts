@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "../../auth.utils";
 
-export const audienceRappApi = `${process.env.NAIS_CLUSTER_NAME}:raptus:dp-rapp-api`;
+export const audienceRappApi = `dev-gcp:raptus:dp-rapp-api`;
 
 type Data = {
   name: string;
