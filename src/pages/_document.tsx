@@ -5,10 +5,8 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
-import getConfig from "next/config";
 import {
   Components as DecoratorComponents,
-  Env,
   fetchDecoratorReact,
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";

@@ -1,5 +1,4 @@
 import { Button } from "@navikt/ds-react";
-import getConfig from "next/config";
 
 export default function Page(dekoratorEnv: string) {
   const kallApi = () =>
@@ -18,8 +17,3 @@ export default function Page(dekoratorEnv: string) {
     </main>
   );
 }
-Page.getInitialProps = async () => {
-  const { publicRuntimeConfig } = await getConfig();
-  const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV;
-  return { dekoratorEnv };
-};

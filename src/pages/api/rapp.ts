@@ -18,7 +18,6 @@ export default async function handler(
     //const callId = uuid(); //trengs kanskje senere hvis vi skal ha tracing
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
     const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
-    console.log("4: pinger rapp-api");
     const response = await fetch(url, {
       method: "Get",
       headers: {
