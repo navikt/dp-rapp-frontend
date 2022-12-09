@@ -1,27 +1,27 @@
-import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
 import {
   Components as DecoratorComponents,
-  Env,
   fetchDecoratorReact,
   Props as DecoratorProps,
-} from '@navikt/nav-dekoratoren-moduler/ssr';
-
-const dekoratorEnv = process.env.NAV_DEKORATOREN_ENV as Exclude<Env, "localhost">;
-
-const dekoratorProps: DecoratorProps = {
-  env: 'dev', // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
-  redirectToApp: true,
-  chatbotVisible: true
-}
+} from "@navikt/nav-dekoratoren-moduler/ssr";
 
 class MyDocument extends Document<DecoratorComponents> {
-
   static async getInitialProps(ctx: DocumentContext) {
-
     const initialProps = await Document.getInitialProps(ctx);
 
+    const dekoratorProps: DecoratorProps = {
+      env: "dev", // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
+      chatbotVisible: true,
+    };
+
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
-      ...dekoratorProps
+      ...dekoratorProps,
     }).catch((err) => {
       console.error(err);
       const empty = () => <></>;
@@ -36,7 +36,7 @@ class MyDocument extends Document<DecoratorComponents> {
 
     return {
       ...initialProps,
-      ...Dekorator
+      ...Dekorator,
     };
   }
 
@@ -56,8 +56,8 @@ class MyDocument extends Document<DecoratorComponents> {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

@@ -6,7 +6,7 @@ RUN npm install -g npm@9.1.3
 WORKDIR /app
 
 COPY package.json package-lock.json .npmrc* ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 
 # Rebuild the source code only when needed
