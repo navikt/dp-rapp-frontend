@@ -16,8 +16,6 @@ import {
 class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    const { publicRuntimeConfig } = await getConfig();
-    //const dekoratorEnv = publicRuntimeConfig.NAV_DEKORATOREN_ENV;
 
     const dekoratorProps: DecoratorProps = {
       env: "dev", // TODO: Må komme fra dekoratorEnv, men dekoratorEnv er null når vi henter Dekoratøren, da får vi prod
