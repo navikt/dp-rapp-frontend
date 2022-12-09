@@ -21,8 +21,12 @@ export default async function handler(
     if (!session) {
       return res.status(401).end();
     }
-    //console.log("3: lager obo token");
-    //const onBehalfOfToken = await session.apiToken(audienceRappApi);
+    try {
+      console.log("3: lager obo token");
+      const onBehalfOfToken = await session.apiToken(audienceRappApi);
+    } catch (error) {
+      console.log("aiii, noe kresjet. error: " + error);
+    }
     //const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
     const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
