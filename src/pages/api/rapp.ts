@@ -2,18 +2,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "../../auth.utils";
 
-export const audienceRappApi = `dev-gcp:raptus:dp-rapp-api`;
-
-type Data = {
-  name: string;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   //const { token } = await getSession(req);
   console.log("1: fått kall");
+  const audienceRappApi = `dev-gcp:raptus:dp-rapp-api`;
   try {
     console.log("2: prøver å hente session");
     const session = await getSession(req);
@@ -21,12 +16,9 @@ export default async function handler(
     if (!session) {
       return res.status(401).end();
     }
-    try {
-      console.log("3: lager obo token");
-      const onBehalfOfToken = await session.apiToken(audienceRappApi);
-    } catch (error) {
-      console.log("aiii, noe kresjet. error: " + error);
-    }
+    console.log("3: lager obo token");
+    const onBehalfOfToken = await session.apiToken(audienceRappApi);
+    console.log("obo token: " + onBehalfOfToken);
     //const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
     const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
@@ -45,6 +37,7 @@ export default async function handler(
     }
     return res.json(response);
   } catch (error) {
+    console.log("aiii, noe kresjet. error: " + error);
     return res.status(500).send(error);
   }
 }
