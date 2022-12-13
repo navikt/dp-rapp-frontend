@@ -11,6 +11,17 @@ hvor %PAT% er Personal Access Token fra GitHub med (minst) read:packages
 Hvordan kan man opprette PAT?  
 Se https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
+Bruk
+```
+npm install --legacy-peer-deps
+```
+Vi trenger "--legacy-peer-deps" fordi én av avhengigheter (dp-auth) har
+```
+"peerDependencies": {
+  "next": "^12.0.0"
+}
+```
+
 ## Lokal kjøring
 ```
 npm run dev
