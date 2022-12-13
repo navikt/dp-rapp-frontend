@@ -1,6 +1,6 @@
 import { Button } from "@navikt/ds-react";
 
-export default function Page(dekoratorEnv: string) {
+export default function Page() {
   const kallApi = () =>
     fetch("/api/hello")
       .then((response) => response.json())

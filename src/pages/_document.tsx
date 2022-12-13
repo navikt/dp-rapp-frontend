@@ -11,7 +11,7 @@ import {
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 
-class MyDocument extends Document<DecoratorComponents> {
+export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
@@ -59,5 +59,3 @@ class MyDocument extends Document<DecoratorComponents> {
     );
   }
 }
-
-export default MyDocument;
