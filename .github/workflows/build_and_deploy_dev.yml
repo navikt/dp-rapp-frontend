@@ -81,7 +81,7 @@ jobs:
           mv package.json.new package.json
 
       - name: Install npm packages
-        run: npm ci --legacy-peer-deps
+        run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
