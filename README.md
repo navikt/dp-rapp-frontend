@@ -13,7 +13,7 @@ Se https://docs.github.com/en/authentication/keeping-your-account-and-data-secur
 
 
 ## Lokal kjøring
-I prosjektet sin root opprett en fil med navn .env.development som inneholder:
+I prosjektet sin root opprett en fil med navn .env.local som inneholder:
 ```
 NAV_DEKORATOREN_ENV=dev
 AUTH_PROVIDER=local

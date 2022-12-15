@@ -5,13 +5,13 @@ import {
   fetchDecoratorReact,
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
-
-const navDekoratorenEnv = process.env.NAV_DEKORATOREN_ENV as Env
+import getConfig from "next/config";
 
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
+    const navDekoratorenEnv = getConfig().serverRuntimeConfig.navDekoratorenEnv || process.env.NAV_DEKORATOREN_ENV as Env
     console.log(navDekoratorenEnv);
     const dekoratorProps: DecoratorProps = {
       env: navDekoratorenEnv,
