@@ -10,6 +10,12 @@ import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
+export async function getServerSideProps(context) {
+  return {
+    props: {}, // will be passed to the page component as props
+  }
+}
+
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
