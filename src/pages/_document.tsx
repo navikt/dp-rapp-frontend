@@ -10,7 +10,7 @@ import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   return {
     props: {}, // will be passed to the page component as props
   }
