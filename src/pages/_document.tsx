@@ -6,21 +6,15 @@ import {
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 
-const { NAV_DEKORATOREN_ENV } = process.env
-const env = {
-  navDekoratorenEnv: (NAV_DEKORATOREN_ENV || "prod") as Env,
-  navDekoratorenEnv2: NAV_DEKORATOREN_ENV,
-}
+const navDekoratorenEnv = process.env.NAV_DEKORATOREN_ENV as Env
 
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
-    console.log(NAV_DEKORATOREN_ENV);
-    console.log(env.navDekoratorenEnv);
-    console.log(env.navDekoratorenEnv2);
+    console.log(navDekoratorenEnv);
     const dekoratorProps: DecoratorProps = {
-      env: env.navDekoratorenEnv,
+      env: navDekoratorenEnv,
       chatbotVisible: true,
     };
 
