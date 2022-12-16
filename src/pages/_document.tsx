@@ -11,13 +11,6 @@ import { GetServerSideProps } from "next";
 const { serverRuntimeConfig } = getConfig();
 // const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  // Disable static rendring
-  return {
-    props: {},
-  }
-}
-
 const navDekoratorenEnv = process.env.DECORATOR_ENV as Exclude<Env, "localhost">;
 const dekoratorProps: DecoratorProps = {
   env: navDekoratorenEnv ?? "prod",
