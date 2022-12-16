@@ -7,13 +7,14 @@ import {
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 import getConfig from "next/config";
 import { GetServerSideProps } from "next";
+import serverEnv from "../serverEnv";
 
 const { serverRuntimeConfig } = getConfig();
 // const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
 const navDekoratorenEnv = process.env.DECORATOR_ENV as Exclude<Env, "localhost">;
 const dekoratorProps: DecoratorProps = {
-  env: navDekoratorenEnv ?? "prod",
+  env: serverEnv.NAV_DEKORATOREN_ENV,
   chatbotVisible: true,
 };
 
