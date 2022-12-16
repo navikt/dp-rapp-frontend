@@ -5,6 +5,15 @@ import {
   fetchDecoratorReact,
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
+import { GetServerSideProps } from "next";
+
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  // Disable static rendring
+  return {
+    props: {},
+  }
+}
 
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
