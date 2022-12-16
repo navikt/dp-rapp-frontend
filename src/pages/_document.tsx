@@ -15,14 +15,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
+const dekoratorProps: DecoratorProps = {
+  env: (process.env.navDekoratorenEnv ?? process.env.NAV_DEKORATOREN_ENV) as Env,
+  chatbotVisible: true,
+};
+
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-
-    const dekoratorProps: DecoratorProps = {
-      env: (process.env.navDekoratorenEnv ?? process.env.NAV_DEKORATOREN_ENV) as Env,
-      chatbotVisible: true,
-    };
 
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps,
