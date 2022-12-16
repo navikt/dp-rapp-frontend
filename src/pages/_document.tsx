@@ -9,7 +9,7 @@ import getConfig from "next/config";
 import { GetServerSideProps } from "next";
 
 const { serverRuntimeConfig } = getConfig();
-const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
+// const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
 export const getServerSideProps: GetServerSideProps = async () => {
   // Disable static rendring
@@ -18,16 +18,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
+const navDekoratorenEnv = process.env.DECORATOR_ENV as Exclude<Env, "localhost">;
+const dekoratorProps: DecoratorProps = {
+  env: navDekoratorenEnv ?? "prod",
+  chatbotVisible: true,
+};
+
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-
-    console.log(navDekoratorenEnv);
-    console.log(process.env.NAV_DEKORATOREN_ENV);
-    const dekoratorProps: DecoratorProps = {
-      env: navDekoratorenEnv || process.env.NAV_DEKORATOREN_ENV,
-      chatbotVisible: true,
-    };
 
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps,
