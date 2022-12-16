@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: "standalone",
-  serverRuntimeConfig: {
+  env: {
     navDekoratorenEnv: process.env.NAV_DEKORATOREN_ENV,
   }
 };

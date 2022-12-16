@@ -5,17 +5,13 @@ import {
   fetchDecoratorReact,
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
-import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
-
-
 
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
     const dekoratorProps: DecoratorProps = {
-      env: serverRuntimeConfig.navDekoratorenEnv,
+      env: (process.env.navDekoratorenEnv ?? process.env.NAV_DEKORATOREN_ENV) as Env,
       chatbotVisible: true,
     };
 
