@@ -22,8 +22,10 @@ export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
+    console.log(navDekoratorenEnv);
+    console.log(process.env.NAV_DEKORATOREN_ENV);
     const dekoratorProps: DecoratorProps = {
-      env: navDekoratorenEnv,
+      env: navDekoratorenEnv || process.env.NAV_DEKORATOREN_ENV,
       chatbotVisible: true,
     };
 
