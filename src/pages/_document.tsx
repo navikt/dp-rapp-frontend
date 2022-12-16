@@ -5,18 +5,9 @@ import {
   fetchDecoratorReact,
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
-import { GetServerSideProps } from "next";
-
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  // Disable static rendring
-  return {
-    props: {},
-  }
-}
 
 const dekoratorProps: DecoratorProps = {
-  env: (process.env.navDekoratorenEnv ?? process.env.NAV_DEKORATOREN_ENV) as Env,
+  env: process.env.NAV_DEKORATOREN_ENV as Env,
   chatbotVisible: true,
 };
 

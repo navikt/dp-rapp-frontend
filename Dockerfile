@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat
 RUN npm install -g npm@9.1.3
 WORKDIR /app
 
-COPY package.json package-lock.json .npmrc* ./
+COPY package.json package-lock.json .npmrc* .env* ./
 RUN npm ci
 
 
