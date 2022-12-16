@@ -6,13 +6,15 @@ import {
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 import getConfig from "next/config";
+import { GetServerSideProps } from "next";
 
 const { serverRuntimeConfig } = getConfig();
 const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
-export async function getServerSideProps(context: any) {
+export const getServerSideProps: GetServerSideProps = async () => {
+  // Disable static rendring
   return {
-    props: {}, // will be passed to the page component as props
+    props: {},
   }
 }
 
