@@ -6,21 +6,18 @@ import {
   Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 import getConfig from "next/config";
-import { GetServerSideProps } from "next";
-import serverEnv from "../serverEnv";
-
 const { serverRuntimeConfig } = getConfig();
-// const navDekoratorenEnv = serverRuntimeConfig.navDekoratorenEnv as Env
 
-const navDekoratorenEnv = process.env.DECORATOR_ENV as Exclude<Env, "localhost">;
-const dekoratorProps: DecoratorProps = {
-  env: serverEnv.NAV_DEKORATOREN_ENV,
-  chatbotVisible: true,
-};
+
 
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
+
+    const dekoratorProps: DecoratorProps = {
+      env: serverRuntimeConfig.navDekoratorenEnv,
+      chatbotVisible: true,
+    };
 
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps,
