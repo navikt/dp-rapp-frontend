@@ -1,58 +1,78 @@
-import { Button, GuidePanel, Heading, Panel, Stepper } from "@navikt/ds-react";
-import { Back, Next } from "@navikt/ds-icons";
-import { useState } from "react";
-import Link from "next/link";
+import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import NavPanel from "../../components/NavPanel";
+import CustomStepper from "../../components/CustomStepper";
+import { useState } from "react";
 
 export default function Page() {
-  const kallApi = () =>
-    fetch("/api/hello")
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  const kallRappApi = () =>
-    fetch("/api/rapp").then((response) => console.log(response));
 
-  const [activeStep, setActiveStep] = useState(1);
+  const [val1, setVal1] = useState<boolean | null>(null);
+  const [val2, setVal2] = useState<boolean | null>(null);
+  const [val3, setVal3] = useState<boolean | null>(null);
+  const [val4, setVal4] = useState<boolean | null>(null);
 
   return (
     <main>
-      <Heading level="1" size="xlarge">Hello, Next.js!</Heading>
+      <Heading level="1" size="xlarge">Dagpenger rapportering</Heading>
+      <Heading level="2" size="medium">Uke 49 - 50 (05.12.22 - 18.12.22)</Heading>
 
-      <Panel>
-        <Button onClick={() => kallApi()}> kall hello api </Button>
-        <Button onClick={() => kallRappApi()}> kall dp-rapp-api </Button>
-      </Panel>
+      <div className="divider" />
 
-      <GuidePanel poster>
-        About
-      </GuidePanel>
+      <CustomStepper numberOfSteps={4} currentStep={1} />
 
-      <Stepper
-        aria-labelledby="stepper-heading"
-        activeStep={activeStep}
-        onStepChange={(x) => setActiveStep(x)}
+      <Heading level="3" size="large">Aktivitet siste 14 dager</Heading>
+
+      <div className="spacer10" />
+
+      <RadioGroup
+        legend="Har du vært i arbeid de siste 14 dager?"
+        description="Med &quot;arbeid&quot; mener vi aktivitet som kan gi inntekt eller som normalt ville ha vært betalt"
+        onChange={(val: boolean) => setVal1(val)}
+        value={val1}
+        error="Du må svare på dette spørsmålet"
       >
-        <Stepper.Step href="#">Start søknad</Stepper.Step>
-        <Stepper.Step href="#">Saksopplysninger</Stepper.Step>
-        <Stepper.Step href="#">Vedlegg</Stepper.Step>
-        <Stepper.Step href="#">Oppsummering</Stepper.Step>
-        <Stepper.Step href="#">Innsending</Stepper.Step>
-      </Stepper>
+        <Radio value={true}>Ja</Radio>
+        <Radio value={false}>Nei</Radio>
+      </RadioGroup>
 
-      <Panel border className="navds-date__caption">
-        <Link href="/" passHref>
-          <Button icon={<Back aria-hidden />} variant="secondary">
-            Tilbake
-          </Button>
-        </Link>
-        <Link href="/page1" passHref>
-          <Button icon={<Next aria-hidden />} iconPosition="right">
-            Neste
-          </Button>
-        </Link>
-      </Panel>
+      <div className="spacer10" />
 
-      <NavPanel nextHref="/page1" />
+      <RadioGroup
+        legend="Har du deltatt på tiltak, kurs eller utdanning?"
+        description="Med &quot;tiltak&quot; mener vi aktivitet som kan gi..."
+        onChange={(val: boolean) => setVal2(val)}
+        value={val2}
+      >
+        <Radio value={true}>Ja</Radio>
+        <Radio value={false}>Nei</Radio>
+      </RadioGroup>
+
+      <div className="spacer10" />
+
+      <RadioGroup
+        legend="Har du vært syk?"
+        description="Har du vært forhindret fra å ta arbeid, delta på tiltak eller være arbeidssøker fordi du har vært syk?"
+        onChange={(val: boolean) => setVal3(val)}
+        value={val3}
+      >
+        <Radio value={true}>Ja</Radio>
+        <Radio value={false}>Nei</Radio>
+      </RadioGroup>
+
+      <div className="spacer10" />
+
+      <RadioGroup
+        legend="Har du hatt ferie eller annet fravær?"
+        description="Har du hatt ferie eller annet fravær slik at du ikke har kunnet ta arbeid, delta på tiltak eller være arbeidssøker?"
+        onChange={(val: boolean) => setVal4(val)}
+        value={val4}
+      >
+        <Radio value={true}>Ja</Radio>
+        <Radio value={false}>Nei</Radio>
+      </RadioGroup>
+
+      <div className="spacer10" />
+
+      <NavPanel nextHref="/page1" nextText="Neste" />
     </main>
   );
 }
