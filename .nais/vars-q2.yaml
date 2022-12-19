@@ -1,5 +1,4 @@
 dashEnv: -q2
 ingresses:
   - "https://dp-rapp-frontend-q2.dev.nav.no"
-navDekoratorenEnv: dev
 dpRappApiUrl: "http://dp-rapp-api.raptus.svc.cluster.local"

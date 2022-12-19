@@ -33,8 +33,6 @@ spec:
       cpu: 500m
       memory: 512Mi
   env:
-    - name: NAV_DEKORATOREN_ENV
-      value: '{{ navDekoratorenEnv }}'
     - name: DP_RAPP_API_URL
       value: '{{ dpRappApiUrl }}'
   #envFrom:

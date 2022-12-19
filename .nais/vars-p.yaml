@@ -1,5 +1,4 @@
 dashEnv: ""
 ingresses:
   - "https://dp-rapp-frontend.nav.no"
-navDekoratorenEnv: prod
 dpRappApiUrl: "https://dp-rapp-api.intern.nav.no"

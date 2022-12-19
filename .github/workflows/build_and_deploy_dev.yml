@@ -94,7 +94,11 @@ jobs:
       - name: Build Docker image
         run: |
           echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
-          echo NAV_DEKORATOREN_ENV=dev >> .env.production
+          if [[ ${{ env.ENVIRONMENT }} == 'p' ]]; then
+            echo NAV_DEKORATOREN_ENV=prod >> .env.production
+          else
+            echo NAV_DEKORATOREN_ENV=dev >> .env.production
+          fi
           docker build -t ${{ steps.setVars.outputs.image }} .
 
       - name: Log in to the Container registry
