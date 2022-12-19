@@ -6,7 +6,7 @@ export default function Page() {
     <main>
       <h1>Page 2</h1>
       <p>Bla bla bla 2</p>
-      <NavPanel backHref="/page1" />
+      <NavPanel backHref="/page1" backText="Tilbake" />
     </main>
   );
 }

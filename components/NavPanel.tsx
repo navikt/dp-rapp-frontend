@@ -4,7 +4,9 @@ import { Back, Next } from "@navikt/ds-icons";
 
 export type NavPanelProps = {
   backHref?: string;
+  backText?: string;
   nextHref?: string
+  nextText?: string
 }
 
 export default function NavPanel(props: NavPanelProps) {
@@ -12,7 +14,7 @@ export default function NavPanel(props: NavPanelProps) {
   if(props.backHref != undefined) {
     backButton = <Link href={props.backHref} passHref>
       <Button icon={<Back aria-hidden />} variant="secondary">
-        Tilbake
+        {props.backText}
       </Button>
     </Link>
   }
@@ -21,13 +23,13 @@ export default function NavPanel(props: NavPanelProps) {
   if(props.nextHref != undefined) {
     nextButton = <Link href={props.nextHref} passHref>
       <Button icon={<Next aria-hidden />} iconPosition="right">
-        Neste
+        {props.nextText}
       </Button>
     </Link>
   }
 
   return (
-    <Panel border className="navds-date__caption">
+    <Panel border className="navds-date__caption navds-link-panel__description">
       {
         backButton
       }
