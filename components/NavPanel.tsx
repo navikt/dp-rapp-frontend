@@ -11,7 +11,7 @@ export type NavPanelProps = {
 
 export default function NavPanel(props: NavPanelProps) {
   let backButton = <div />
-  if(props.backHref != undefined) {
+  if (props.backHref != undefined) {
     backButton = <Link href={props.backHref} passHref>
       <Button icon={<Back aria-hidden />} variant="secondary">
         {props.backText}
@@ -20,7 +20,7 @@ export default function NavPanel(props: NavPanelProps) {
   }
 
   let nextButton = <div />
-  if(props.nextHref != undefined) {
+  if (props.nextHref != undefined) {
     nextButton = <Link href={props.nextHref} passHref>
       <Button icon={<Next aria-hidden />} iconPosition="right">
         {props.nextText}
