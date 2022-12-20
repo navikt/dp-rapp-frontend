@@ -77,3 +77,33 @@ main {
   background-color: var(--a-purple-400);
   margin-top: 0;
 }
+
+.activityType {
+  width: 10rem;
+  border-style: solid;
+  border-radius: 50vh;
+  margin: 0.3rem 10rem 0.3rem 0.3rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.5rem;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+.activityType.work {
+  border-color: var(--a-deepblue-200);
+  background-color: var(--a-deepblue-200)
+}
+
+.activityType.illness {
+  border-color: var(--a-orange-200);
+  background-color: var(--a-orange-200)
+}
+
+.activityType.measures {
+  border-color: var(--a-purple-200);
+  background-color: var(--a-purple-200)
+}
+
+.activityType.vacation {
+  border-color: var(--a-green-200);
+  background-color: var(--a-green-200)
+}
