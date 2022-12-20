@@ -38,11 +38,7 @@ main {
   margin: 1rem -10%;
 }
 
-.spacer5 {
-  height: var(--a-spacing-5);
-}
-
-.spacer10 {
+.spacer {
   height: var(--a-spacing-10);
 }
 

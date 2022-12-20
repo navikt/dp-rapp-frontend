@@ -2,6 +2,8 @@ import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import NavPanel from "../../components/NavPanel";
 import CustomStepper from "../../components/CustomStepper";
 import { useState } from "react";
+import Spacer from "../../components/Spacer";
+import Divider from "../../components/Divider";
 
 export default function Page() {
 
@@ -15,13 +17,13 @@ export default function Page() {
       <Heading level="1" size="xlarge">Dagpenger rapportering</Heading>
       <Heading level="2" size="medium">Uke 49 - 50 (05.12.22 - 18.12.22)</Heading>
 
-      <div className="divider" />
+      <Divider />
 
       <CustomStepper numberOfSteps={4} currentStep={1} />
 
       <Heading level="3" size="large">Aktivitet siste 14 dager</Heading>
 
-      <div className="spacer10" />
+      <Spacer />
 
       <RadioGroup
         legend="Har du vært i arbeid de siste 14 dager?"
@@ -34,7 +36,7 @@ export default function Page() {
         <Radio value={false}>Nei</Radio>
       </RadioGroup>
 
-      <div className="spacer10" />
+      <Spacer />
 
       <RadioGroup
         legend="Har du deltatt på tiltak, kurs eller utdanning?"
@@ -46,7 +48,7 @@ export default function Page() {
         <Radio value={false}>Nei</Radio>
       </RadioGroup>
 
-      <div className="spacer10" />
+      <Spacer />
 
       <RadioGroup
         legend="Har du vært syk?"
@@ -58,7 +60,7 @@ export default function Page() {
         <Radio value={false}>Nei</Radio>
       </RadioGroup>
 
-      <div className="spacer10" />
+      <Spacer />
 
       <RadioGroup
         legend="Har du hatt ferie eller annet fravær?"
@@ -70,7 +72,7 @@ export default function Page() {
         <Radio value={false}>Nei</Radio>
       </RadioGroup>
 
-      <div className="spacer10" />
+      <Spacer />
 
       <NavPanel nextHref="/page1" nextText="Neste" />
     </main>
