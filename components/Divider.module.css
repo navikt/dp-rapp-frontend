@@ -1,0 +1,6 @@
+.divider {
+    width: 120%;
+    height: 0.5rem;
+    background-color: var(--a-green-400);
+    margin: 1rem -10%;
+}
