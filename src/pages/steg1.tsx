@@ -1,9 +1,9 @@
 import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
-import CustomStepper from "../../components/CustomStepper";
-import { FormEvent, useState } from "react";
-import Spacer from "../../components/Spacer";
 import Divider from "../../components/Divider";
+import CustomStepper from "../../components/CustomStepper";
+import Spacer from "../../components/Spacer";
 import NavPanelWithSubmit from "../../components/NavPanelWithSubmit";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function Page() {

@@ -1,10 +1,10 @@
 import { Heading } from "@navikt/ds-react";
-import NavPanel from "../../components/NavPanel";
+import Divider from "../../components/Divider";
 import CustomStepper from "../../components/CustomStepper";
 import Spacer from "../../components/Spacer";
-import Divider from "../../components/Divider";
-import CancelButton from "../../components/CancelButton";
 import ActivitySelector from "../../components/ActivitySelector";
+import NavPanel from "../../components/NavPanel";
+import CancelButton from "../../components/CancelButton";
 import { format } from "date-fns";
 
 export default function Page() {
