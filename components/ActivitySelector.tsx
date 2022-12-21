@@ -2,6 +2,7 @@ import styles from "./ActivitySelector.module.css";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Button, Heading, Modal, Panel, TextField } from "@navikt/ds-react";
 import { addDays, format } from "date-fns";
+import Spacer from "./Spacer";
 
 export type ActivitySelectorProps = {
   startDate: Date;
@@ -12,7 +13,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
 
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string>('');
   const [selectedHours, setSelectedHours] = useState<string | null>(null);
   const [savedDates, setSavedDates] = useState<{ [key: number]: { type: string, hours: number } }>({});
 
@@ -21,7 +22,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   }, []);
 
   const dateSelected = (date: Date) => {
-    setSelectedType(savedDates[date.getTime()]?.type);
+    setSelectedType(savedDates[date.getTime()]?.type || '');
     setSelectedHours(savedDates[date.getTime()]?.hours.toString());
     setSelectedDate(date);
     setOpen(true);
@@ -37,7 +38,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   }
 
   const saveDate = () => {
-    if (selectedDate == null || selectedType == null) {
+    if (selectedDate == null) {
       return;
     }
 
@@ -60,6 +61,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
     setOpen(false);
   }
 
+  // Building day grid
   const days = [];
   for (let i = 0; i < 14; i++) {
     const currentDate = addDays(props.startDate, i);
@@ -94,6 +96,52 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
                                 value={selectedHours || 0}
                                 onChange={updateHours} />
 
+  // Summary
+  let workHours = 0;
+  let illnessDays = 0;
+  let measuresDays = 0;
+  let vacationDays = 0;
+  for (const date in savedDates) {
+    const currentData = savedDates[date];
+
+    if (currentData.type == 'work') workHours += currentData.hours;
+    else if (currentData.type == 'illness') illnessDays += 1;
+    else if (currentData.type == 'measures') measuresDays += 1;
+    else if (currentData.type == 'vacation') vacationDays += 1;
+  }
+
+  let summaryWork = <></>
+  if (workHours > 0) {
+    summaryWork = <div className={styles.summaryLine + ' ' + styles.work}>
+      <div>Arbeid</div>
+      <div>{workHours} { (workHours == 1) ? 'time' : 'timer' }</div>
+    </div>
+  }
+
+  let summaryIllness = <></>
+  if (illnessDays > 0) {
+    summaryIllness = <div className={styles.summaryLine + ' ' + styles.illness}>
+      <div>Syk</div>
+      <div>{illnessDays} { (illnessDays == 1) ? 'dag' : 'dager' }</div>
+    </div>
+  }
+
+  let summaryMeasures = <></>
+  if (measuresDays > 0) {
+    summaryMeasures = <div className={styles.summaryLine + ' ' + styles.measures}>
+      <div>Tiltak</div>
+      <div>{measuresDays} { (measuresDays == 1) ? 'dag' : 'dager' }</div>
+    </div>
+  }
+
+  let summaryVacation = <></>
+  if (vacationDays > 0) {
+    summaryVacation = <div className={styles.summaryLine + ' ' + styles.vacation}>
+      <div>Fravær/ferie</div>
+      <div>{vacationDays} { (vacationDays == 1) ? 'dag' : 'dager' }</div>
+    </div>
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.dayGrid}>
@@ -108,6 +156,17 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
           days
         }
       </div>
+
+      <Spacer />
+
+      <div className={styles.summary}>
+        <div className={styles.summaryHeader}>Sammenlagt for meldeperioden:</div>
+        {summaryWork}
+        {summaryIllness}
+        {summaryMeasures}
+        {summaryVacation}
+      </div>
+
 
       <Modal
         open={open}
@@ -151,6 +210,13 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
                 className={styles.activityTypeButton + ' ' + styles.vacation + ' ' + ((selectedType == 'vacation') ? styles.selected : '')}
                 onClick={() => dateTypeSelected('vacation')}>
                 Fravær/ferie
+              </button>
+            </div>
+            <div>
+              <button
+                className={styles.activityTypeButton + ' ' + styles.none + ' ' + ((selectedType == '') ? styles.selected : '')}
+                onClick={() => dateTypeSelected('')}>
+                Ingenting
               </button>
             </div>
           </Panel>

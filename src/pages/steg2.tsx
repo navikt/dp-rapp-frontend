@@ -32,10 +32,6 @@ export default function Page() {
 
       <Spacer />
 
-      <div>Sammenlagt for meldeperioden:</div>
-
-      <Spacer />
-
       <NavPanel backHref="/steg1" backText="Forrige steg" nextHref="/steg3" nextText="Neste steg" />
 
       <CancelButton />
