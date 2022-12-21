@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.dayGrid {
+    display: grid;
+    grid-template-columns: 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
+    gap: 1rem 0;
+    justify-items: center;
+}
+
+.activityGridButton {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-style: solid;
+    border-radius: 50vh;
+    margin: 0.3rem 0.3rem 0.3rem 0.3rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.5rem;
+    font-weight: bold;
+    cursor:pointer;
+}
+
+.activityTypeButton {
+    width: 10rem;
+    border-style: solid;
+    border-radius: 50vh;
+    margin: 0.3rem 10rem 0.3rem 0.3rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.activityGridButton.none {
+    border-color: var(--a-grayalpha-200);
+    background-color: var(--a-grayalpha-200)
+}
+
+.activityGridButton.work,
+.activityTypeButton.work {
+    border-color: var(--a-deepblue-200);
+    background-color: var(--a-deepblue-200)
+}
+
+.activityGridButton.illness,
+.activityTypeButton.illness {
+    border-color: var(--a-orange-200);
+    background-color: var(--a-orange-200)
+}
+
+.activityGridButton.measures,
+.activityTypeButton.measures {
+    border-color: var(--a-purple-200);
+    background-color: var(--a-purple-200)
+}
+
+.activityGridButton.vacation,
+.activityTypeButton.vacation {
+    border-color: var(--a-green-200);
+    background-color: var(--a-green-200)
+}
+
+.activityTypeButton.selected {
+    border-color: black;
+}
+
+.workHours {
+    text-align: center;
+    font-size: 90%;
+    color: var(--a-grayalpha-600);
+    width: 2.5rem;
+    height: 2.8rem;
+    padding-top: 1.4rem;
+    margin: -1.8rem auto auto;
+    background-color: var(--a-deepblue-100);
+    border-radius: 0.5rem;
+}
