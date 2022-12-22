@@ -7,7 +7,7 @@ import NavPanelWithSubmit from "../../components/NavPanelWithSubmit";
 import CancelButton from "../../components/CancelButton";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 export default function Page() {
 
@@ -16,6 +16,8 @@ export default function Page() {
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
+
+  const [savedDates, setSavedDates] = useState<{ [key: number]: { type: string, hours: number } }>({});
 
   const router = useRouter();
 
@@ -40,7 +42,7 @@ export default function Page() {
       <Spacer />
 
       <form onSubmit={handleSubmit}>
-        <ActivitySelector startDate={startDate} endDate={endDate} />
+        <ActivitySelector startDate={startDate} endDate={endDate} savedDates={savedDates} setSavedDates={setSavedDates} />
 
         <Spacer />
 

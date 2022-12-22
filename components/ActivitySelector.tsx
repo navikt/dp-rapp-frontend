@@ -1,5 +1,5 @@
 import styles from "./ActivitySelector.module.css";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Heading, Modal, Panel, TextField } from "@navikt/ds-react";
 import { addDays, format } from "date-fns";
 import Spacer from "./Spacer";
@@ -7,6 +7,10 @@ import Spacer from "./Spacer";
 export type ActivitySelectorProps = {
   startDate: Date;
   endDate: Date;
+  savedDates: {
+    [key: number]: { type: string, hours: number };
+  };
+  setSavedDates: Dispatch<SetStateAction<{ [p: number]: { type: string, hours: number } }>>;
 }
 
 export default function ActivitySelector(props: ActivitySelectorProps) {
@@ -15,7 +19,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedType, setSelectedType] = useState<string>('');
   const [selectedHours, setSelectedHours] = useState<string | null>(null);
-  const [savedDates, setSavedDates] = useState<{ [key: number]: { type: string, hours: number } }>({});
+  const { startDate, savedDates, setSavedDates } = props;
 
   useEffect(() => {
     Modal.setAppElement("#__next");
@@ -50,13 +54,21 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
 
     const key = selectedDate.getTime();
 
-    setSavedDates({
-      ...savedDates,
-      [key]: {
-        type: selectedType,
-        hours: hoursNUmber
-      }
-    });
+    // Delete object if its type is empty
+    // Else save
+    if (selectedType == '') {
+      const state = { ...savedDates };
+      delete state[key];
+      setSavedDates(state);
+    } else {
+      setSavedDates({
+        ...savedDates,
+        [key]: {
+          type: selectedType,
+          hours: hoursNUmber
+        }
+      });
+    }
 
     setOpen(false);
   }
@@ -64,7 +76,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   // Building day grid
   const days = [];
   for (let i = 0; i < 14; i++) {
-    const currentDate = addDays(props.startDate, i);
+    const currentDate = addDays(startDate, i);
     const currentDateStr = format(currentDate, "d.");
     const currentData = savedDates[currentDate.getTime()];
 
@@ -161,13 +173,16 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
 
       <Spacer />
 
-      <div className={styles.summary}>
-        <div className={styles.summaryHeader}>Sammenlagt for meldeperioden:</div>
-        {summaryWork}
-        {summaryIllness}
-        {summaryMeasures}
-        {summaryVacation}
-      </div>
+      {
+        Object.keys(savedDates).length !== 0 &&
+          <div className={styles.summary}>
+              <div className={styles.summaryHeader}>Sammenlagt for meldeperioden:</div>
+            {summaryWork}
+            {summaryIllness}
+            {summaryMeasures}
+            {summaryVacation}
+          </div>
+      }
 
 
       <Modal
