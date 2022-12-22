@@ -26,13 +26,13 @@ export default function Page() {
 
     const data = {
       sp6: val6,
-    }
+    };
 
     // Send the data to the server in JSON format.
-    const JSONdata = JSON.stringify(data)
+    const JSONdata = JSON.stringify(data);
 
     // API endpoint where we send form data.
-    const endpoint = '/api/form'
+    const endpoint = '/api/form';
 
     // Form the request for sending data to the server.
     const options = {
@@ -44,13 +44,13 @@ export default function Page() {
       },
       // Body of the request is the JSON data we created above.
       body: JSONdata,
-    }
+    };
 
     // Send the form data to our forms API on Vercel and get a response.
-    const response = await fetch(endpoint, options)
+    const response = await fetch(endpoint, options);
 
     // Get the response data from server as JSON.
-    // const result = await response.json()
+    // const result = await response.json();
 
     console.log(response.ok);
 
@@ -87,7 +87,7 @@ export default function Page() {
 
         <Spacer />
 
-        <NavPanelWithSubmit backHref="/steg2" backText="Forrige steg" nextText="Neste steg" />
+        <NavPanelWithSubmit backHref="/steg3" backText="Forrige steg" nextText="Neste steg" />
       </form>
 
       <CancelButton />

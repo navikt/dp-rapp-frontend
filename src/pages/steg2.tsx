@@ -3,9 +3,11 @@ import Divider from "../../components/Divider";
 import CustomStepper from "../../components/CustomStepper";
 import Spacer from "../../components/Spacer";
 import ActivitySelector from "../../components/ActivitySelector";
-import NavPanel from "../../components/NavPanel";
+import NavPanelWithSubmit from "../../components/NavPanelWithSubmit";
 import CancelButton from "../../components/CancelButton";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
+import { FormEvent } from "react";
 
 export default function Page() {
 
@@ -14,6 +16,15 @@ export default function Page() {
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
+
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent) => {
+    // Stop the form from submitting and refreshing the page.
+    event.preventDefault();
+
+    await router.push('/steg3');
+  }
 
   return (
     <main>
@@ -28,11 +39,13 @@ export default function Page() {
 
       <Spacer />
 
-      <ActivitySelector startDate={startDate} endDate={endDate} />
+      <form onSubmit={handleSubmit}>
+        <ActivitySelector startDate={startDate} endDate={endDate} />
 
-      <Spacer />
+        <Spacer />
 
-      <NavPanel backHref="/steg1" backText="Forrige steg" nextHref="/steg3" nextText="Neste steg" />
+        <NavPanelWithSubmit backHref="/steg1" backText="Forrige steg" nextText="Neste steg" />
+      </form>
 
       <CancelButton />
     </main>
