@@ -81,8 +81,10 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
 
     days.push(
       <div key={currentDate.getTime()}>
-        <button className={styles.activityGridButton + ' ' + addClass}
-                onClick={() => dateSelected(currentDate)}>
+        <button
+          type="button"
+          className={styles.activityGridButton + ' ' + addClass}
+          onClick={() => dateSelected(currentDate)}>
           {currentDateStr}
         </button>
         {hours}
@@ -114,7 +116,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   if (workHours > 0) {
     summaryWork = <div className={styles.summaryLine + ' ' + styles.work}>
       <div>Arbeid</div>
-      <div>{workHours} { (workHours == 1) ? 'time' : 'timer' }</div>
+      <div>{workHours} {(workHours == 1) ? 'time' : 'timer'}</div>
     </div>
   }
 
@@ -122,7 +124,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   if (illnessDays > 0) {
     summaryIllness = <div className={styles.summaryLine + ' ' + styles.illness}>
       <div>Syk</div>
-      <div>{illnessDays} { (illnessDays == 1) ? 'dag' : 'dager' }</div>
+      <div>{illnessDays} {(illnessDays == 1) ? 'dag' : 'dager'}</div>
     </div>
   }
 
@@ -130,7 +132,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   if (measuresDays > 0) {
     summaryMeasures = <div className={styles.summaryLine + ' ' + styles.measures}>
       <div>Tiltak</div>
-      <div>{measuresDays} { (measuresDays == 1) ? 'dag' : 'dager' }</div>
+      <div>{measuresDays} {(measuresDays == 1) ? 'dag' : 'dager'}</div>
     </div>
   }
 
@@ -138,7 +140,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   if (vacationDays > 0) {
     summaryVacation = <div className={styles.summaryLine + ' ' + styles.vacation}>
       <div>Fravær/ferie</div>
-      <div>{vacationDays} { (vacationDays == 1) ? 'dag' : 'dager' }</div>
+      <div>{vacationDays} {(vacationDays == 1) ? 'dag' : 'dager'}</div>
     </div>
   }
 
@@ -183,6 +185,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
             </Heading>
             <div>
               <button
+                type="button"
                 className={styles.activityTypeButton + ' ' + styles.work + ' ' + ((selectedType == 'work') ? styles.selected : '')}
                 onClick={() => dateTypeSelected('work')}>
                 Arbeid
@@ -193,6 +196,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
             </div>
             <div>
               <button
+                type="button"
                 className={styles.activityTypeButton + ' ' + styles.illness + ' ' + ((selectedType == 'illness') ? styles.selected : '')}
                 onClick={() => dateTypeSelected('illness')}>
                 Syk
@@ -200,6 +204,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
             </div>
             <div>
               <button
+                type="button"
                 className={styles.activityTypeButton + ' ' + styles.measures + ' ' + ((selectedType == 'measures') ? styles.selected : '')}
                 onClick={() => dateTypeSelected('measures')}>
                 Tiltak
@@ -214,6 +219,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
             </div>
             <div>
               <button
+                type="button"
                 className={styles.activityTypeButton + ' ' + styles.none + ' ' + ((selectedType == '') ? styles.selected : '')}
                 onClick={() => dateTypeSelected('')}>
                 Ingenting
