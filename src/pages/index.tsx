@@ -19,7 +19,6 @@ export default function Page() {
         <Button onClick={() => kallRappApi()}> kall dp-rapp-api </Button>
       </Panel>
 
-      <NavPanel nextHref="/steg1" nextText="Begynn utfylling (old)" />
       <NavPanel nextHref="/form" nextText="Begynn utfylling (new)" />
     </main>
   );
