@@ -1,5 +1,6 @@
 import { ConfirmationPanel, Heading } from "@navikt/ds-react";
 import Spacer from "./Spacer";
+import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../src/pages/form";
 import { FormEvent, useState } from "react";
@@ -10,7 +11,9 @@ export default function Step4(props: CommonFormProps) {
     questionConsent,
     setQuestionConsent,
     prevStep,
-    send
+    send,
+    showLoader,
+    error
   } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -52,10 +55,13 @@ export default function Step4(props: CommonFormProps) {
 
       <Spacer />
 
+      <Error showError={!!error} error={error} />
+
       <NavPanelWithButtons backText="Forrige steg"
                            backOnClick={prevStep}
                            nextText="Send"
-                           nextOnClick={checkForm} />
+                           nextOnClick={checkForm}
+                           showLoader={showLoader} />
     </>
   );
 }

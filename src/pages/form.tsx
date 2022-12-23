@@ -5,6 +5,7 @@ import Step1 from "../../components/Step1";
 import Step2 from "../../components/Step2";
 import Step3 from "../../components/Step3";
 import Step4 from "../../components/Step4";
+import Receipt from "../../components/Receipt";
 import CancelButton from "../../components/CancelButton";
 import { format } from "date-fns";
 import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
@@ -31,6 +32,8 @@ export type CommonFormProps = {
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
   send: FormEventHandler;
+  showLoader: boolean;
+  error: string;
 }
 
 export default function Page() {
@@ -43,7 +46,9 @@ export default function Page() {
 
   const maxStep = 4;
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [showReceipt, setShowReceipt] = useState<boolean>(false);
   const [questionWork, setQuestionWork] = useState<boolean | null>(null);
   const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(null);
   const [questionIllness, setQuestionIllness] = useState<boolean | null>(null);
@@ -51,6 +56,7 @@ export default function Page() {
   const [savedDates, setSavedDates] = useState<{ [key: number]: { type: string, hours: number } }>({});
   const [questionProceed, setQuestionProceed] = useState<boolean | null>(null);
   const [questionConsent, setQuestionConsent] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const prevStep = () => {
     if (currentStep > 1) {
@@ -64,9 +70,15 @@ export default function Page() {
     }
   };
 
-  const send = () => {
-    const dates = [];
+  const send = async () => {
+    // Reset error
+    setError('');
 
+    // Show loader
+    setShowLoader(true);
+
+    // Prepare dates
+    const dates = [];
     for (const key in savedDates) {
       dates.push({
         date: new Date(+key),
@@ -75,6 +87,7 @@ export default function Page() {
       });
     }
 
+    // Collect data in one object
     const data = {
       questionWork,
       questionMeasures,
@@ -84,7 +97,38 @@ export default function Page() {
       questionProceed
     }
 
-    console.log(data);
+    // Send the data to the server in JSON format.
+    const JSONdata = JSON.stringify(data);
+
+    // API endpoint where we send form data.
+    const endpoint = '/api/send';
+
+    // Form the request for sending data to the server.
+    const options = {
+      // The method is POST because we are sending data.
+      method: 'POST',
+      // Tell the server we're sending JSON.
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Body of the request is the JSON data we created above.
+      body: JSONdata,
+    };
+
+    // Send the form data to our forms API on Vercel and get a response.
+    const response = await fetch(endpoint, options);
+
+    if (response.ok) {
+      // Get the response data from server as JSON.
+      // const result = await response.json();
+      setCurrentStep(currentStep + 1);
+      setShowReceipt(true);
+    } else {
+      setError('Feil i vårt baksystem. Prøv senere');
+    }
+
+    // Hide loader
+    setShowLoader(false);
   }
 
   const commonFormProps: CommonFormProps = {
@@ -106,7 +150,9 @@ export default function Page() {
     setQuestionConsent,
     prevStep,
     nextStep,
-    send
+    send,
+    showLoader,
+    error
   }
 
   return (
@@ -116,12 +162,13 @@ export default function Page() {
 
       <Divider />
 
-      <CustomStepper numberOfSteps={maxStep} currentStep={currentStep} />
+      {!showReceipt && <CustomStepper numberOfSteps={maxStep} currentStep={currentStep} />}
 
       {currentStep == 1 && <Step1 {...commonFormProps} />}
       {currentStep == 2 && <Step2 {...commonFormProps} />}
       {currentStep == 3 && <Step3 {...commonFormProps} />}
       {currentStep == 4 && <Step4 {...commonFormProps} />}
+      {showReceipt && <Receipt />}
 
       <CancelButton />
     </main>

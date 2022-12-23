@@ -7,9 +7,19 @@ export type NavPanelWithSubmitProps = {
   backOnClick?: FormEventHandler;
   nextText?: string;
   nextOnClick?: FormEventHandler;
+  showLoader?: boolean;
 }
 
 export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
+  if (props.showLoader) {
+    return (
+      <Panel border className="navds-date__caption navds-link-panel__description">
+        <div />
+        <Button loading>Loading</Button>
+      </Panel>
+    );
+  }
+
   let backButton = <div />
   if (props.backOnClick != undefined) {
     backButton = <Button icon={<Back aria-hidden />} variant="secondary" type="button" onClick={props.backOnClick}>

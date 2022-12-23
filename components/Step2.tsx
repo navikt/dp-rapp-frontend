@@ -1,9 +1,10 @@
 import styles from "./ActivitySelector.module.css";
-import { Alert, Heading } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import ActivitySelector from "./ActivitySelector";
-import { CommonFormProps } from "../src/pages/form";
+import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
+import { CommonFormProps } from "../src/pages/form";
 import { FormEvent, useState } from "react";
 
 export default function Step2(props: CommonFormProps) {
@@ -36,7 +37,7 @@ export default function Step2(props: CommonFormProps) {
       <ActivitySelector startDate={startDate} endDate={endDate} savedDates={savedDates} setSavedDates={setSavedDates} />
 
       <div className={styles.summary}>
-        {isChecked && !savedDatesValidated() && <Alert variant="error">Du må velge minst 1 dag</Alert>}
+        <Error showError={isChecked && !savedDatesValidated()} error={"Du må velge minst 1 dag"} />
       </div>
 
       <Spacer />
