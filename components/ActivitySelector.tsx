@@ -115,8 +115,8 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   let illnessDays = 0;
   let measuresDays = 0;
   let vacationDays = 0;
-  for (const date in savedDates) {
-    const currentData = savedDates[date];
+  for (const key in savedDates) {
+    const currentData = savedDates[key];
 
     if (currentData.type == 'work') workHours += currentData.hours;
     else if (currentData.type == 'illness') illnessDays += 1;

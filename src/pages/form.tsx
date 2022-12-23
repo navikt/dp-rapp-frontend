@@ -7,7 +7,7 @@ import Step3 from "../../components/Step3";
 import Step4 from "../../components/Step4";
 import CancelButton from "../../components/CancelButton";
 import { format } from "date-fns";
-import { Dispatch, FormEvent, FormEventHandler, SetStateAction, useState } from "react";
+import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
 
 export type CommonFormProps = {
   startDate: Date;
@@ -52,23 +52,39 @@ export default function Page() {
   const [questionProceed, setQuestionProceed] = useState<boolean | null>(null);
   const [questionConsent, setQuestionConsent] = useState<boolean>(false);
 
-  const prevStep = (event: FormEvent) => {
-    event.preventDefault();
+  const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
   };
 
-  const nextStep = (event: FormEvent) => {
-    event.preventDefault();
+  const nextStep = () => {
     if (currentStep < maxStep) {
       setCurrentStep(currentStep + 1);
     }
   };
 
-  const send = (event: FormEvent) => {
-    nextStep(event);
-    // Send data
+  const send = () => {
+    const dates = [];
+
+    for (const key in savedDates) {
+      dates.push({
+        date: new Date(+key),
+        type: savedDates[key].type,
+        hours: savedDates[key].hours,
+      });
+    }
+
+    const data = {
+      questionWork,
+      questionMeasures,
+      questionIllness,
+      questionVacation,
+      dates,
+      questionProceed
+    }
+
+    console.log(data);
   }
 
   const commonFormProps: CommonFormProps = {

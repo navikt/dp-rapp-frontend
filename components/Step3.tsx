@@ -8,6 +8,7 @@ export default function Step3(props: CommonFormProps) {
 
   const {
     questionProceed,
+    setQuestionProceed,
     prevStep,
     nextStep
   } = props;
@@ -38,8 +39,8 @@ export default function Step3(props: CommonFormProps) {
       <RadioGroup
         legend="Ønsker du fortsatt å være registrert hos NAV som arbeidssøker de neste 14 dager?"
         description="For å få bistand og/eller ytelser, må du være registrert hos NAV"
-        value={props.questionProceed}
-        onChange={(val: boolean) => props.setQuestionProceed(val)}
+        value={questionProceed}
+        onChange={(val: boolean) => setQuestionProceed(val)}
         error={isChecked && !questionProceedValidated() && "Du må svare på dette spørsmålet"}
       >
         <Radio value={true}>Ja</Radio>
