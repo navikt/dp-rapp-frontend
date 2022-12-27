@@ -17,34 +17,25 @@ export default async function handler(
 
     const onBehalfOfToken = await session.apiToken(audienceRappApi);
 
-    const response = {
-      answer: "ok"
-    };
-    /*
     const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
-    const url = `${dpRappApiUrl}/api/v1/authenticatedping`;
+    const url = `${dpRappApiUrl}/api/v1/save`;
     const response = await fetch(url, {
-      method: "Post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${onBehalfOfToken}`,
         "X-Request-ID": callId
       },
+      body: JSON.stringify(req.body),
     })
 
     if (!response.ok) {
       return res.status(500).send(`Unexpected response status: ${response.statusText}`)
     }
-    */
-
-    // TODO: delete
-    // Sleep 2 seconds
-    await new Promise(r => setTimeout(r, 2000));
 
     return res.json(response);
-    // return res.status(500).end();
   } catch (error) {
     return res.status(500).send(error);
   }

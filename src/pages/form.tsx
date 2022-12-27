@@ -78,9 +78,9 @@ export default function Page() {
     setShowLoader(true);
 
     // Prepare dates
-    const dates = [];
+    const days = [];
     for (const key in savedDates) {
-      dates.push({
+      days.push({
         date: new Date(+key),
         type: savedDates[key].type,
         hours: savedDates[key].hours,
@@ -93,7 +93,7 @@ export default function Page() {
       questionMeasures,
       questionIllness,
       questionVacation,
-      dates,
+      days,
       questionProceed
     }
 
@@ -101,7 +101,7 @@ export default function Page() {
     const JSONdata = JSON.stringify(data);
 
     // API endpoint where we send form data.
-    const endpoint = '/api/send';
+    const endpoint = '/api/save';
 
     // Form the request for sending data to the server.
     const options = {
