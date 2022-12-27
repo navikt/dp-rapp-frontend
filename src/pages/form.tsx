@@ -38,8 +38,10 @@ export type CommonFormProps = {
 
 export default function Page() {
 
-  const startDate = new Date(2022, 11, 5);
-  const endDate = new Date(2022, 11, 18);
+  // JavaScript Dates are internally in UTC
+  // We have to add time (12:00) so as the date itself is not changed when converted from/to CET
+  const startDate = new Date(2022, 11, 5, 12, 0);
+  const endDate = new Date(2022, 11, 18, 12, 0);
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
