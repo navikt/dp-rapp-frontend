@@ -172,7 +172,7 @@ export default function Page() {
       {currentStep == 4 && <Step4 {...commonFormProps} />}
       {showReceipt && <Receipt />}
 
-      <CancelButton />
+      {!showReceipt && <CancelButton />}
     </main>
   );
 }
