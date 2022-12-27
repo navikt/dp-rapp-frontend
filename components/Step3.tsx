@@ -1,4 +1,4 @@
-import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
+import { Alert, Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../src/pages/form";
@@ -46,6 +46,12 @@ export default function Step3(props: CommonFormProps) {
         <Radio value={true}>Ja</Radio>
         <Radio value={false}>Nei</Radio>
       </RadioGroup>
+      {
+        questionProceed == false &&
+          <Alert variant="warning">
+              Hvis du svarer Nei, skal du ikke få penger fra NAV
+          </Alert>
+      }
 
       <Spacer />
 
