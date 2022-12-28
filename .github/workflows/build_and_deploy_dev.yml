@@ -24,9 +24,29 @@ env:
   MAIN_BRANCH: refs/heads/master
 
 jobs:
-  test:
-    name: Build and deploy
+  calculateVersion:
+    name: Calculate version
     runs-on: ubuntu-latest
+    outputs:
+      releaseVersion: ${{ steps.releaseVersion.outputs.version }}
+    steps:
+      # Version blir eksisterende versjon fra package.json uten -SNAPSHOT
+      # For release:  eks 1.0.1
+      # For snapshot: eks 1.0.1-20220104111118
+      - name: Calculate release version
+        uses: slime-hatena/semantic-versioning-calculator-action@main
+        id: releaseVersion
+        with:
+          version: ${{ steps.packageVersion.outputs.current-version }}
+          increment_major: 'false'
+          increment_minor: 'false'
+          increment_patch: 'false'
+          prerelease: ${{ steps.snapshotTimestamp.outputs.timestamp }}
+
+  buildAndtest:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    needs: [ calculateVersion ]
     steps:
       - name: Check if correct branch
         if: github.event.inputs.bump_patch == 'bump' && github.ref != env.MAIN_BRANCH
@@ -57,27 +77,9 @@ jobs:
         run: |
           echo "timestamp=$(date +'%Y%m%d%H%M%S')" >>$GITHUB_OUTPUT
 
-      # Version blir eksisterende versjon fra package.json uten -SNAPSHOT
-      # For release:  eks 1.0.1
-      # For snapshot: eks 1.0.1-20220104111118
-      - name: Calculate release version
-        uses: slime-hatena/semantic-versioning-calculator-action@main
-        id: releaseVersion
-        with:
-          version: ${{ steps.packageVersion.outputs.current-version }}
-          increment_major: 'false'
-          increment_minor: 'false'
-          increment_patch: 'false'
-          prerelease: ${{ steps.snapshotTimestamp.outputs.timestamp }}
-
-      - name: Set vars
-        id: setVars
-        run: |
-          echo "image=ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ steps.releaseVersion.outputs.version }}" >>$GITHUB_OUTPUT
-
       - name: Set release version in package.json
         run: |
-          jq '.version="${{ steps.releaseVersion.outputs.version }}"' package.json > package.json.new
+          jq '.version="${{ needs.calculateVersion.outputs.releaseVersion }}"' package.json > package.json.new
           mv package.json.new package.json
 
       - name: Install npm packages
@@ -91,10 +93,16 @@ jobs:
       - name: Test application
         run: npm run test
 
-  build:
-    name: Build and deploy
+  createDockerImage:
+    name: Create Docker image
     runs-on: ubuntu-latest
+    needs: [ calculateVersion ]
     steps:
+      - name: Set vars
+        id: setVars
+        run: |
+          echo "image=ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ needs.calculateVersion.outputs.releaseVersion }}" >>$GITHUB_OUTPUT
+
       - name: Build Docker image
         run: |
           echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
@@ -117,9 +125,9 @@ jobs:
           docker push ${{ steps.setVars.outputs.image }}
 
   deploy:
-    name: Build and deploy
+    name: Deploy
     runs-on: ubuntu-latest
-    needs: [test, build]
+    needs: [ calculateVersion, buildAndtest, createDockerImage ]
     steps:
       - name: Deploy to dev
         if: env.ENVIRONMENT == 'q1' || env.ENVIRONMENT == 'q2' || (github.event_name == 'push' && github.ref == env.MAIN_BRANCH)
@@ -138,14 +146,14 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           path: .nais
-          filename: '${{ env.REPONAME }}-${{ steps.releaseVersion.outputs.version }}.zip'
+          filename: '${{ env.REPONAME }}-${{ needs.calculateVersion.outputs.releaseVersion }}.zip'
 
       - name: Create release
         if: github.event.inputs.bump_patch == 'bump' && github.ref == env.MAIN_BRANCH
         uses: ncipollo/release-action@v1
         with:
-          tag: 'v${{ steps.releaseVersion.outputs.version }}'
-          artifacts: '${{ env.REPONAME }}-${{ steps.releaseVersion.outputs.version }}.zip'
+          tag: 'v${{ needs.calculateVersion.outputs.releaseVersion }}'
+          artifacts: '${{ env.REPONAME }}-${{ needs.calculateVersion.outputs.releaseVersion }}.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # Next version blir eksisterende versjon + 0.0.1, med postfix -SNAPSHOT
@@ -164,7 +172,7 @@ jobs:
       - name: Set next version in package.json
         if: github.event.inputs.bump_patch == 'bump' && github.ref == env.MAIN_BRANCH
         run: |
-          jq '.version="${{ steps.nextReleaseVersion.outputs.version }}"' package.json > package.json.new
+          jq '.version="${{ needs.calculateVersion.outputs.releaseVersion }}"' package.json > package.json.new
           mv package.json.new package.json
 
       - name: Commit bumped version
@@ -173,7 +181,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -m "Bump version fra Github Actions" -a
-          git tag -a ${{ env.REPONAME }}-${{ steps.nextReleaseVersion.outputs.version }} -m ${{ env.REPONAME }}-${{ steps.nextReleaseVersion.outputs.version }}
+          git tag -a ${{ env.REPONAME }}-${{ needs.calculateVersion.outputs.releaseVersion }} -m ${{ env.REPONAME }}-${{ needs.calculateVersion.outputs.releaseVersion }}
 
       - name: Push changes
         if: github.event.inputs.bump_patch == 'bump' && github.ref == env.MAIN_BRANCH
