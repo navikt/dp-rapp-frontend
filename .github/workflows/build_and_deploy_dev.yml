@@ -107,6 +107,9 @@ jobs:
         run: |
           echo "image=ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ needs.calculateVersion.outputs.releaseVersion }}" >>$GITHUB_OUTPUT
 
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Build Docker image
         run: |
           echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
