@@ -24,7 +24,7 @@ env:
   MAIN_BRANCH: refs/heads/master
 
 jobs:
-  build:
+  test:
     name: Build and deploy
     runs-on: ubuntu-latest
     steps:
@@ -91,6 +91,10 @@ jobs:
       - name: Test application
         run: npm run test
 
+  build:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Build Docker image
         run: |
           echo //npm.pkg.github.com/:_authToken=${{ secrets.READER_TOKEN }} >> .npmrc
@@ -112,6 +116,11 @@ jobs:
         run: |
           docker push ${{ steps.setVars.outputs.image }}
 
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    needs: [test, build]
+    steps:
       - name: Deploy to dev
         if: env.ENVIRONMENT == 'q1' || env.ENVIRONMENT == 'q2' || (github.event_name == 'push' && github.ref == env.MAIN_BRANCH)
         uses: nais/deploy/actions/deploy@v1
