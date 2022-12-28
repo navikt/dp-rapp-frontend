@@ -28,8 +28,13 @@ jobs:
     name: Calculate version
     runs-on: ubuntu-latest
     outputs:
+      currentVersion: ${{ steps.packageVersion.outputs.current-version }}
       releaseVersion: ${{ steps.releaseVersion.outputs.version }}
     steps:
+      - name: Read version from package.json
+        id: packageVersion
+        uses: martinbeentjes/npm-get-version-action@master
+
       # Version blir eksisterende versjon fra package.json uten -SNAPSHOT
       # For release:  eks 1.0.1
       # For snapshot: eks 1.0.1-20220104111118
@@ -66,10 +71,6 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://npm.pkg.github.com'
-
-      - name: Read version from package.json
-        id: packageVersion
-        uses: martinbeentjes/npm-get-version-action@master
 
       - name: Set snapshot timestamp
         id: snapshotTimestamp
@@ -162,7 +163,7 @@ jobs:
         uses: slime-hatena/semantic-versioning-calculator-action@main
         id: nextReleaseVersion
         with:
-          version: ${{ steps.packageVersion.outputs.current-version }}
+          version: ${{ needs.calculateVersion.outputs.currentVersion }}
           increment_major: 'false'
           increment_minor: 'false'
           increment_patch: 'true'
