@@ -31,6 +31,9 @@ jobs:
       currentVersion: ${{ steps.packageVersion.outputs.current-version }}
       releaseVersion: ${{ steps.releaseVersion.outputs.version }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Read version from package.json
         id: packageVersion
         uses: martinbeentjes/npm-get-version-action@master
