@@ -3,17 +3,29 @@ import {
   Components as DecoratorComponents,
   Env,
   fetchDecoratorReact,
-  Props as DecoratorProps,
+  Locale,
+  Props as DecoratorProps
 } from "@navikt/nav-dekoratoren-moduler/ssr";
-
-const dekoratorProps: DecoratorProps = {
-  env: process.env.NAV_DEKORATOREN_ENV as Env,
-  chatbotVisible: true,
-};
 
 export default class MyDocument extends Document<DecoratorComponents> {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
+
+    const dekoratorProps: DecoratorProps = {
+      env: process.env.NAV_DEKORATOREN_ENV as Env,
+      chatbotVisible: true,
+      availableLanguages: [
+        {
+          locale: "nb",
+          url: "/"
+        },
+        {
+          locale: "en",
+          url: "/en"
+        }
+      ],
+      language: (ctx.locale || "nb") as Locale
+    };
 
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps,

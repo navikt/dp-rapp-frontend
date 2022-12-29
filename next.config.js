@@ -4,8 +4,8 @@ const nextConfig = {
   swcMinify: true,
   output: 'standalone',
   i18n: {
-    locales: ['no', 'en'],
-    defaultLocale: 'no',
+    locales: ['nb', 'en'],
+    defaultLocale: 'nb',
     localeDetection: false
   },
 };

@@ -8,12 +8,12 @@ export type TextsType = {
 }
 
 export type LocalesType = {
-  no: TextsType;
+  nb: TextsType;
   en: TextsType;
 }
 
 const allTexts: LocalesType = {
-  "no": {
+  "nb": {
     "menuSend": "Send",
     "menuHistory": "Tidligere meldekort",
     "menuAbout": "Om meldekort",

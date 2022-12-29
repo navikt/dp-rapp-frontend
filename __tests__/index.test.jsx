@@ -8,7 +8,7 @@ jest.mock('next/router', () => require('next-router-mock'));
 describe("Home", () => {
 
   beforeEach(() => {
-    mockRouter.locale = "no"
+    mockRouter.locale = "nb"
   });
 
   it("renders a heading", () => {
