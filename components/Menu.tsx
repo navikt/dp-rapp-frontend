@@ -3,7 +3,7 @@ import { Panel } from "@navikt/ds-react";
 import { Helptext, Historic, Information, Send } from "@navikt/ds-icons";
 import StyledLink from "./StyledLink";
 
-export default function CancelButton() {
+export default function Menu() {
 
   return (
     <Panel className={styles.menu}>

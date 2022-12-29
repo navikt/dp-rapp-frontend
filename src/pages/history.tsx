@@ -1,7 +1,7 @@
 import { Table } from "@navikt/ds-react";
-import { format, getISOWeek } from "date-fns";
-import Spacer from "../../components/Spacer";
 import Menu from "../../components/Menu";
+import Spacer from "../../components/Spacer";
+import { format, getISOWeek } from "date-fns";
 
 export default function Page() {
 
