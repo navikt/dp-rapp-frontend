@@ -30,6 +30,7 @@ jobs:
     outputs:
       currentVersion: ${{ steps.packageVersion.outputs.current-version }}
       releaseVersion: ${{ steps.releaseVersion.outputs.version }}
+      imageName: ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ steps.releaseVersion.outputs.version }}
     steps:
       - name: Check if correct branch
         if: github.event.inputs.bump_patch == 'bump' && github.ref != env.MAIN_BRANCH
@@ -102,11 +103,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ calculateVersion ]
     steps:
-      - name: Set vars
-        id: setVars
-        run: |
-          echo "image=ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ needs.calculateVersion.outputs.releaseVersion }}" >>$GITHUB_OUTPUT
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -118,7 +114,7 @@ jobs:
           else
             echo NAV_DEKORATOREN_ENV=dev >> .env.production
           fi
-          docker build -t ${{ steps.setVars.outputs.image }} .
+          docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
@@ -129,7 +125,7 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ steps.setVars.outputs.image }}
+          docker push ${{ needs.calculateVersion.outputs.imageName }}
 
   deploy:
     name: Deploy
@@ -147,7 +143,7 @@ jobs:
           PRINT_PAYLOAD: true
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: ${{ env.NAIS_FILE }}
-          VAR: image=${{ steps.setVars.outputs.image }},appName=${{ env.APPNAME }}
+          VAR: image=${{ needs.calculateVersion.outputs.imageName }},appName=${{ env.APPNAME }}
           VARS: .nais/vars-${{ env.ENVIRONMENT }}.yaml
           WAIT: false
 
