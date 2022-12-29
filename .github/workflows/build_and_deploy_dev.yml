@@ -31,6 +31,12 @@ jobs:
       currentVersion: ${{ steps.packageVersion.outputs.current-version }}
       releaseVersion: ${{ steps.releaseVersion.outputs.version }}
     steps:
+      - name: Check if correct branch
+        if: github.event.inputs.bump_patch == 'bump' && github.ref != env.MAIN_BRANCH
+        run: |
+          echo "Release skal kun bygges fra ${{ env.MAIN_BRANCH }} branch!"
+          exit 1
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -56,12 +62,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ calculateVersion ]
     steps:
-      - name: Check if correct branch
-        if: github.event.inputs.bump_patch == 'bump' && github.ref != env.MAIN_BRANCH
-        run: |
-          echo "Release skal kun bygges fra ${{ env.MAIN_BRANCH }} branch!"
-          exit 1
-
       - name: Set default environment for push
         if: github.event_name == 'push' && github.ref == env.MAIN_BRANCH
         run: echo "ENVIRONMENT=q2" >> $GITHUB_ENV
