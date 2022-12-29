@@ -7,8 +7,11 @@ body {
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--a-text-action);
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--a-spacing-1);
 }
 
 * {
