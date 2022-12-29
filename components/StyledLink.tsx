@@ -1,10 +1,10 @@
 import styles from "./StyledLink.module.css";
-import { useRouter } from "next/router";
-import { Link } from "@navikt/ds-react";
 import React from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export type StyledLinkProps = {
-  href?: string;
+  href: string;
   children?: React.ReactNode;
 }
 
