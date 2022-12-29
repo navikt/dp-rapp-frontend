@@ -1,23 +1,18 @@
 import { Table } from "@navikt/ds-react";
-import Menu from "../../components/Menu";
-import Spacer from "../../components/Spacer";
-import NavPanel from "../../components/NavPanel";
 import { format, getISOWeek } from "date-fns";
+import Spacer from "../../components/Spacer";
+import Menu from "../../components/Menu";
 
 export default function Page() {
 
   const data = [
     {
-      startDate: new Date(2022, 10, 21, 12, 0),
-      endDate: new Date(2022, 11, 4, 12, 0),
+      startDate: new Date(2022, 9, 24, 12, 0),
+      endDate: new Date(2022, 10, 6, 12, 0),
     },
     {
-      startDate: new Date(2022, 11, 5, 12, 0),
-      endDate: new Date(2022, 11, 18, 12, 0),
-    },
-    {
-      startDate: new Date(2022, 11, 19, 12, 0),
-      endDate: new Date(2023, 0, 1, 12, 0),
+      startDate: new Date(2022, 10, 7, 12, 0),
+      endDate: new Date(2022, 10, 20, 12, 0),
     }
   ];
 
@@ -25,8 +20,7 @@ export default function Page() {
     <main>
       <Menu />
 
-      <h1>Ny løsning</h1>
-      <p>Du kan sende inn meldekort for følgende perioder:</p>
+      <h1>Tidligere meldekort</h1>
 
       <Table zebraStripes>
         <Table.Header>
@@ -52,8 +46,6 @@ export default function Page() {
       </Table>
 
       <Spacer />
-
-      <NavPanel nextHref="/form" nextText="Begynn utfylling" />
     </main>
   );
 }

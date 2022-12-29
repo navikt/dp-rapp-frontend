@@ -7,7 +7,7 @@ import Step3 from "../../components/Step3";
 import Step4 from "../../components/Step4";
 import Receipt from "../../components/Receipt";
 import CancelButton from "../../components/CancelButton";
-import { format } from "date-fns";
+import { format, getISOWeek } from "date-fns";
 import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
 
 export type CommonFormProps = {
@@ -160,7 +160,7 @@ export default function Page() {
   return (
     <main>
       <Heading level="1" size="xlarge">Dagpenger rapportering</Heading>
-      <Heading level="2" size="medium">Uke 49 - 50 ({startDateStr} - {endDateStr})</Heading>
+      <Heading level="2" size="medium">Uke {getISOWeek(startDate)} - {getISOWeek(endDate)} ({startDateStr} - {endDateStr})</Heading>
 
       <Divider />
 
