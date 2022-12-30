@@ -3,13 +3,11 @@ import Menu from "../../components/Menu";
 import Spacer from "../../components/Spacer";
 import NavPanel from "../../components/NavPanel";
 import { format, getISOWeek } from "date-fns";
-import { useRouter } from "next/router";
-import allTexts, { LocalesType } from "../allTexts";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
 
-  const router = useRouter();
-  const texts = allTexts[(router.locale || router.defaultLocale) as keyof LocalesType];
+  const { t } = useTranslation();
 
   const data = [
     {
@@ -30,7 +28,7 @@ export default function Page() {
     <main>
       <Menu />
 
-      <h1>{texts.title}</h1>
+      <h1>{t('title')}</h1>
       <p>Du kan sende inn meldekort for følgende perioder:</p>
 
       <Table zebraStripes>

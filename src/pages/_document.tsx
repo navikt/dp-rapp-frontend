@@ -3,7 +3,6 @@ import {
   Components as DecoratorComponents,
   Env,
   fetchDecoratorReact,
-  Locale,
   Props as DecoratorProps
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 
@@ -17,14 +16,14 @@ export default class MyDocument extends Document<DecoratorComponents> {
       availableLanguages: [
         {
           locale: "nb",
-          url: "/"
+          handleInApp: true
         },
         {
           locale: "en",
-          url: "/en"
+          handleInApp: true
         }
       ],
-      language: (ctx.locale || "nb") as Locale
+      language: "nb"
     };
 
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({

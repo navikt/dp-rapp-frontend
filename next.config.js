@@ -2,12 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone',
-  i18n: {
-    locales: ['nb', 'en'],
-    defaultLocale: 'nb',
-    localeDetection: false
-  },
+  output: 'standalone'
 };
 
 module.exports = nextConfig;

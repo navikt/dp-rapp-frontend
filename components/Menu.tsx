@@ -2,31 +2,29 @@ import styles from "./Menu.module.css";
 import { Panel } from "@navikt/ds-react";
 import { Helptext, Historic, Information, Send } from "@navikt/ds-icons";
 import StyledLink from "./StyledLink";
-import { useRouter } from "next/router";
-import allTexts, { LocalesType } from "../src/allTexts";
+import { useTranslation } from "react-i18next";
 
 export default function Menu() {
 
-  const router = useRouter();
-  const texts = allTexts[(router.locale || router.defaultLocale) as keyof LocalesType];
+  const { t } = useTranslation();
 
   return (
     <Panel className={styles.menu}>
       <StyledLink href="/">
         <Send aria-hidden />
-        {texts.menuSend}
+        {t("menuSend")}
       </StyledLink>
       <StyledLink href="/history">
         <Historic aria-hidden />
-        {texts.menuHistory}
+        {t("menuHistory")}
       </StyledLink>
       <StyledLink href="/about">
         <Information aria-hidden />
-        {texts.menuAbout}
+        {t("menuAbout")}
       </StyledLink>
       <StyledLink href="/faq">
         <Helptext aria-hidden />
-        {texts.menuFaq}
+        {t("menuFaq")}
       </StyledLink>
     </Panel>
   );
