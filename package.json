@@ -15,6 +15,7 @@
     "@navikt/ds-react": "^2.0.6",
     "@navikt/nav-dekoratoren-moduler": "^1.8.1",
     "date-fns": "^2.29.3",
+    "i18next": "^22.4.6",
     "next": "13.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",

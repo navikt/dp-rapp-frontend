@@ -2,8 +2,11 @@ import { Table } from "@navikt/ds-react";
 import Menu from "../../components/Menu";
 import Spacer from "../../components/Spacer";
 import { format, getISOWeek } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+
+  const { t } = useTranslation();
 
   const data = [
     {
@@ -20,13 +23,13 @@ export default function Page() {
     <main>
       <Menu />
 
-      <h1>Tidligere meldekort</h1>
+      <h1>{t('historyTitle')}</h1>
 
       <Table zebraStripes>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
+            <Table.HeaderCell scope="col">{t('period')}</Table.HeaderCell>
+            <Table.HeaderCell scope="col">{t('date')}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -34,7 +37,7 @@ export default function Page() {
             return (
               <Table.Row key={startDate.getTime()}>
                 <Table.HeaderCell scope="row">
-                  Uke {getISOWeek(startDate)} - {getISOWeek(endDate)}
+                  {t('week')} {getISOWeek(startDate)} - {getISOWeek(endDate)}
                 </Table.HeaderCell>
                 <Table.DataCell>
                   {format(startDate, "dd.MM.yyyy")} - {format(endDate, "dd.MM.yyyy")}

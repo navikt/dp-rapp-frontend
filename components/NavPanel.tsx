@@ -6,7 +6,7 @@ export type NavPanelProps = {
   backHref?: string;
   backText?: string;
   nextHref?: string
-  nextText?: string
+  nextText?: string | null
 }
 
 export default function NavPanel(props: NavPanelProps) {

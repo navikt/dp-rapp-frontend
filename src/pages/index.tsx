@@ -28,14 +28,14 @@ export default function Page() {
     <main>
       <Menu />
 
-      <h1>{t('title')}</h1>
-      <p>Du kan sende inn meldekort for følgende perioder:</p>
+      <h1>{t('indexTitle')}</h1>
+      <p>{t('indexDescription')}</p>
 
       <Table zebraStripes>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell scope="col">Periode</Table.HeaderCell>
-            <Table.HeaderCell scope="col">Dato</Table.HeaderCell>
+            <Table.HeaderCell scope="col">{t('period')}</Table.HeaderCell>
+            <Table.HeaderCell scope="col">{t('date')}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -43,7 +43,7 @@ export default function Page() {
             return (
               <Table.Row key={startDate.getTime()}>
                 <Table.HeaderCell scope="row">
-                  Uke {getISOWeek(startDate)} - {getISOWeek(endDate)}
+                  {t('week')} {getISOWeek(startDate)} - {getISOWeek(endDate)}
                 </Table.HeaderCell>
                 <Table.DataCell>
                   {format(startDate, "dd.MM.yyyy")} - {format(endDate, "dd.MM.yyyy")}
@@ -56,7 +56,7 @@ export default function Page() {
 
       <Spacer />
 
-      <NavPanel nextHref="/form" nextText="Begynn utfylling" />
+      <NavPanel nextHref="/form" nextText={t('startFillingOut')} />
     </main>
   );
 }

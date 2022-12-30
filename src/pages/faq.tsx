@@ -1,14 +1,17 @@
 import { Accordion } from "@navikt/ds-react";
 import Menu from "../../components/Menu";
 import Spacer from "../../components/Spacer";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+
+  const { t } = useTranslation();
 
   return (
     <main>
       <Menu />
 
-      <h1>Ofte stilte spørsmål</h1>
+      <h1>{t('faqTitle')}</h1>
 
       <Accordion>
         <Accordion.Item>
