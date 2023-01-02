@@ -3,22 +3,21 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "reac
 import { Button, Heading, Modal, Panel, TextField } from "@navikt/ds-react";
 import { addDays, format } from "date-fns";
 import Spacer from "./Spacer";
+import { ActivityType, SavedDates } from "../models/Data";
 
 export type ActivitySelectorProps = {
   startDate: Date;
   endDate: Date;
-  savedDates: {
-    [key: number]: { type: string, hours: number };
-  };
-  setSavedDates: Dispatch<SetStateAction<{ [p: number]: { type: string, hours: number } }>>;
+  savedDates: SavedDates;
+  setSavedDates: Dispatch<SetStateAction<{ [p: number]: { type: ActivityType | null, hours: number | null } }>>;
 }
 
 export default function ActivitySelector(props: ActivitySelectorProps) {
 
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedType, setSelectedType] = useState<string>('');
-  const [selectedHours, setSelectedHours] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<ActivityType | null>(null);
+  const [selectedHours, setSelectedHours] = useState<number | null>(null);
   const { startDate, savedDates, setSavedDates } = props;
 
   useEffect(() => {
@@ -26,19 +25,19 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   }, []);
 
   const dateSelected = (date: Date) => {
-    setSelectedType(savedDates[date.getTime()]?.type || '');
-    setSelectedHours(savedDates[date.getTime()]?.hours.toString());
+    setSelectedType(savedDates[date.getTime()]?.type);
+    setSelectedHours(savedDates[date.getTime()]?.hours);
     setSelectedDate(date);
     setOpen(true);
   }
 
-  const dateTypeSelected = (type: string) => {
+  const dateTypeSelected = (type: ActivityType | null) => {
     setSelectedType(type);
-    setSelectedHours("0");
+    setSelectedHours(0);
   }
 
   const updateHours = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedHours(event.target.value);
+    setSelectedHours(Number.parseFloat(event.target.value));
   }
 
   const saveDate = () => {
@@ -46,8 +45,8 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
       return;
     }
 
-    const hoursNUmber = Number(selectedHours);
-    if (isNaN(+hoursNUmber) || hoursNUmber < 0 || hoursNUmber > 24) {
+    const hoursNumber = Number(selectedHours);
+    if (isNaN(+hoursNumber) || hoursNumber < 0 || hoursNumber > 24) {
       return;
     }
 
@@ -56,7 +55,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
 
     // Delete object if its type is empty
     // Else save
-    if (selectedType == '') {
+    if (selectedType == null) {
       const state = { ...savedDates };
       delete state[key];
       setSavedDates(state);
@@ -65,7 +64,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
         ...savedDates,
         [key]: {
           type: selectedType,
-          hours: hoursNUmber
+          hours: hoursNumber
         }
       });
     }
@@ -81,13 +80,13 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
     const currentData = savedDates[currentDate.getTime()];
 
     let addClass = styles.none;
-    if (currentData?.type == 'work') addClass = styles.work;
-    else if (currentData?.type == 'illness') addClass = styles.illness;
-    else if (currentData?.type == 'measures') addClass = styles.measures;
-    else if (currentData?.type == 'vacation') addClass = styles.vacation;
+    if (currentData?.type == ActivityType.WORK) addClass = styles.work;
+    else if (currentData?.type == ActivityType.ILLNESS) addClass = styles.illness;
+    else if (currentData?.type == ActivityType.MEASURES) addClass = styles.measures;
+    else if (currentData?.type == ActivityType.VACATION) addClass = styles.vacation;
 
     let hours = <></>;
-    if (currentData?.type == 'work') {
+    if (currentData?.type == ActivityType.WORK) {
       hours = <div className={styles.workHours}>{currentData.hours}t</div>;
     }
 
@@ -118,10 +117,10 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
   for (const key in savedDates) {
     const currentData = savedDates[key];
 
-    if (currentData.type == 'work') workHours += currentData.hours;
-    else if (currentData.type == 'illness') illnessDays += 1;
-    else if (currentData.type == 'measures') measuresDays += 1;
-    else if (currentData.type == 'vacation') vacationDays += 1;
+    if (currentData.type == ActivityType.WORK) workHours += (currentData.hours || 0);
+    else if (currentData.type == ActivityType.ILLNESS) illnessDays += 1;
+    else if (currentData.type == ActivityType.MEASURES) measuresDays += 1;
+    else if (currentData.type == ActivityType.VACATION) vacationDays += 1;
   }
 
   let summaryWork = <></>
@@ -201,42 +200,42 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
             <div>
               <button
                 type="button"
-                className={styles.activityTypeButton + ' ' + styles.work + ' ' + ((selectedType == 'work') ? styles.selected : '')}
-                onClick={() => dateTypeSelected('work')}>
+                className={styles.activityTypeButton + ' ' + styles.work + ' ' + ((selectedType == ActivityType.WORK) ? styles.selected : '')}
+                onClick={() => dateTypeSelected(ActivityType.WORK)}>
                 Arbeid
               </button>
               {
-                (selectedType == 'work') ? hoursInput : ''
+                (selectedType == ActivityType.WORK) ? hoursInput : ''
               }
             </div>
             <div>
               <button
                 type="button"
-                className={styles.activityTypeButton + ' ' + styles.illness + ' ' + ((selectedType == 'illness') ? styles.selected : '')}
-                onClick={() => dateTypeSelected('illness')}>
+                className={styles.activityTypeButton + ' ' + styles.illness + ' ' + ((selectedType == ActivityType.ILLNESS) ? styles.selected : '')}
+                onClick={() => dateTypeSelected(ActivityType.ILLNESS)}>
                 Syk
               </button>
             </div>
             <div>
               <button
                 type="button"
-                className={styles.activityTypeButton + ' ' + styles.measures + ' ' + ((selectedType == 'measures') ? styles.selected : '')}
-                onClick={() => dateTypeSelected('measures')}>
+                className={styles.activityTypeButton + ' ' + styles.measures + ' ' + ((selectedType == ActivityType.MEASURES) ? styles.selected : '')}
+                onClick={() => dateTypeSelected(ActivityType.MEASURES)}>
                 Tiltak
               </button>
             </div>
             <div>
               <button
-                className={styles.activityTypeButton + ' ' + styles.vacation + ' ' + ((selectedType == 'vacation') ? styles.selected : '')}
-                onClick={() => dateTypeSelected('vacation')}>
+                className={styles.activityTypeButton + ' ' + styles.vacation + ' ' + ((selectedType == ActivityType.VACATION) ? styles.selected : '')}
+                onClick={() => dateTypeSelected(ActivityType.VACATION)}>
                 Fravær/ferie
               </button>
             </div>
             <div>
               <button
                 type="button"
-                className={styles.activityTypeButton + ' ' + styles.none + ' ' + ((selectedType == '') ? styles.selected : '')}
-                onClick={() => dateTypeSelected('')}>
+                className={styles.activityTypeButton + ' ' + styles.none + ' ' + ((selectedType == null) ? styles.selected : '')}
+                onClick={() => dateTypeSelected(null)}>
                 Ingenting
               </button>
             </div>

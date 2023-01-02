@@ -9,6 +9,12 @@ import Receipt from "../../components/Receipt";
 import CancelButton from "../../components/CancelButton";
 import { format, getISOWeek } from "date-fns";
 import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
+import { ActivityType, Data, Day, LoadedData, SavedDates } from "../../models/Data";
+
+type InitialState = {
+  currentId: string;
+  loadedData: LoadedData;
+}
 
 export type CommonFormProps = {
   startDate: Date;
@@ -21,10 +27,8 @@ export type CommonFormProps = {
   setQuestionIllness: Dispatch<SetStateAction<boolean | null>>;
   questionVacation: boolean | null;
   setQuestionVacation: Dispatch<SetStateAction<boolean | null>>;
-  savedDates: {
-    [key: number]: { type: string, hours: number };
-  };
-  setSavedDates: Dispatch<SetStateAction<{ [p: number]: { type: string, hours: number } }>>;
+  savedDates: SavedDates;
+  setSavedDates: Dispatch<SetStateAction<SavedDates>>;
   questionProceed: boolean | null;
   setQuestionProceed: Dispatch<SetStateAction<boolean | null>>;
   questionConsent: boolean;
@@ -36,8 +40,61 @@ export type CommonFormProps = {
   error: string;
 }
 
-export default function Page() {
+export async function getServerSideProps() {
+  // TODO: Get ID from the earliest meldekort and set it as currentId
+  const currentId = "5";
 
+  // Default values for initial state
+  let loadedData: LoadedData = {
+    id: currentId,
+    questionWork: null,
+    questionMeasures: null,
+    questionIllness: null,
+    questionVacation: null,
+    days: [],
+    questionProceed: null
+  }
+
+  const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/get/' + currentId);
+  if (response.ok) {
+    loadedData = await response.json();
+  }
+
+  return {
+    props: {
+      currentId,
+      loadedData
+    },
+  };
+}
+
+export default function Page(props: InitialState) {
+
+  // Service variables
+  const maxStep = 4;
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [showReceipt, setShowReceipt] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
+  const { currentId, loadedData } = props;
+
+  // Use loaded data as initial state
+  const loadedSavedDates: SavedDates = {}
+  loadedData?.days.forEach((day) => {
+    // @ts-ignore
+    loadedSavedDates[Date.parse(day.date + " 12:00:00")] = { type: ActivityType[day.type], hours: day.hours }
+  });
+
+  const [questionWork, setQuestionWork] = useState<boolean | null>(loadedData.questionWork);
+  const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(loadedData.questionMeasures);
+  const [questionIllness, setQuestionIllness] = useState<boolean | null>(loadedData.questionIllness);
+  const [questionVacation, setQuestionVacation] = useState<boolean | null>(loadedData.questionVacation);
+  const [savedDates, setSavedDates] = useState<SavedDates>(loadedSavedDates);
+  const [questionProceed, setQuestionProceed] = useState<boolean | null>(loadedData.questionProceed);
+  const [questionConsent, setQuestionConsent] = useState<boolean>(false); // Always false initially, user must check it every time
+
+  // TODO: Get dates from the earliest meldekort and use these dates
   // JavaScript Dates are internally in UTC
   // We have to add time (12:00) so as the date itself is not changed when converted from/to CET
   const startDate = new Date(2022, 11, 5, 12, 0);
@@ -45,20 +102,6 @@ export default function Page() {
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
-
-  const maxStep = 4;
-
-  const [currentStep, setCurrentStep] = useState<number>(1);
-  const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [showReceipt, setShowReceipt] = useState<boolean>(false);
-  const [questionWork, setQuestionWork] = useState<boolean | null>(null);
-  const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(null);
-  const [questionIllness, setQuestionIllness] = useState<boolean | null>(null);
-  const [questionVacation, setQuestionVacation] = useState<boolean | null>(null);
-  const [savedDates, setSavedDates] = useState<{ [key: number]: { type: string, hours: number } }>({});
-  const [questionProceed, setQuestionProceed] = useState<boolean | null>(null);
-  const [questionConsent, setQuestionConsent] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
 
   const prevStep = () => {
     if (currentStep > 1) {
@@ -80,7 +123,7 @@ export default function Page() {
     setShowLoader(true);
 
     // Prepare dates
-    const days = [];
+    const days: Day[] = [];
     for (const key in savedDates) {
       days.push({
         date: new Date(+key),
@@ -90,7 +133,8 @@ export default function Page() {
     }
 
     // Collect data in one object
-    const data = {
+    const data: Data = {
+      id: currentId,
       questionWork,
       questionMeasures,
       questionIllness,
