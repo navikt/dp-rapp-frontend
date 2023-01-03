@@ -7,9 +7,10 @@ import Step3 from "../../components/Step3";
 import Step4 from "../../components/Step4";
 import Receipt from "../../components/Receipt";
 import CancelButton from "../../components/CancelButton";
-import { format, getISOWeek } from "date-fns";
+import { format, getISOWeek, parseISO } from "date-fns";
 import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
-import { ActivityType, Data, Day, LoadedData, SavedDates } from "../../models/Data";
+import { ActivityType, Data, Day, SavedDates } from "../../models/Data";
+import { LoadedData } from "../../models/LoadedData";
 
 type InitialState = {
   currentId: string;
@@ -55,11 +56,18 @@ export async function getServerSideProps() {
     questionProceed: null
   }
 
-  const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/get/' + currentId);
-  if (response.ok) {
-    loadedData = await response.json();
+  // Get saved values
+  try {
+    const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/get/' + currentId);
+    if (response.ok) {
+      loadedData = await response.json();
+    }
+  } catch (e) {
+    console.warn("Kunne ikke hente lagrede verdier", e);
   }
 
+
+  // Data comes to page as props
   return {
     props: {
       currentId,
@@ -77,15 +85,17 @@ export default function Page(props: InitialState) {
   const [showReceipt, setShowReceipt] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
+  // Pre-fetched data (initial state) comes to the page as props
   const { currentId, loadedData } = props;
 
-  // Use loaded data as initial state
+  // Convert loaded days to SavedDates
   const loadedSavedDates: SavedDates = {}
   loadedData?.days.forEach((day) => {
     // @ts-ignore
-    loadedSavedDates[Date.parse(day.date + " 12:00:00")] = { type: ActivityType[day.type], hours: day.hours }
+    loadedSavedDates[parseISO(day.date + "T12:00:00").getTime()] = { type: ActivityType[day.type], hours: day.hours }
   });
 
+  // Use loaded data as initial state for variables
   const [questionWork, setQuestionWork] = useState<boolean | null>(loadedData.questionWork);
   const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(loadedData.questionMeasures);
   const [questionIllness, setQuestionIllness] = useState<boolean | null>(loadedData.questionIllness);
@@ -109,13 +119,39 @@ export default function Page(props: InitialState) {
     }
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (currentStep < maxStep) {
+      await save();
       setCurrentStep(currentStep + 1);
     }
   };
 
+  const save = async () => {
+    const response = await postData('/api/save');
+
+    if (!response.ok) {
+      setError('Feil i vårt baksystem. Kunne ikke lagre data');
+    }
+
+    // Hide loader
+    setShowLoader(false);
+  }
+
   const send = async () => {
+    const response = await postData('/api/send');
+
+    if (response.ok) {
+      setCurrentStep(currentStep + 1);
+      setShowReceipt(true);
+    } else {
+      setError('Feil i vårt baksystem. Prøv senere');
+    }
+
+    // Hide loader
+    setShowLoader(false);
+  }
+
+  const postData = async (endpoint: string) => {
     // Reset error
     setError('');
 
@@ -146,9 +182,6 @@ export default function Page(props: InitialState) {
     // Send the data to the server in JSON format.
     const JSONdata = JSON.stringify(data);
 
-    // API endpoint where we send form data.
-    const endpoint = '/api/save';
-
     // Form the request for sending data to the server.
     const options = {
       // The method is POST because we are sending data.
@@ -162,19 +195,7 @@ export default function Page(props: InitialState) {
     };
 
     // Send the form data to our forms API on Vercel and get a response.
-    const response = await fetch(endpoint, options);
-
-    if (response.ok) {
-      // Get the response data from server as JSON.
-      // const result = await response.json();
-      setCurrentStep(currentStep + 1);
-      setShowReceipt(true);
-    } else {
-      setError('Feil i vårt baksystem. Prøv senere');
-    }
-
-    // Hide loader
-    setShowLoader(false);
+    return await fetch(endpoint, options);
   }
 
   const commonFormProps: CommonFormProps = {
@@ -204,7 +225,8 @@ export default function Page(props: InitialState) {
   return (
     <main>
       <Heading level="1" size="xlarge">Dagpenger rapportering</Heading>
-      <Heading level="2" size="medium">Uke {getISOWeek(startDate)} - {getISOWeek(endDate)} ({startDateStr} - {endDateStr})</Heading>
+      <Heading level="2"
+               size="medium">Uke {getISOWeek(startDate)} - {getISOWeek(endDate)} ({startDateStr} - {endDateStr})</Heading>
 
       <Divider />
 

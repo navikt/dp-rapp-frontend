@@ -9,7 +9,7 @@ export type ActivitySelectorProps = {
   startDate: Date;
   endDate: Date;
   savedDates: SavedDates;
-  setSavedDates: Dispatch<SetStateAction<{ [p: number]: { type: ActivityType | null, hours: number | null } }>>;
+  setSavedDates: Dispatch<SetStateAction<SavedDates>>;
 }
 
 export default function ActivitySelector(props: ActivitySelectorProps) {

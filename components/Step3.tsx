@@ -10,7 +10,8 @@ export default function Step3(props: CommonFormProps) {
     questionProceed,
     setQuestionProceed,
     prevStep,
-    nextStep
+    nextStep,
+    showLoader
   } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -58,7 +59,8 @@ export default function Step3(props: CommonFormProps) {
       <NavPanelWithButtons backText="Forrige steg"
                            backOnClick={prevStep}
                            nextText="Neste steg"
-                           nextOnClick={checkForm} />
+                           nextOnClick={checkForm}
+                           showLoader={showLoader} />
     </>
   );
 }

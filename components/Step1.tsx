@@ -15,7 +15,8 @@ export default function Step1(props: CommonFormProps) {
     setQuestionIllness,
     questionVacation,
     setQuestionVacation,
-    nextStep
+    nextStep,
+    showLoader
   } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -105,7 +106,7 @@ export default function Step1(props: CommonFormProps) {
 
       <Spacer />
 
-      <NavPanelWithButtons nextText="Neste steg" nextOnClick={checkForm} />
+      <NavPanelWithButtons nextText="Neste steg" nextOnClick={checkForm} showLoader={showLoader} />
     </>
   );
 }

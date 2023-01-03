@@ -5,6 +5,7 @@ import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../src/pages/form";
 import { FormEvent, useState } from "react";
 import { format } from "date-fns";
+import { ActivityType } from "../models/Data";
 
 export default function Step4(props: CommonFormProps) {
 
@@ -43,7 +44,7 @@ export default function Step4(props: CommonFormProps) {
   for (const key in savedDates) {
     const date = format(new Date(+key), "dd.MM.yy");
     const type = savedDates[key].type;
-    const hours = type == 'work' ? '(' + savedDates[key].hours + ' t)' : '';
+    const hours = type == ActivityType.WORK ? '(' + savedDates[key].hours + ' t)' : '';
     const str = date + ' ' + type + ' ' + hours;
 
     days.push(
@@ -96,9 +97,7 @@ export default function Step4(props: CommonFormProps) {
         <Heading spacing level="4" size="small">
           Registrerte dager
         </Heading>
-        <BodyShort>
           {days}
-        </BodyShort>
       </Panel>
       <Panel>
         <Heading spacing level="4" size="small">

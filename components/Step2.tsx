@@ -9,7 +9,7 @@ import { FormEvent, useState } from "react";
 
 export default function Step2(props: CommonFormProps) {
 
-  const { startDate, endDate, savedDates, setSavedDates, prevStep, nextStep } = props;
+  const { startDate, endDate, savedDates, setSavedDates, prevStep, nextStep, showLoader } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -45,7 +45,8 @@ export default function Step2(props: CommonFormProps) {
       <NavPanelWithButtons backText="Forrige steg"
                            backOnClick={prevStep}
                            nextText="Neste steg"
-                           nextOnClick={checkForm} />
+                           nextOnClick={checkForm}
+                           showLoader={showLoader} />
     </>
   );
 }
