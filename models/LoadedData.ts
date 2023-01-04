@@ -1,5 +1,5 @@
 export type LoadedData = {
-  id: string;
+  id: number;
   questionWork: boolean | null;
   questionMeasures: boolean | null;
   questionIllness: boolean | null;

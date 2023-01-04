@@ -13,7 +13,7 @@ import { ActivityType, Data, Day, SavedDates } from "../../models/Data";
 import { LoadedData } from "../../models/LoadedData";
 
 type InitialState = {
-  currentId: string;
+  currentId: number;
   loadedData: LoadedData;
 }
 
@@ -43,7 +43,7 @@ export type CommonFormProps = {
 
 export async function getServerSideProps() {
   // TODO: Get ID from the earliest meldekort and set it as currentId
-  const currentId = "5";
+  const currentId = 5;
 
   // Default values for initial state
   let loadedData: LoadedData = {
@@ -58,12 +58,12 @@ export async function getServerSideProps() {
 
   // Get saved values
   try {
-    const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/get/' + currentId);
+    const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/hente/' + currentId);
     if (response.ok) {
       loadedData = await response.json();
     }
   } catch (e) {
-    console.warn("Kunne ikke hente lagrede verdier", e);
+    // Couldn't find saved data, just proceed
   }
 
 

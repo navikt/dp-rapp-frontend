@@ -19,7 +19,7 @@ export default async function handler(
 
     const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
-    const url = `${dpRappApiUrl}/api/v1/save`;
+    const url = `${dpRappApiUrl}/api/v1/lagre`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
