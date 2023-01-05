@@ -1,7 +1,7 @@
 import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import NavPanelWithButtons from "./NavPanelWithButtons";
-import { CommonFormProps } from "../src/pages/form";
+import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 
 export default function Step1(props: CommonFormProps) {

@@ -2,7 +2,7 @@ import { BodyShort, ConfirmationPanel, Heading, Panel } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
-import { CommonFormProps } from "../src/pages/form";
+import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { ActivityType } from "../models/Data";

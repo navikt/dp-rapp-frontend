@@ -1,11 +1,11 @@
 import { Table } from "@navikt/ds-react";
-import Menu from "../../components/Menu";
-import Spacer from "../../components/Spacer";
-import NavPanel from "../../components/NavPanel";
-import CenteredLoader from "../../components/CenteredLoader";
+import Menu from "../components/Menu";
+import Spacer from "../components/Spacer";
+import NavPanel from "../components/NavPanel";
+import CenteredLoader from "../components/CenteredLoader";
 import { format, getISOWeek, parseISO } from "date-fns";
 import { useTranslation } from "react-i18next";
-import { Meldeperiode } from "../../models/Meldeperiode";
+import { Meldeperiode } from "../models/Meldeperiode";
 import { useEffect, useState } from "react";
 
 export default function Page() {

@@ -4,7 +4,7 @@ import Spacer from "./Spacer";
 import ActivitySelector from "./ActivitySelector";
 import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
-import { CommonFormProps } from "../src/pages/form";
+import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 
 export default function Step2(props: CommonFormProps) {

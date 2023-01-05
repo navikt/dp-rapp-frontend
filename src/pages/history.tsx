@@ -1,6 +1,6 @@
 import { Table } from "@navikt/ds-react";
-import Menu from "../../components/Menu";
-import Spacer from "../../components/Spacer";
+import Menu from "../components/Menu";
+import Spacer from "../components/Spacer";
 import { format, getISOWeek } from "date-fns";
 import { useTranslation } from "react-i18next";
 

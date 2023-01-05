@@ -1,6 +1,6 @@
 import { Accordion } from "@navikt/ds-react";
-import Menu from "../../components/Menu";
-import Spacer from "../../components/Spacer";
+import Menu from "../components/Menu";
+import Spacer from "../components/Spacer";
 import { useTranslation } from "react-i18next";
 
 export default function Page() {
