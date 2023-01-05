@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "../../auth.utils";
+import { getSession } from "../../../auth.utils";
 import { v4 as uuid } from 'uuid';
 
 export default async function handler(
@@ -19,7 +19,7 @@ export default async function handler(
 
     const callId = uuid();
     const dpRappApiUrl = process.env.DP_RAPP_API_URL;
-    const url = `${dpRappApiUrl}/api/v1/lagre`;
+    const url = `${dpRappApiUrl}/api/v1/send`;
     const response = await fetch(url, {
       method: "POST",
       headers: {

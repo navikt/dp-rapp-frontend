@@ -40,6 +40,7 @@ i18n
           "period": "Periode",
           "date": "Dato",
           "week": "Uke",
+          "deadline": "Frist",
           "startFillingOut": "Begynn utfylling"
         }
       },
@@ -61,7 +62,7 @@ i18n
 
           "period": "Period",
           "date": "Date",
-          "week": "Week",
+          "deadline": "Deadline",
           "startFillingOut": "Start filling out"
         }
       }

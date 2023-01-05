@@ -58,7 +58,7 @@ export async function getServerSideProps() {
 
   // Get saved values
   try {
-    const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/hente/' + currentId);
+    const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/mellomlagring/hente/' + currentId);
     if (response.ok) {
       loadedData = await response.json();
     }
@@ -127,7 +127,7 @@ export default function Page(props: InitialState) {
   };
 
   const save = async () => {
-    const response = await postData('/api/save');
+    const response = await postData('/api/period/save');
 
     if (!response.ok) {
       setError('Feil i vårt baksystem. Kunne ikke lagre data');
@@ -138,7 +138,7 @@ export default function Page(props: InitialState) {
   }
 
   const send = async () => {
-    const response = await postData('/api/send');
+    const response = await postData('/api/period/send');
 
     if (response.ok) {
       setCurrentStep(currentStep + 1);
