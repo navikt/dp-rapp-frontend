@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "../../auth.utils";
+import { getSession } from "../../utils/auth.utils";
 import { v4 as uuid } from 'uuid';
 
 export default async function handler(

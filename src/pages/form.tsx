@@ -7,15 +7,12 @@ import Step3 from "../components/Step3";
 import Step4 from "../components/Step4";
 import Receipt from "../components/Receipt";
 import CancelButton from "../components/CancelButton";
-import { format, getISOWeek, parseISO } from "date-fns";
-import { Dispatch, FormEventHandler, SetStateAction, useState } from "react";
+import { format, getISOWeek } from "date-fns";
+import { Dispatch, FormEventHandler, SetStateAction, useEffect, useState } from "react";
 import { ActivityType, Data, Day, SavedDates } from "../models/Data";
 import { LoadedData } from "../models/LoadedData";
-
-type InitialState = {
-  currentId: number;
-  loadedData: LoadedData;
-}
+import { fromStringToDate } from "../utils/date.utils";
+import CenteredLoader from "../components/CenteredLoader";
 
 export type CommonFormProps = {
   startDate: Date;
@@ -32,8 +29,8 @@ export type CommonFormProps = {
   setSavedDates: Dispatch<SetStateAction<SavedDates>>;
   questionProceed: boolean | null;
   setQuestionProceed: Dispatch<SetStateAction<boolean | null>>;
-  questionConsent: boolean;
-  setQuestionConsent: Dispatch<SetStateAction<boolean>>;
+  questionConsent: boolean | undefined;
+  setQuestionConsent: Dispatch<SetStateAction<boolean | undefined>>;
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
   send: FormEventHandler;
@@ -41,42 +38,15 @@ export type CommonFormProps = {
   error: string;
 }
 
-export async function getServerSideProps() {
+export default function Page() {
   // TODO: Get ID from the earliest meldekort and set it as currentId
   const currentId = 5;
 
-  // Default values for initial state
-  let loadedData: LoadedData = {
-    id: currentId,
-    questionWork: null,
-    questionMeasures: null,
-    questionIllness: null,
-    questionVacation: null,
-    days: [],
-    questionProceed: null
-  }
-
-  // Get saved values
-  try {
-    const response = await fetch(process.env.DP_RAPP_API_URL + '/api/v1/mellomlagring/hente/' + currentId);
-    if (response.ok) {
-      loadedData = await response.json();
-    }
-  } catch (e) {
-    // Couldn't find saved data, just proceed
-  }
-
-
-  // Data comes to page as props
-  return {
-    props: {
-      currentId,
-      loadedData
-    },
-  };
-}
-
-export default function Page(props: InitialState) {
+  // TODO: Get dates from the earliest meldekort and use these dates
+  // JavaScript Dates are internally in UTC
+  // We have to add time (12:00) so as the date itself is not changed when converted from/to CET
+  const startDate = new Date(2022, 11, 5, 12, 0);
+  const endDate = new Date(2022, 11, 18, 12, 0);
 
   // Service variables
   const maxStep = 4;
@@ -84,31 +54,42 @@ export default function Page(props: InitialState) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [showReceipt, setShowReceipt] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [isLoading, setLoading] = useState(false)
 
-  // Pre-fetched data (initial state) comes to the page as props
-  const { currentId, loadedData } = props;
+  // Data variables
+  const [questionWork, setQuestionWork] = useState<boolean | null>(null);
+  const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(null);
+  const [questionIllness, setQuestionIllness] = useState<boolean | null>(null);
+  const [questionVacation, setQuestionVacation] = useState<boolean | null>(null);
+  const [savedDates, setSavedDates] = useState<SavedDates>([]);
+  const [questionProceed, setQuestionProceed] = useState<boolean | null>(null);
+  const [questionConsent, setQuestionConsent] = useState<boolean>();
 
-  // Convert loaded days to SavedDates
-  const loadedSavedDates: SavedDates = {}
-  loadedData?.days.forEach((day) => {
-    // @ts-ignore
-    loadedSavedDates[parseISO(day.date + "T12:00:00").getTime()] = { type: ActivityType[day.type], hours: day.hours }
-  });
+  useEffect(() => {
+    setLoading(true)
+    fetch('/api/periods/' + currentId)
+      .then((res) => res.json())
+      .then((loadedData: LoadedData) => {
+        // Convert loaded days to SavedDates
+        const loadedSavedDates: SavedDates = {}
+        loadedData?.days.forEach((day) => {
+          // @ts-ignore
+          loadedSavedDates[fromStringToDate(day.date).getTime()] = { type: ActivityType[day.type], hours: day.hours }
+        });
 
-  // Use loaded data as initial state for variables
-  const [questionWork, setQuestionWork] = useState<boolean | null>(loadedData.questionWork);
-  const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(loadedData.questionMeasures);
-  const [questionIllness, setQuestionIllness] = useState<boolean | null>(loadedData.questionIllness);
-  const [questionVacation, setQuestionVacation] = useState<boolean | null>(loadedData.questionVacation);
-  const [savedDates, setSavedDates] = useState<SavedDates>(loadedSavedDates);
-  const [questionProceed, setQuestionProceed] = useState<boolean | null>(loadedData.questionProceed);
-  const [questionConsent, setQuestionConsent] = useState<boolean>(false); // Always false initially, user must check it every time
+        setQuestionWork(loadedData.questionWork);
+        setQuestionMeasures(loadedData.questionMeasures);
+        setQuestionIllness(loadedData.questionIllness);
+        setQuestionVacation(loadedData.questionVacation);
+        setSavedDates(loadedSavedDates);
+        setQuestionProceed(loadedData.questionProceed);
+        setQuestionConsent(false); // User must check it every time
 
-  // TODO: Get dates from the earliest meldekort and use these dates
-  // JavaScript Dates are internally in UTC
-  // We have to add time (12:00) so as the date itself is not changed when converted from/to CET
-  const startDate = new Date(2022, 11, 5, 12, 0);
-  const endDate = new Date(2022, 11, 18, 12, 0);
+        setLoading(false)
+      }).catch((error) => {
+      console.log(error)
+    });
+  }, [])
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
@@ -127,7 +108,7 @@ export default function Page(props: InitialState) {
   };
 
   const save = async () => {
-    const response = await postData('/api/period/save');
+    const response = await postData('/api/periods/save');
 
     if (!response.ok) {
       setError('Feil i vårt baksystem. Kunne ikke lagre data');
@@ -138,7 +119,7 @@ export default function Page(props: InitialState) {
   }
 
   const send = async () => {
-    const response = await postData('/api/period/send');
+    const response = await postData('/api/periods/send');
 
     if (response.ok) {
       setCurrentStep(currentStep + 1);
@@ -220,6 +201,14 @@ export default function Page(props: InitialState) {
     send,
     showLoader,
     error
+  }
+
+  if (isLoading) {
+    return (
+      <main>
+        <CenteredLoader />
+      </main>
+    );
   }
 
   return (

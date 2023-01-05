@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import Home from "../src/pages/index";
 import "@testing-library/jest-dom";
 import fetchMock from "jest-fetch-mock";
@@ -27,15 +27,19 @@ describe("Home", () => {
         fetch.resetMocks();
     });
 
-    it("renders a heading", () => {
-        // fetch.mockResponseOnce(JSON.stringify([]));
+    it("renders a heading", async () => {
+        fetch.mockResponseOnce(JSON.stringify([]));
 
-        render(<Home periods={[]} />);
-
-        const heading = screen.getByRole("heading", {
-            name: /Ny løsning/i,
+        act(() => {
+            render(<Home periods={[]} />);
         });
 
-        expect(heading).toBeInTheDocument();
+        await waitFor(() => {
+            const heading = screen.getByRole("heading", {
+                name: /Ny løsning/i,
+            });
+
+            expect(heading).toBeInTheDocument();
+        });
     });
 });
