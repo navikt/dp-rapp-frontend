@@ -35,7 +35,9 @@ export default async function handler(
       return res.status(500).send(`Unexpected response status: ${response.statusText}`)
     }
 
-    return res.json(response);
+    const json = await response.json();
+
+    return res.json(json);
   } catch (error) {
     return res.status(500).send(error);
   }
