@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const url = `${process.env.DP_RAPP_API_URL}/api/v1/mellomlagring/lagre`;
+    const url = `${process.env.DP_RAPP_API_URL}/api/v1/meldeperioder/lagre`;
 
     const response = await doRequest(req, res, "POST", url);
 

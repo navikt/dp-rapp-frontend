@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   try {
     const { id } = req.query
-    const url = `${process.env.DP_RAPP_API_URL}/api/v1/mellomlagring/hente/${id}`;
+    const url = `${process.env.DP_RAPP_API_URL}/api/v1/meldeperioder/mellomlagret/${id}`;
 
     const response = await doRequest(req, res, "GET", url);
 

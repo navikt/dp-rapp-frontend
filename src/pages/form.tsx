@@ -72,17 +72,19 @@ export default function Page() {
       .then((loadedData: LoadedData) => {
         // Convert loaded days to SavedDates
         const loadedSavedDates: SavedDates = {}
-        loadedData?.days.forEach((day) => {
+        loadedData?.days?.forEach((day) => {
           // @ts-ignore
           loadedSavedDates[fromStringToDate(day.date).getTime()] = { type: ActivityType[day.type], hours: day.hours }
         });
 
-        setQuestionWork(loadedData.questionWork);
-        setQuestionMeasures(loadedData.questionMeasures);
-        setQuestionIllness(loadedData.questionIllness);
-        setQuestionVacation(loadedData.questionVacation);
+        // If we didn't get data and fields are undefined > use null
+        // We can't leave undefined in these fields, because it makes these components uncontrolled
+        setQuestionWork(loadedData.questionWork == undefined ? null : loadedData.questionWork);
+        setQuestionMeasures(loadedData.questionMeasures == undefined ? null : loadedData.questionMeasures);
+        setQuestionIllness(loadedData.questionIllness == undefined ? null : loadedData.questionIllness);
+        setQuestionVacation(loadedData.questionVacation == undefined ? null : loadedData.questionVacation);
         setSavedDates(loadedSavedDates);
-        setQuestionProceed(loadedData.questionProceed);
+        setQuestionProceed(loadedData.questionProceed == undefined ? null : loadedData.questionProceed);
         setQuestionConsent(false); // User must check it every time
 
         setLoading(false)
