@@ -62,6 +62,7 @@ i18n
 
           "period": "Period",
           "date": "Date",
+          "week": "Week",
           "deadline": "Deadline",
           "startFillingOut": "Start filling out"
         }
