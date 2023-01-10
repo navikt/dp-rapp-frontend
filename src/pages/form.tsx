@@ -19,6 +19,7 @@ import { ActivityType, Data, Day, SavedDates } from "../models/Data";
 import { LoadedData } from "../models/LoadedData";
 import { fromStringToDate } from "../utils/date.utils";
 import CenteredLoader from "../components/CenteredLoader";
+import Introduction from "../components/Introduction";
 
 export type CommonFormProps = {
   startDate: Date;
@@ -260,10 +261,9 @@ export default function Page() {
       {!showReceipt && (
         <CustomStepper numberOfSteps={maxStep} currentStep={currentStep} />
       )}
-
-      {currentStep == 1 && <Step1 {...commonFormProps} />}
-      {currentStep == 2 && <Step2 {...commonFormProps} />}
-      {currentStep == 3 && <Step3 {...commonFormProps} />}
+      {currentStep == 1 && <Introduction {...commonFormProps} />}
+      {currentStep == 2 && <Step1 {...commonFormProps} />}
+      {currentStep == 3 && <Step2 {...commonFormProps} />}
       {currentStep == 4 && <Step4 {...commonFormProps} />}
       {showReceipt && <Receipt />}
 
