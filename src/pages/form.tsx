@@ -84,8 +84,8 @@ export default function Page() {
         // Convert loaded days to SavedDates
         const loadedSavedDates: SavedDates = {};
         loadedData?.days?.forEach((day) => {
-          // @ts-ignore
           loadedSavedDates[fromStringToDate(day.date).getTime()] = {
+            // @ts-ignore
             type: ActivityType[day.type],
             hours: day.hours,
           };
