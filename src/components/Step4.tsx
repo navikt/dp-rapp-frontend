@@ -10,9 +10,6 @@ import { ActivityType } from "../models/Data";
 export default function Step4(props: CommonFormProps) {
   const {
     questionWork,
-    questionMeasures,
-    questionIllness,
-    questionVacation,
     savedDates,
     questionProceed,
     questionConsent,

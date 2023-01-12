@@ -1,9 +1,15 @@
-import Document, { DocumentContext, Head, Html, Main, NextScript, } from "next/document";
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
 import {
   Components as DecoratorComponents,
   Env,
   fetchDecoratorReact,
-  Props as DecoratorProps
+  Props as DecoratorProps,
 } from "@navikt/nav-dekoratoren-moduler/ssr";
 
 export default class MyDocument extends Document<DecoratorComponents> {
@@ -16,16 +22,16 @@ export default class MyDocument extends Document<DecoratorComponents> {
       availableLanguages: [
         {
           locale: "nb",
-          handleInApp: true
+          handleInApp: true,
         },
         {
           locale: "en",
-          handleInApp: true
-        }
+          handleInApp: true,
+        },
       ],
-      language: "nb"
+      language: "nb",
     };
-
+    //t
     const Dekorator: DecoratorComponents = await fetchDecoratorReact({
       ...dekoratorProps,
     }).catch((err) => {

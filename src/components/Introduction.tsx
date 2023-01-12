@@ -1,39 +1,17 @@
-import {
-  Checkbox,
-  ConfirmationPanel,
-  Heading,
-  Radio,
-  RadioGroup,
-} from "@navikt/ds-react";
+import { ConfirmationPanel, Heading } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 
 export default function Introduction(props: CommonFormProps) {
-  const {
-    questionWork,
-    setQuestionWork,
-    questionMeasures,
-    setQuestionMeasures,
-    questionIllness,
-    setQuestionIllness,
-    questionVacation,
-    setQuestionVacation,
-    nextStep,
-    showLoader,
-  } = props;
+  const { nextStep, showLoader } = props;
 
-  const [isChecked, setIsChecked] = useState<boolean>(false);
   const [notShow, setNotShow] = useState<boolean>(false);
 
   // Check form
   const checkForm = (event: FormEvent) => {
-    setIsChecked(true);
-
-    if (true) {
-      nextStep(event);
-    }
+    nextStep(event);
   };
 
   // Render
