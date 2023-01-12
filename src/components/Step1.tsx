@@ -8,13 +8,9 @@ export default function Step1(props: CommonFormProps) {
   const {
     questionWork,
     setQuestionWork,
-    questionMeasures,
-    setQuestionMeasures,
-    questionIllness,
-    setQuestionIllness,
-    questionVacation,
-    setQuestionVacation,
+    prevStep,
     nextStep,
+    goToSummaryStep,
     showLoader,
   } = props;
 
@@ -24,22 +20,17 @@ export default function Step1(props: CommonFormProps) {
   const questionWorkValidated = () => {
     return questionWork != null;
   };
-  const questionMeasuresValidated = () => {
-    return questionMeasures != null;
-  };
-  const questionIllnessValidated = () => {
-    return questionIllness != null;
-  };
-  const questionVacationValidated = () => {
-    return questionVacation != null;
-  };
 
   // Check form
   const checkForm = (event: FormEvent) => {
     setIsChecked(true);
 
     if (questionWorkValidated()) {
-      nextStep(event);
+      if (questionWork) {
+        nextStep(event);
+      } else {
+        goToSummaryStep(event);
+      }
     }
   };
 
@@ -54,7 +45,7 @@ export default function Step1(props: CommonFormProps) {
 
       <RadioGroup
         legend="Har du vært i annen aktivitet enn det å være arbeidssøker i løpet av denne perioden?"
-        description='Med "arbeid" mener vi aktivitet som kan gi inntekt eller som normalt ville ha vært betalt'
+        description='Med "aktivitet" mener vi....'
         onChange={(val: boolean) => setQuestionWork(val)}
         value={questionWork}
         error={
@@ -70,6 +61,8 @@ export default function Step1(props: CommonFormProps) {
       <Spacer />
 
       <NavPanelWithButtons
+        backText="Forrige steg"
+        backOnClick={prevStep}
         nextText="Neste steg"
         nextOnClick={checkForm}
         showLoader={showLoader}

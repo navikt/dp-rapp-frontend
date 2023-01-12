@@ -3,13 +3,13 @@ import Divider from "../components/Divider";
 import CustomStepper from "../components/CustomStepper";
 import Step1 from "../components/Step1";
 import Step2 from "../components/Step2";
-import Step3 from "../components/Step3";
 import Step4 from "../components/Step4";
 import Receipt from "../components/Receipt";
 import CancelButton from "../components/CancelButton";
 import { format, getISOWeek } from "date-fns";
 import {
   Dispatch,
+  FormEvent,
   FormEventHandler,
   SetStateAction,
   useEffect,
@@ -40,6 +40,7 @@ export type CommonFormProps = {
   setQuestionConsent: Dispatch<SetStateAction<boolean | undefined>>;
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
+  goToSummaryStep: FormEventHandler;
   send: FormEventHandler;
   showLoader: boolean;
   error: string;
@@ -129,8 +130,9 @@ export default function Page() {
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
 
-  const prevStep = () => {
+  const prevStep = async () => {
     if (currentStep > 1) {
+      await save();
       setCurrentStep(currentStep - 1);
     }
   };
@@ -140,6 +142,11 @@ export default function Page() {
       await save();
       setCurrentStep(currentStep + 1);
     }
+  };
+
+  const goToSummaryStep = async () => {
+    await save();
+    setCurrentStep(4);
   };
 
   const save = async () => {
@@ -233,6 +240,7 @@ export default function Page() {
     setQuestionConsent,
     prevStep,
     nextStep,
+    goToSummaryStep,
     send,
     showLoader,
     error,
