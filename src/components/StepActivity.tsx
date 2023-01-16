@@ -5,14 +5,8 @@ import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 
 export default function StepActivity(props: CommonFormProps) {
-  const {
-    questionWork,
-    setQuestionWork,
-    prevStep,
-    nextStep,
-    goToSummaryStep,
-    showLoader,
-  } = props;
+  const { questionWork, setQuestionWork, prevStep, nextStep, showLoader } =
+    props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -26,11 +20,7 @@ export default function StepActivity(props: CommonFormProps) {
     setIsChecked(true);
 
     if (questionWorkValidated()) {
-      if (questionWork) {
-        nextStep(event);
-      } else {
-        goToSummaryStep(event);
-      }
+      nextStep(event);
     }
   };
 

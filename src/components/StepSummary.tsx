@@ -6,6 +6,7 @@ import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { ActivityType } from "../models/Data";
+import ActivitySummary from "./ActivitySummary";
 
 export default function StepSummary(props: CommonFormProps) {
   const {
@@ -64,10 +65,7 @@ export default function StepSummary(props: CommonFormProps) {
         <BodyShort>{questionWork ? "Ja" : "Nei"}</BodyShort>
       </Panel>
       <Panel>
-        <Heading spacing level="4" size="small">
-          Registrerte dager
-        </Heading>
-        {days}
+        <ActivitySummary savedDates={savedDates} />
       </Panel>
       <Panel>
         <Heading spacing level="4" size="small">

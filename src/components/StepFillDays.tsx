@@ -6,6 +6,7 @@ import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
+import ActivitySummary from "./ActivitySummary";
 
 export default function StepFillDays(props: CommonFormProps) {
   const {
@@ -29,7 +30,7 @@ export default function StepFillDays(props: CommonFormProps) {
   const checkForm = (event: FormEvent) => {
     setIsChecked(true);
 
-    if (savedDatesValidated()) {
+    if (true) {
       nextStep(event);
     }
   };
@@ -49,6 +50,8 @@ export default function StepFillDays(props: CommonFormProps) {
         savedDates={savedDates}
         setSavedDates={setSavedDates}
       />
+
+      <ActivitySummary savedDates={savedDates} />
 
       <div className={styles.summary}>
         <Error

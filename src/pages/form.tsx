@@ -18,7 +18,6 @@ import { LoadedData } from "../models/LoadedData";
 import { fromStringToDate } from "../utils/date.utils";
 import CenteredLoader from "../components/CenteredLoader";
 import StepIntroduction from "../components/StepIntroduction";
-import { Loading } from "@navikt/ds-react/src/button/button.stories";
 import Guidance from "../components/Guidance";
 
 export type CommonFormProps = {
@@ -40,7 +39,6 @@ export type CommonFormProps = {
   setQuestionConsent: Dispatch<SetStateAction<boolean | undefined>>;
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
-  goToSummaryStep: FormEventHandler;
   send: FormEventHandler;
   showLoader: boolean;
   error: string;
@@ -63,6 +61,7 @@ export default function Page() {
   const [showReceipt, setShowReceipt] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [isLoading, setLoading] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   // Data variables
   const [questionWork, setQuestionWork] = useState<boolean | null>(null);
@@ -119,18 +118,62 @@ export default function Page() {
             : loadedData.questionProceed
         );
         setQuestionConsent(false); // User must check it every time
-        calculateStep();
+
         setLoading(false);
+      })
+      .then(() => {
+        setIsFetched(true);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+  useEffect(() => {
+    if (!isLoading && isFetched) {
+      setCurrentStep(calculateStep());
+    }
+  }, [isFetched]);
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
+  const hasActivity = () => {
+    if (savedDates) {
+      for (const key in savedDates) {
+        const currentData = savedDates[key];
+        if (
+          currentData.type == ActivityType.WORK ||
+          currentData.type == ActivityType.ILLNESS ||
+          currentData.type == ActivityType.MEASURES ||
+          currentData.type == ActivityType.VACATION
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
 
-  const calculateStep = async () => {};
+  const calculateStep = () => {
+    var shouldGoToStep = currentStep + 1;
+    if (currentStep == 0) {
+      if (hasActivity()) {
+        shouldGoToStep = 3;
+      } else shouldGoToStep = 2;
+      if (!questionIllness) {
+        shouldGoToStep = 1;
+      }
+    }
+    if (currentStep == 2 && !questionWork) {
+      shouldGoToStep = 4;
+    }
+    if (currentStep == 3 && !hasActivity()) {
+      shouldGoToStep = 2;
+    }
+    if (isLoading) {
+      shouldGoToStep = 0;
+    }
+    return shouldGoToStep;
+  };
 
   const prevStep = async () => {
     if (currentStep > 1) {
@@ -142,13 +185,8 @@ export default function Page() {
   const nextStep = async () => {
     if (currentStep < maxStep) {
       await save();
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(calculateStep());
     }
-  };
-
-  const goToSummaryStep = async () => {
-    await save();
-    setCurrentStep(4);
   };
 
   const save = async () => {
@@ -242,7 +280,6 @@ export default function Page() {
     setQuestionConsent,
     prevStep,
     nextStep,
-    goToSummaryStep,
     send,
     showLoader,
     error,

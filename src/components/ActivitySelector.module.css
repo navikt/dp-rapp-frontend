@@ -12,6 +12,7 @@
 }
 
 .summary {
+    justify-self: flex-start;
     width: 20rem;
     margin: auto;
 }
