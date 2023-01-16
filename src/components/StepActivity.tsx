@@ -4,7 +4,7 @@ import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 
-export default function Step1(props: CommonFormProps) {
+export default function StepActivity(props: CommonFormProps) {
   const {
     questionWork,
     setQuestionWork,

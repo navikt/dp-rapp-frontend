@@ -7,7 +7,7 @@ import { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { ActivityType } from "../models/Data";
 
-export default function Step4(props: CommonFormProps) {
+export default function StepSummary(props: CommonFormProps) {
   const {
     questionWork,
     savedDates,

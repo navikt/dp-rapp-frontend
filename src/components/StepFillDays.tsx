@@ -7,16 +7,23 @@ import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 
-export default function Step2(props: CommonFormProps) {
-
-  const { startDate, endDate, savedDates, setSavedDates, prevStep, nextStep, showLoader } = props;
+export default function StepFillDays(props: CommonFormProps) {
+  const {
+    startDate,
+    endDate,
+    savedDates,
+    setSavedDates,
+    prevStep,
+    nextStep,
+    showLoader,
+  } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   // Validators
   const savedDatesValidated = () => {
     return Object.keys(savedDates).length > 0;
-  }
+  };
 
   // Check form
   const checkForm = (event: FormEvent) => {
@@ -25,28 +32,40 @@ export default function Step2(props: CommonFormProps) {
     if (savedDatesValidated()) {
       nextStep(event);
     }
-  }
+  };
 
   // Render
   return (
     <>
-      <Heading level="3" size="large">Utfylling</Heading>
+      <Heading level="3" size="large">
+        Utfylling
+      </Heading>
 
       <Spacer />
 
-      <ActivitySelector startDate={startDate} endDate={endDate} savedDates={savedDates} setSavedDates={setSavedDates} />
+      <ActivitySelector
+        startDate={startDate}
+        endDate={endDate}
+        savedDates={savedDates}
+        setSavedDates={setSavedDates}
+      />
 
       <div className={styles.summary}>
-        <Error showError={isChecked && !savedDatesValidated()} error={"Du må velge minst 1 dag"} />
+        <Error
+          showError={isChecked && !savedDatesValidated()}
+          error={"Du må velge minst 1 dag"}
+        />
       </div>
 
       <Spacer />
 
-      <NavPanelWithButtons backText="Forrige steg"
-                           backOnClick={prevStep}
-                           nextText="Neste steg"
-                           nextOnClick={checkForm}
-                           showLoader={showLoader} />
+      <NavPanelWithButtons
+        backText="Forrige steg"
+        backOnClick={prevStep}
+        nextText="Neste steg"
+        nextOnClick={checkForm}
+        showLoader={showLoader}
+      />
     </>
   );
 }
