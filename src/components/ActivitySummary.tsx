@@ -12,6 +12,10 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
   let illnessDays = 0;
   let measuresDays = 0;
   let vacationDays = 0;
+  const hasActivity = () => {
+    if (workHours + illnessDays + measuresDays + vacationDays > 0) return true;
+    return false;
+  };
   for (const key in savedDates) {
     const currentData = savedDates[key];
 
@@ -69,13 +73,20 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
       </div>
     );
   }
+  const summaryNothing = (
+    <div className={styles.summaryLine + " " + styles.none}>
+      Ingen aktivitet utenom å være arbeidssøker
+    </div>
+  );
+
   return (
-    <div className={styles.summary}>
+    <div>
       <div className={styles.summaryHeader}>Sammenlagt for meldeperioden:</div>
-      {summaryWork}
-      {summaryIllness}
-      {summaryMeasures}
-      {summaryVacation}
+      {hasActivity() && summaryWork}
+      {hasActivity() && summaryIllness}
+      {hasActivity() && summaryMeasures}
+      {hasActivity() && summaryVacation}
+      {!hasActivity() && summaryNothing}
     </div>
   );
 }

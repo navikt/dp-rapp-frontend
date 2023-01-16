@@ -1,5 +1,5 @@
 import styles from "./ActivitySelector.module.css";
-import { Heading } from "@navikt/ds-react";
+import { Heading, Panel } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import ActivitySelector from "./ActivitySelector";
 import Error from "./Error";
@@ -50,8 +50,9 @@ export default function StepFillDays(props: CommonFormProps) {
         savedDates={savedDates}
         setSavedDates={setSavedDates}
       />
-
-      <ActivitySummary savedDates={savedDates} />
+      <Panel className={styles.summary}>
+        <ActivitySummary savedDates={savedDates} />
+      </Panel>
 
       <div className={styles.summary}>
         <Error

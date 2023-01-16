@@ -7,6 +7,7 @@ import { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { ActivityType } from "../models/Data";
 import ActivitySummary from "./ActivitySummary";
+import styles from "./StepSummary.module.css";
 
 export default function StepSummary(props: CommonFormProps) {
   const {
@@ -64,10 +65,10 @@ export default function StepSummary(props: CommonFormProps) {
         </Heading>
         <BodyShort>{questionWork ? "Ja" : "Nei"}</BodyShort>
       </Panel>
-      <Panel>
+      <Panel className={styles.summary}>
         <ActivitySummary savedDates={savedDates} />
       </Panel>
-      <Panel>
+      <Panel className={styles.summary}>
         <Heading spacing level="4" size="small">
           Ønsker du fortsatt å være registrert hos NAV som arbeidssøker de neste
           14 dager?
