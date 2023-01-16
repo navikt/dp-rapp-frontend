@@ -54,7 +54,7 @@ export default function StepSummary(props: CommonFormProps) {
   return (
     <>
       <Heading level="3" size="large">
-        Arbeidssøker
+        Oppsummering
       </Heading>
 
       <Spacer />

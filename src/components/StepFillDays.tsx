@@ -39,7 +39,7 @@ export default function StepFillDays(props: CommonFormProps) {
   return (
     <>
       <Heading level="3" size="large">
-        Utfylling
+        Fyll ut aktivitet
       </Heading>
 
       <Spacer />
