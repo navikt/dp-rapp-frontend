@@ -1,18 +1,24 @@
 import { Heading } from "@navikt/ds-react";
 import Divider from "../components/Divider";
-import CustomStepper from "../components/CustomStepper";
-import Step1 from "../components/Step1";
-import Step2 from "../components/Step2";
-import Step3 from "../components/Step3";
-import Step4 from "../components/Step4";
+import StepActivity from "../components/StepActivity";
+import StepFillDays from "../components/StepFillDays";
+import StepSummary from "../components/StepSummary";
 import Receipt from "../components/Receipt";
 import CancelButton from "../components/CancelButton";
 import { format, getISOWeek } from "date-fns";
-import { Dispatch, FormEventHandler, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEventHandler,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { ActivityType, Data, Day, SavedDates } from "../models/Data";
 import { LoadedData } from "../models/LoadedData";
 import { fromStringToDate } from "../utils/date.utils";
 import CenteredLoader from "../components/CenteredLoader";
+import StepIntroduction from "../components/StepIntroduction";
+import Guidance from "../components/Guidance";
 
 export type CommonFormProps = {
   startDate: Date;
@@ -36,7 +42,7 @@ export type CommonFormProps = {
   send: FormEventHandler;
   showLoader: boolean;
   error: string;
-}
+};
 
 export default function Page() {
   // TODO: Get ID from the earliest meldekort and set it as currentId
@@ -50,54 +56,128 @@ export default function Page() {
 
   // Service variables
   const maxStep = 4;
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [showReceipt, setShowReceipt] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
-  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState<string>("");
+  const [isLoading, setLoading] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   // Data variables
   const [questionWork, setQuestionWork] = useState<boolean | null>(null);
-  const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(null);
+  const [questionMeasures, setQuestionMeasures] = useState<boolean | null>(
+    null
+  );
   const [questionIllness, setQuestionIllness] = useState<boolean | null>(null);
-  const [questionVacation, setQuestionVacation] = useState<boolean | null>(null);
+  const [questionVacation, setQuestionVacation] = useState<boolean | null>(
+    null
+  );
   const [savedDates, setSavedDates] = useState<SavedDates>([]);
   const [questionProceed, setQuestionProceed] = useState<boolean | null>(null);
   const [questionConsent, setQuestionConsent] = useState<boolean>();
 
   useEffect(() => {
-    setLoading(true)
-    fetch('/api/periods/' + currentId)
+    setLoading(true);
+    fetch("/api/periods/" + currentId)
       .then((res) => res.json())
       .then((loadedData: LoadedData) => {
         // Convert loaded days to SavedDates
-        const loadedSavedDates: SavedDates = {}
+        const loadedSavedDates: SavedDates = {};
         loadedData?.days?.forEach((day) => {
-          // @ts-ignore
-          loadedSavedDates[fromStringToDate(day.date).getTime()] = { type: ActivityType[day.type], hours: day.hours }
+          loadedSavedDates[fromStringToDate(day.date).getTime()] = {
+            // @ts-ignore
+            type: ActivityType[day.type],
+            hours: day.hours,
+          };
         });
 
         // If we didn't get data and fields are undefined > use null
         // We can't leave undefined in these fields, because it makes these components uncontrolled
-        setQuestionWork(loadedData.questionWork == undefined ? null : loadedData.questionWork);
-        setQuestionMeasures(loadedData.questionMeasures == undefined ? null : loadedData.questionMeasures);
-        setQuestionIllness(loadedData.questionIllness == undefined ? null : loadedData.questionIllness);
-        setQuestionVacation(loadedData.questionVacation == undefined ? null : loadedData.questionVacation);
+        setQuestionWork(
+          loadedData.questionWork == undefined ? null : loadedData.questionWork
+        );
+        setQuestionMeasures(
+          loadedData.questionMeasures == undefined
+            ? null
+            : loadedData.questionMeasures
+        );
+        setQuestionIllness(
+          loadedData.questionIllness == undefined
+            ? null
+            : loadedData.questionIllness
+        );
+        setQuestionVacation(
+          loadedData.questionVacation == undefined
+            ? null
+            : loadedData.questionVacation
+        );
         setSavedDates(loadedSavedDates);
-        setQuestionProceed(loadedData.questionProceed == undefined ? null : loadedData.questionProceed);
+        setQuestionProceed(
+          loadedData.questionProceed == undefined
+            ? null
+            : loadedData.questionProceed
+        );
         setQuestionConsent(false); // User must check it every time
 
-        setLoading(false)
-      }).catch((error) => {
-      console.log(error)
-    });
-  }, [])
+        setLoading(false);
+      })
+      .then(() => {
+        setIsFetched(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  useEffect(() => {
+    if (!isLoading && isFetched) {
+      setCurrentStep(calculateStep());
+    }
+  }, [isFetched]);
 
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
+  const hasActivity = () => {
+    if (savedDates) {
+      for (const key in savedDates) {
+        const currentData = savedDates[key];
+        if (
+          currentData.type == ActivityType.WORK ||
+          currentData.type == ActivityType.ILLNESS ||
+          currentData.type == ActivityType.MEASURES ||
+          currentData.type == ActivityType.VACATION
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
 
-  const prevStep = () => {
+  const calculateStep = () => {
+    let shouldGoToStep = currentStep + 1;
+    if (currentStep == 0) {
+      if (hasActivity()) {
+        shouldGoToStep = 3;
+      } else shouldGoToStep = 2;
+      if (!questionIllness) {
+        shouldGoToStep = 1;
+      }
+    }
+    if (currentStep == 2 && !questionWork) {
+      shouldGoToStep = 4;
+    }
+    if (currentStep == 3 && !hasActivity()) {
+      shouldGoToStep = 2;
+    }
+    if (isLoading) {
+      shouldGoToStep = 0;
+    }
+    return shouldGoToStep;
+  };
+
+  const prevStep = async () => {
     if (currentStep > 1) {
+      await save();
       setCurrentStep(currentStep - 1);
     }
   };
@@ -105,38 +185,38 @@ export default function Page() {
   const nextStep = async () => {
     if (currentStep < maxStep) {
       await save();
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(calculateStep());
     }
   };
 
   const save = async () => {
-    const response = await postData('/api/periods/save');
+    const response = await postData("/api/periods/save");
 
     if (!response.ok) {
-      setError('Feil i vårt baksystem. Kunne ikke lagre data');
+      setError("Feil i vårt baksystem. Kunne ikke lagre data");
     }
 
     // Hide loader
     setShowLoader(false);
-  }
+  };
 
   const send = async () => {
-    const response = await postData('/api/periods/send');
+    const response = await postData("/api/periods/send");
 
     if (response.ok) {
       setCurrentStep(currentStep + 1);
       setShowReceipt(true);
     } else {
-      setError('Feil i vårt baksystem. Prøv senere');
+      setError("Feil i vårt baksystem. Prøv senere");
     }
 
     // Hide loader
     setShowLoader(false);
-  }
+  };
 
   const postData = async (endpoint: string) => {
     // Reset error
-    setError('');
+    setError("");
 
     // Show loader
     setShowLoader(true);
@@ -159,8 +239,8 @@ export default function Page() {
       questionIllness,
       questionVacation,
       days,
-      questionProceed
-    }
+      questionProceed,
+    };
 
     // Send the data to the server in JSON format.
     const JSONdata = JSON.stringify(data);
@@ -168,10 +248,10 @@ export default function Page() {
     // Form the request for sending data to the server.
     const options = {
       // The method is POST because we are sending data.
-      method: 'POST',
+      method: "POST",
       // Tell the server we're sending JSON.
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       // Body of the request is the JSON data we created above.
       body: JSONdata,
@@ -179,7 +259,7 @@ export default function Page() {
 
     // Send the form data to our forms API on Vercel and get a response.
     return await fetch(endpoint, options);
-  }
+  };
 
   const commonFormProps: CommonFormProps = {
     startDate,
@@ -202,8 +282,8 @@ export default function Page() {
     nextStep,
     send,
     showLoader,
-    error
-  }
+    error,
+  };
 
   if (isLoading) {
     return (
@@ -215,21 +295,22 @@ export default function Page() {
 
   return (
     <main>
-      <Heading level="1" size="xlarge">Dagpenger rapportering</Heading>
-      <Heading level="2"
-               size="medium">Uke {getISOWeek(startDate)} - {getISOWeek(endDate)} ({startDateStr} - {endDateStr})</Heading>
-
+      <Heading level="1" size="xlarge">
+        Dagpenger rapportering
+      </Heading>
+      <Heading level="2" size="medium">
+        Uke {getISOWeek(startDate)} - {getISOWeek(endDate)} ({startDateStr} -{" "}
+        {endDateStr})
+      </Heading>
       <Divider />
-
-      {!showReceipt && <CustomStepper numberOfSteps={maxStep} currentStep={currentStep} />}
-
-      {currentStep == 1 && <Step1 {...commonFormProps} />}
-      {currentStep == 2 && <Step2 {...commonFormProps} />}
-      {currentStep == 3 && <Step3 {...commonFormProps} />}
-      {currentStep == 4 && <Step4 {...commonFormProps} />}
+      {currentStep == 1 && <StepIntroduction {...commonFormProps} />}
+      {currentStep == 2 && <StepActivity {...commonFormProps} />}
+      {currentStep == 3 && <StepFillDays {...commonFormProps} />}
+      {currentStep == 4 && <StepSummary {...commonFormProps} />}
+      {currentStep == 0 && <p>Laster</p>}
       {showReceipt && <Receipt />}
-
       {!showReceipt && <CancelButton />}
+      {currentStep != 0 && <Guidance />}
     </main>
   );
 }
