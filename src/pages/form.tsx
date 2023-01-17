@@ -310,7 +310,7 @@ export default function Page() {
       {currentStep == 0 && <p>Laster</p>}
       {showReceipt && <Receipt />}
       {!showReceipt && <CancelButton />}
-      {currentStep != 0 && <Guidance />}
+      {currentStep == 3 && <Guidance />}
     </main>
   );
 }
