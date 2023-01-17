@@ -29,10 +29,7 @@ export default function StepFillDays(props: CommonFormProps) {
   // Check form
   const checkForm = (event: FormEvent) => {
     setIsChecked(true);
-
-    if (true) {
-      nextStep(event);
-    }
+    nextStep(event);
   };
 
   // Render

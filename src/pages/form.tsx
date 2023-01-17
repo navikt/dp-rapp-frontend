@@ -154,7 +154,7 @@ export default function Page() {
   };
 
   const calculateStep = () => {
-    var shouldGoToStep = currentStep + 1;
+    let shouldGoToStep = currentStep + 1;
     if (currentStep == 0) {
       if (hasActivity()) {
         shouldGoToStep = 3;
