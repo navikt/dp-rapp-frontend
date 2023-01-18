@@ -125,7 +125,7 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ needs.calculateVersion.outputs.imageName }}
+          docker push ${{ needs.calculateVersion.outputs.imageName }}:${{ github.sha }}
 
   deploy:
     name: Deploy
