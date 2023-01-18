@@ -134,6 +134,13 @@ export default function Page() {
     }
   }, [isFetched]);
 
+  useEffect(() => {
+    //lagre datoer i activityselector hver gang man trykker ok i modalen, kanskje ikke optimalt at logikken ligger her?
+    if (isFetched && !isLoading && !showLoader && currentStep == 3) {
+      save();
+    }
+  }, [savedDates]);
+
   const startDateStr = format(startDate, "dd.MM.yy");
   const endDateStr = format(endDate, "dd.MM.yy");
   const hasActivity = () => {
