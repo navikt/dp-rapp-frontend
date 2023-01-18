@@ -170,6 +170,11 @@ export default function Page() {
         shouldGoToStep = 1;
       }
     }
+    if (currentStep == 1) {
+      if (hasActivity()) {
+        shouldGoToStep = 3;
+      }
+    }
     if (currentStep == 2 && !questionWork) {
       shouldGoToStep = 4;
     }
