@@ -1,9 +1,10 @@
 name: Build and deploy to dev
 
 on:
-  push:
-    branches:
-      - 'main'
+  #push funker ikke pga build-docker-image actionen krever enviroment variabel
+  #push:
+   # branches:
+    #  - 'main'
   workflow_dispatch:
     inputs:
       environment:
