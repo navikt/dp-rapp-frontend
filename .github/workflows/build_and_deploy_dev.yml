@@ -1,9 +1,10 @@
 name: Build and deploy to dev
 
 on:
-  push:
-    branches:
-      - 'master'
+  #push funker ikke pga build-docker-image actionen krever enviroment variabel
+  #push:
+   # branches:
+    #  - 'main'
   workflow_dispatch:
     inputs:
       environment:
@@ -11,7 +12,7 @@ on:
         required: true
         default: 'q2'
       bump_patch:
-        description: 'Skriv "bump" her for å bygge release og øke patchversjon på snapshot. Kun for master branch.'
+        description: 'Skriv "bump" her for å bygge release og øke patchversjon på snapshot. Kun for main branch.'
         required: false
         default: ''
 
@@ -21,7 +22,7 @@ env:
   ENVIRONMENT: ${{ github.event.inputs.environment }}
   CLUSTER: dev-gcp
   NAIS_FILE: .nais/nais.yaml
-  MAIN_BRANCH: refs/heads/master
+  MAIN_BRANCH: refs/heads/main
 
 jobs:
   calculateVersion:
@@ -186,6 +187,7 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add .
           git commit -m "Bump version fra Github Actions" -a
           git tag -a ${{ env.REPONAME }}-${{ needs.calculateVersion.outputs.releaseVersion }} -m ${{ env.REPONAME }}-${{ needs.calculateVersion.outputs.releaseVersion }}
 
