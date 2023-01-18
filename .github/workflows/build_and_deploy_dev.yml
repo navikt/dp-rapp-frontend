@@ -3,7 +3,7 @@ name: Build and deploy to dev
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
   workflow_dispatch:
     inputs:
       environment:
@@ -11,7 +11,7 @@ on:
         required: true
         default: 'q2'
       bump_patch:
-        description: 'Skriv "bump" her for å bygge release og øke patchversjon på snapshot. Kun for master branch.'
+        description: 'Skriv "bump" her for å bygge release og øke patchversjon på snapshot. Kun for main branch.'
         required: false
         default: ''
 
@@ -21,7 +21,7 @@ env:
   ENVIRONMENT: ${{ github.event.inputs.environment }}
   CLUSTER: dev-gcp
   NAIS_FILE: .nais/nais.yaml
-  MAIN_BRANCH: refs/heads/master
+  MAIN_BRANCH: refs/heads/main
 
 jobs:
   calculateVersion:
