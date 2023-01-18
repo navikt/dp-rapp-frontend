@@ -31,7 +31,7 @@ jobs:
     outputs:
       currentVersion: ${{ steps.packageVersion.outputs.current-version }}
       releaseVersion: ${{ steps.releaseVersion.outputs.version }}
-      imageName: ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ steps.releaseVersion.outputs.version }}
+      imageName: ghcr.io/${{ github.repository }}/${{ env.REPONAME }}:${{ steps.releaseVersion.outputs.version }}-${{ github.sha }}
     steps:
       - name: Check if correct branch
         if: github.event.inputs.bump_patch == 'bump' && github.ref != env.MAIN_BRANCH
@@ -126,7 +126,7 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ needs.calculateVersion.outputs.imageName }}:${{ github.sha }}
+          docker push ${{ needs.calculateVersion.outputs.imageName }}
 
   deploy:
     name: Deploy
