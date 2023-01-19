@@ -309,18 +309,16 @@ export default function Page() {
     );
   }
 
-  //tester om jeg kan vise dette, litt på gøy
-  const github_branch = process.env.NEXT_PUBLIC_GITHUB_BRANCH
-    ? process.env.NEXT_PUBLIC_GITHUB_BRANCH
-    : false;
+  //tester om jeg kan vise github branch, litt på gøy
 
   return (
     <main>
       <Panel>
         <strong>ADMINPANEL</strong>
-        {github_branch && (
+        {process.env.NEXT_PUBLIC_GITHUB_BRANCH && (
           <BodyShort>
-            Denne versjonen er bygget fra branch: {github_branch}
+            Denne versjonen er bygget fra branch:{" "}
+            {process.env.NEXT_PUBLIC_GITHUB_BRANCH}
           </BodyShort>
         )}
         <BodyShort>
