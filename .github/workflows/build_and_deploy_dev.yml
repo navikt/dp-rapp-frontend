@@ -116,6 +116,7 @@ jobs:
           else
             echo "'NAV_DEKORATOREN_ENV=dev\n'/'NEXT_PUBLIC_GITHUB_BRANCH='${{ env.BRANCHNAME }}" >> .env.production
           fi
+          echo cat .env.production
           docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
 
       - name: Log in to the Container registry
