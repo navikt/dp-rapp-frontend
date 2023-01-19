@@ -9,67 +9,50 @@ export default function Guidance() {
       <p>NAV trenger å vite en del informasjon, blablabla</p>
       <Accordion style={{ width: "100%" }}>
         <Accordion.Item>
-          <Accordion.Header>Hva må jeg rapportere som arbeid?</Accordion.Header>
+          <Accordion.Header>
+            <h3>Hva må jeg rapportere som arbeid?</h3>
+          </Accordion.Header>
           <Accordion.Content>
-            <h3
-              id="chapter-2"
-              className="chapter-header navds-heading navds-heading--medium navds-typo--spacing"
-            >
-              <strong>Spørsmål 1 - Arbeid</strong>
-            </h3>{" "}
+            <h4 className="chapter-header navds-heading navds-heading--medium navds-typo--spacing">
+              <strong>Arbeid</strong>
+            </h4>{" "}
+            <ul>
+              <li>Alle timer du har jobbet i perioden føres på meldekortet</li>
+              <li>
+                Timene rundes av til nærmeste halve time, er det midt mellom to
+                halve timer, runder du nedover.
+              </li>
+              <li>
+                Inntektsgivende arbeid skal føres i den perioden arbeidet er
+                utført, selv om inntekten kommer senere.
+              </li>
+              <li>
+                Får du lønn for flere timer enn du jobbet, skal du føre alle
+                timene du får lønn for.
+              </li>
+            </ul>
+            <h4 className="chapter-header navds-heading navds-heading--medium navds-typo--spacing">
+              <strong>Utbetalt lunsj</strong>
+            </h4>
             <p className="navds-body-long navds-typo--spacing">
-              Hvis du har vært i arbeid i perioden meldekortet gjelder for, må
-              du oppgi alle timene du har arbeidet hver dag. Dette gjelder alle
-              dager i uken, også lørdag og søndag, uansett når på døgnet du
-              jobber.
+              Regnes ikke som arbeid, skal ikke føres på meldekortet.
             </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              En time i arbeid skal føres som en time på meldekortet. Hvis du
-              ikke jobber nøyaktig hele eller halve timer, runder du av til
-              nærmeste halve time. Er det like langt til begge alternativer
-              runder du av nedover, ikke oppover.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Som hovedregel skal du alltid oppgi det antall timer du faktisk
-              arbeider. Hvis du mottar dagpenger oppgir du både lønnet og
-              ulønnet arbeid. Inntektsgivende arbeid skal føres i den perioden
-              arbeidet har blitt utført, selv om inntekten først kommer senere.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Hvis du får lønn for flere timer enn du faktisk har jobbet, skal
-              du føre alle timene du får lønn for. Dette gjelder også om
-              arbeidsgiveren din velger å betale kompensasjon for tapt lønn når
-              du er permittert.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              <strong>Ubetalt lunsj</strong>
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Ubetalt lunsjpause regnes ikke som arbeid, og du skal ikke føre
-              dette på meldekortet. Du skal føre betalt lunsjpause som arbeid på
-              meldekortet.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
+            <h4 className="navds-body-long navds-typo--spacing">
               <strong>Avspasering</strong>
-            </p>{" "}
+            </h4>{" "}
             <p className="navds-body-long navds-typo--spacing">
-              Avspasering føres som om du var på jobb.
+              Føres som om du var på jobb.
             </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
+            <h4 className="navds-body-long navds-typo--spacing">
               <strong>Hva regnes som arbeid?</strong>
-            </p>{" "}
+            </h4>{" "}
             <p className="navds-body-long navds-typo--spacing">
               Med «arbeid» mener vi aktivitet som kan gi eller som normalt ville
               ha vært betalt, som for eksempel:
             </p>
             <ul>
-              <li className="navds-body-long">
-                arbeid i vanlige arbeidsforhold (som lønnstaker)
-              </li>
-              <li className="navds-body-long">
-                arbeid i eget foretak (det har ikke noe å si om du har
-                registrert foretaket som ENK, ANS, AS, NUF eller noe annet)
-              </li>
+              <li className="navds-body-long">arbeid i arbeidsforhold</li>
+              <li className="navds-body-long">arbeid i eget foretak</li>
               <li className="navds-body-long">
                 gratisarbeid (for andre) når arbeidet vanligvis er betalt
               </li>
@@ -87,65 +70,49 @@ export default function Guidance() {
               </li>
               <li className="navds-body-long">omsorgsstønad</li>
             </ul>
-            <p className="navds-body-long navds-typo--spacing">
-              <strong>Lønnspliktperiode</strong>
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Hvis du er 100 prosent permittert skal du ikke føre timer på
-              meldekortet de dagene du får lønn fra arbeidsgiveren din i
-              arbeidsgivers lønnspliktperiode. Er du delvis permittert, skal du
-              føre de timene du faktisk jobber.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Mottar du allerede dagpenger når du blir permittert skal du føre
-              timer for de dagene du får lønn av arbeidsgiveren din. Dette
-              kalles arbeidsgivers lønnspliktperiode.{" "}
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
+            <h4>
               <strong>Fosterforeldre</strong>
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Du skal ikke føre opp timer som fosterforeldre på meldekortet.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              <strong>Etablere egen virksomhet</strong>
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Har du fått vedtak fra NAV om at du kan beholde{" "}
-              <a
-                href="https://www.nav.no/arbeid/no/dagpenger/#onsker-du-a-etablere-egen-virksomhet"
-                className="LenkeInline_lenkeInline__Rxp_M"
-              >
-                dagpenger mens du etablerer egen virksomhet
-              </a>
-              , skal du ikke føre på de timene du jobber i virksomheten på
-              meldekortet. Har du ikke fått vedtak fra NAV om at du kan beholde
-              dagpenger mens du etablerer egen virksomhet, skal du føre på alle
-              timer du jobber på meldekortet. Dette gjelder selv om du ikke tar
-              ut lønn eller om virksomheten går med underskudd.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              <strong>Formue og skattefri inntekt</strong>
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Du skal ikke føre opp rene inntekter fra formue, det samme gjelder
-              enkelte skattefrie inntekter på meldekortet. Eksempler er:
-            </p>
+            </h4>
             <ul>
-              <li className="navds-body-long">
-                utleie av fast eiendom utenfor virksomhet
-              </li>
-              <li className="navds-body-long">
-                renter, aksjeutbytte og annen avkastning av penger og
-                verdipapirer utenfor virksomhet
-              </li>
-              <li className="navds-body-long">
-                skattefri oppussing av egen bolig/fritidsbolig
+              <li>
+                Du skal ikke føre opp timer som fosterforeldre på meldekortet
               </li>
             </ul>
+            <h4 className="navds-body-long navds-typo--spacing">
+              <strong>Etablere egen virksomhet</strong>
+            </h4>
             <p className="navds-body-long navds-typo--spacing">
+              Har du fått vedtak om at du kan beholde dagpenger under
+              etablering?
+            </p>
+            <ul>
+              <li>Du skal ikke føre timene du jobber i virksomheten</li>
+            </ul>
+            <p>Har du ikke fått vedtak fra NAV?</p>
+            <ul>
+              <li>
+                Du skal føre alle timene du jobber i virksomheten, selv om du
+                ikke tar ut lønn og det går med underskudd.
+              </li>
+            </ul>
+            <h4>
+              <strong>Formue og skattefri inntekt</strong>
+            </h4>
+            <p>
+              Du skal ikke føre opp rene inntekter fra formue, det samme gjelder
+              enkelte skattefrie inntekter utenfor virksomhet. Eksempler er:
+            </p>
+            <ul>
+              <li>utleie av fast eiendom.</li>
+              <li>
+                renter, aksjeutbytte og annen avkastning av penger og
+                verdipapirer.
+              </li>
+              <li>skattefri oppussing av egen bolig/fritidsbolig</li>
+            </ul>
+            <h4 className="navds-body-long navds-typo--spacing">
               <strong>Ulønnet arbeid</strong>
-            </p>{" "}
+            </h4>{" "}
             <p className="navds-body-long navds-typo--spacing">
               Du skal ikke føre opp enkelte former for ulønnet arbeid på
               meldekortet. Eksempler er
@@ -162,18 +129,20 @@ export default function Guidance() {
               </li>
             </ul>
             <h4 className="navds-heading navds-heading--small navds-typo--spacing">
-              Naturalytelser
+              <strong>Naturalytelser</strong>
             </h4>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              Naturalytelser er goder som du mottar fra arbeidsgiveren din, som
-              for eksempel telefon eller bil.
-            </p>{" "}
-            <p className="navds-body-long navds-typo--spacing">
-              <strong>For permitterte:</strong> Hvis du har hatt goder i mindre
-              enn tre måneder før du ble permittert, regnes summen av disse
-              godene som timelønn. Antall timer som godene utgjør skal føres som
-              timer med arbeid på meldekortene.
-            </p>
+            <ul>
+              <li className="navds-body-long navds-typo--spacing">
+                Naturalytelser er goder som du mottar fra arbeidsgiveren din,
+                som for eksempel telefon eller bil.
+              </li>{" "}
+              <li className="navds-body-long navds-typo--spacing">
+                <strong>For permitterte:</strong> Hvis du har hatt goder i
+                mindre enn tre måneder før du ble permittert, regnes summen av
+                disse godene som timelønn. Antall timer som godene utgjør skal
+                føres som timer med arbeid på meldekortene.
+              </li>
+            </ul>
           </Accordion.Content>
         </Accordion.Item>
         <Accordion.Item>
