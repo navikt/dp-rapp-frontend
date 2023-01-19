@@ -6,7 +6,10 @@ export default function Guidance() {
       <Heading level="2" size="medium">
         Hva må man rapportere?
       </Heading>
-      <p>NAV trenger å vite en del informasjon, blablabla</p>
+      <p>
+        NAV trenger å vite en del informasjon, så det er viktig at man går inn
+        og leser seg opp på hva man skal rapportere.
+      </p>
       <Accordion style={{ width: "100%" }}>
         <Accordion.Item>
           <Accordion.Header>

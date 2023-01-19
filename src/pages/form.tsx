@@ -178,12 +178,6 @@ export default function Page() {
     if (currentStep == 2 && !questionWork) {
       shouldGoToStep = 4;
     }
-    if (currentStep == 3 && !hasActivity()) {
-      shouldGoToStep = 2;
-    }
-    if (isLoading) {
-      shouldGoToStep = 0;
-    }
     return shouldGoToStep;
   };
 

@@ -18,13 +18,16 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-
+/*Drit i color-scheme: dark enn så lenge, komponentene er ikke helt på stell enda*/
+/*@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
   * {
     background: var(--a-gray-900) !important;
     color: var(--a-gray-200) !important;
   }
-}
+}*/
 
 main {
   max-width: 90rem;

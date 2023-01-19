@@ -54,29 +54,13 @@ export default function StepSummary(props: CommonFormProps) {
   return (
     <>
       <Heading level="3" size="large">
-        Oppsummering
+        Send inn rapportering:
       </Heading>
 
       <Spacer />
-
-      <Panel>
-        <Heading spacing level="4" size="small">
-          Har du vært i aktivitet de siste 14 dager?
-        </Heading>
-        <BodyShort>{questionWork ? "Ja" : "Nei"}</BodyShort>
-      </Panel>
       <Panel className={styles.summary}>
         <ActivitySummary savedDates={savedDates} />
       </Panel>
-      <Panel className={styles.summary}>
-        <Heading spacing level="4" size="small">
-          Ønsker du fortsatt å være registrert hos NAV som arbeidssøker de neste
-          14 dager?
-        </Heading>
-        <BodyShort>{questionProceed ? "Ja" : "Nei"}</BodyShort>
-      </Panel>
-
-      <Spacer />
 
       <ConfirmationPanel
         label="Ja, jeg samtykker."

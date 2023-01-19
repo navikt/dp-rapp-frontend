@@ -25,17 +25,12 @@ export default function StepActivity(props: CommonFormProps) {
   };
 
   // Render
+  //todo: må ha en punktliste i description der, flytte det ut fra komponenten og heller bruke label for elns
   return (
     <>
-      <Heading level="3" size="large">
-        Aktivitet siste 14 dager
-      </Heading>
-
-      <Spacer />
-
       <RadioGroup
-        legend="Har du vært i annen aktivitet enn det å være arbeidssøker i løpet av denne perioden?"
-        description='Med "aktivitet" mener vi....'
+        legend="Aktivitet siste 14 dager"
+        description="Har du i løpet av denne perioden: arbeidet, tatt utdanning, hatt fravær eller vært i utlandet, vært syk"
         onChange={(val: boolean) => setQuestionWork(val)}
         value={questionWork}
         error={
