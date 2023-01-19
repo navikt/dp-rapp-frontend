@@ -5,7 +5,7 @@ export default function CancelButton() {
   return (
     <Panel>
       <Link href="/">
-        <b>Avbryt</b>
+        <b>Fortsett senere</b>
       </Link>
     </Panel>
   );

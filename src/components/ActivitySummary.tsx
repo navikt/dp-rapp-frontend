@@ -78,15 +78,13 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
       Ingen aktivitet utenom å være arbeidssøker
     </div>
   );
-  //: todo: flytte overskriften ut til de respektive stedene slik at vi kan ha forskjellig tekst i utfylling og oppsummering/innsending
   return (
-    <div>
-      <div className={styles.summaryHeader}>Sammenlagt for meldeperioden:</div>
+    <>
       {hasActivity() && summaryWork}
       {hasActivity() && summaryIllness}
       {hasActivity() && summaryMeasures}
       {hasActivity() && summaryVacation}
       {!hasActivity() && summaryNothing}
-    </div>
+    </>
   );
 }

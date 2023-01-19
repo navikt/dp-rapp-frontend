@@ -1,4 +1,4 @@
-import { BodyShort, ConfirmationPanel, Heading, Panel } from "@navikt/ds-react";
+import { BodyLong, ConfirmationPanel, Heading, Panel } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
@@ -11,9 +11,7 @@ import styles from "./StepSummary.module.css";
 
 export default function StepSummary(props: CommonFormProps) {
   const {
-    questionWork,
     savedDates,
-    questionProceed,
     questionConsent,
     setQuestionConsent,
     prevStep,
@@ -58,8 +56,13 @@ export default function StepSummary(props: CommonFormProps) {
       </Heading>
 
       <Spacer />
-      <Panel className={styles.summary}>
-        <ActivitySummary savedDates={savedDates} />
+      <Panel>
+        <Heading spacing size="medium" level="4">
+          Dette er det du har registrert for meldekortperioden:
+        </Heading>
+        <BodyLong className={styles.summary}>
+          <ActivitySummary savedDates={savedDates} />
+        </BodyLong>
       </Panel>
 
       <ConfirmationPanel

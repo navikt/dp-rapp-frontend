@@ -23,7 +23,7 @@ export default function StepFillDays(props: CommonFormProps) {
 
   // Validators
   const savedDatesValidated = () => {
-    return Object.keys(savedDates).length > 0;
+    return true; //Object.keys(savedDates).length > 0; <---Skal være lov å sende inn ingen aktivitet også
   };
 
   // Check form
@@ -48,6 +48,9 @@ export default function StepFillDays(props: CommonFormProps) {
         setSavedDates={setSavedDates}
       />
       <Panel className={styles.summary}>
+        <div className={styles.summaryHeader}>
+          Sammenlagt for meldeperioden:
+        </div>
         <ActivitySummary savedDates={savedDates} />
       </Panel>
 
