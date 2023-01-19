@@ -1,4 +1,4 @@
-import { Heading } from "@navikt/ds-react";
+import { BodyShort, Heading, Panel } from "@navikt/ds-react";
 import Divider from "../components/Divider";
 import StepActivity from "../components/StepActivity";
 import StepFillDays from "../components/StepFillDays";
@@ -37,12 +37,17 @@ export type CommonFormProps = {
   setQuestionProceed: Dispatch<SetStateAction<boolean | null>>;
   questionConsent: boolean | undefined;
   setQuestionConsent: Dispatch<SetStateAction<boolean | undefined>>;
+  mockKlarForInnsending: MeldekortState;
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
   send: FormEventHandler;
   showLoader: boolean;
   error: string;
 };
+export enum MeldekortState {
+  KLAR = "KLAR FOR INNSENDING",
+  IKKE_KLAR = "IKKE KLAR FOR INNSENDING ENDA",
+}
 
 export default function Page() {
   // TODO: Get ID from the earliest meldekort and set it as currentId
@@ -53,6 +58,10 @@ export default function Page() {
   // We have to add time (12:00) so as the date itself is not changed when converted from/to CET
   const startDate = new Date(2022, 11, 5, 12, 0);
   const endDate = new Date(2022, 11, 18, 12, 0);
+
+  // Dev variables for å mocke state
+  const [mockKlarForInnsending, setMockKlarForInnsending] =
+    useState<MeldekortState>(MeldekortState.KLAR);
 
   // Service variables
   const maxStep = 4;
@@ -270,6 +279,7 @@ export default function Page() {
   const commonFormProps: CommonFormProps = {
     startDate,
     endDate,
+    mockKlarForInnsending,
     questionWork,
     setQuestionWork,
     questionMeasures,
@@ -299,8 +309,24 @@ export default function Page() {
     );
   }
 
+  //tester om jeg kan vise dette, litt på gøy
+  const github_branch = process.env.NEXT_PUBLIC_GITHUB_BRANCH
+    ? process.env.NEXT_PUBLIC_GITHUB_BRANCH
+    : false;
+
   return (
     <main>
+      <Panel>
+        <strong>ADMINPANEL</strong>
+        {github_branch && (
+          <BodyShort>
+            Denne versjonen er bygget fra branch: {github_branch}
+          </BodyShort>
+        )}
+        <BodyShort>
+          Her kan du sette forskjellige states på meldekortet.
+        </BodyShort>
+      </Panel>
       <Heading level="1" size="xlarge">
         Dagpenger rapportering
       </Heading>

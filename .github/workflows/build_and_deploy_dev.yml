@@ -17,6 +17,7 @@ on:
         default: ''
 
 env:
+  BRANCHNAME: ${GITHUB_REF##*/}
   REPONAME: ${{ github.event.repository.name }}
   APPNAME: ${{ github.event.repository.name }}
   ENVIRONMENT: ${{ github.event.inputs.environment }}
@@ -113,7 +114,7 @@ jobs:
           if [[ ${{ env.ENVIRONMENT }} == 'p' ]]; then
             echo NAV_DEKORATOREN_ENV=prod >> .env.production
           else
-            echo NAV_DEKORATOREN_ENV=dev >> .env.production
+            echo "'NAV_DEKORATOREN_ENV=dev\n'/'NEXT_PUBLIC_GITHUB_BRANCH='${{ env.BRANCHNAME }}" >> .env.production
           fi
           docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
 
