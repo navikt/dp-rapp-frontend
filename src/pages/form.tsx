@@ -1,4 +1,4 @@
-import { BodyShort, Heading, Panel } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import Divider from "../components/Divider";
 import StepActivity from "../components/StepActivity";
 import StepFillDays from "../components/StepFillDays";
@@ -19,6 +19,7 @@ import { fromStringToDate } from "../utils/date.utils";
 import CenteredLoader from "../components/CenteredLoader";
 import StepIntroduction from "../components/StepIntroduction";
 import Guidance from "../components/Guidance";
+import AdminPanel from "../components/AdminPanel";
 
 export type CommonFormProps = {
   startDate: Date;
@@ -38,6 +39,7 @@ export type CommonFormProps = {
   questionConsent: boolean | undefined;
   setQuestionConsent: Dispatch<SetStateAction<boolean | undefined>>;
   mockKlarForInnsending: MeldekortState;
+  setMockKlarForInnsending: Dispatch<SetStateAction<MeldekortState>>;
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
   send: FormEventHandler;
@@ -280,6 +282,7 @@ export default function Page() {
     startDate,
     endDate,
     mockKlarForInnsending,
+    setMockKlarForInnsending,
     questionWork,
     setQuestionWork,
     questionMeasures,
@@ -313,18 +316,6 @@ export default function Page() {
 
   return (
     <main>
-      <Panel>
-        <strong>ADMINPANEL</strong>
-        {process.env.NEXT_PUBLIC_GITHUB_BRANCH && (
-          <BodyShort>
-            Denne versjonen er bygget fra branch:{" "}
-            {process.env.NEXT_PUBLIC_GITHUB_BRANCH}
-          </BodyShort>
-        )}
-        <BodyShort>
-          Her kan du sette forskjellige states på meldekortet.
-        </BodyShort>
-      </Panel>
       <Heading level="1" size="xlarge">
         Dagpenger rapportering
       </Heading>
@@ -341,6 +332,7 @@ export default function Page() {
       {showReceipt && <Receipt />}
       {!showReceipt && <CancelButton />}
       {currentStep == 3 && <Guidance />}
+      <AdminPanel {...commonFormProps} />
     </main>
   );
 }
