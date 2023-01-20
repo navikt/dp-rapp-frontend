@@ -116,7 +116,7 @@ jobs:
           else
             echo NAV_DEKORATOREN_ENV=dev >> .env.production
           fi
-          docker build --build-arg GITHUB_BRANCH=${BRANCHNAME} -t ${{ needs.calculateVersion.outputs.imageName }} .
+          docker build --build-arg GITHUB_BRANCH=${{ env.BRANCHNAME }} -t ${{ needs.calculateVersion.outputs.imageName }} .
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
