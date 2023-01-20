@@ -105,6 +105,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ calculateVersion ]
     steps:
+      - name: build dev env string
+        run: |
+          MY_STRING=$(cat << EOF
+          NAV_DEKORATOREN_ENV=dev
+          NEXT_PUBLIC_GITHUB_BRANCH=${{ env.BRANCHNAME }}
+          EOF
+          )
+          MY_STRING="${MY_STRING//'%'/'%25'}"
+          MY_STRING="${MY_STRING//$'\n'/'%0A'}"
+          MY_STRING="${MY_STRING//$'\r'/'%0D'}"
+          echo "::set-output name=content::$MY_STRING"
+          id: string_dev_env
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -114,8 +126,7 @@ jobs:
           if [[ ${{ env.ENVIRONMENT }} == 'p' ]]; then
             echo NAV_DEKORATOREN_ENV=prod >> .env.production
           else
-            echo "NAV_DEKORATOREN_ENV=dev\n"\
-                 "NEXT_PUBLIC_GITHUB_BRANCH=${{ env.BRANCHNAME }}" >> .env.production
+            echo ${{ steps.string_dev_env.outputs.content }} >> .env.production
           fi
           cat .env.production
           docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
