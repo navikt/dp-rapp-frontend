@@ -105,17 +105,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ calculateVersion ]
     steps:
-      - name: build dev env string
-        id: my_string
-        run: |
-          MY_STRING=$(cat << EOF
-          NAV_DEKORATOREN_ENV=dev
-          NEXT_PUBLIC_GITHUB_BRANCH=${{ env.BRANCHNAME }}
-          EOF
-          )
-          echo "MY_STRING<<EOF" >> $GITHUB_ENV
-          echo "$MY_STRING" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -125,9 +114,8 @@ jobs:
           if [[ ${{ env.ENVIRONMENT }} == 'p' ]]; then
             echo NAV_DEKORATOREN_ENV=prod >> .env.production
           else
-            echo ${{ env.MY_STRING }} >> .env.production
+            echo NAV_DEKORATOREN_ENV=dev >> .env.production
           fi
-          cat .env.production
           docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
 
       - name: Log in to the Container registry
