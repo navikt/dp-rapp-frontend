@@ -1,3 +1,5 @@
+# you could give this a default value as well
+ARG GITHUB_BRANCH
 # Install dependencies only when needed
 FROM node:18-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -16,6 +18,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_PUBLIC_GITHUB_BRANCH=$GITHUB_BRANCH
 
 RUN npm run build
 
@@ -26,6 +29,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_PUBLIC_GITHUB_BRANCH=$GITHUB_BRANCH
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
