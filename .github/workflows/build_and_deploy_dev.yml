@@ -106,6 +106,7 @@ jobs:
     needs: [ calculateVersion ]
     steps:
       - name: build dev env string
+        id: my_string
         run: |
           MY_STRING=$(cat << EOF
           NAV_DEKORATOREN_ENV=dev
@@ -115,7 +116,6 @@ jobs:
           echo "MY_STRING<<EOF" >> $GITHUB_ENV
           echo "$MY_STRING" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          id: my_string
       - name: Checkout
         uses: actions/checkout@v3
 
