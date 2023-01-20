@@ -107,15 +107,14 @@ jobs:
     steps:
       - name: build dev env string
         run: |
-          MY_STRING=$(cat << EOF
+          STRING_DEV_ENV=$(cat << EOF
           NAV_DEKORATOREN_ENV=dev
           NEXT_PUBLIC_GITHUB_BRANCH=${{ env.BRANCHNAME }}
           EOF
           )
-          MY_STRING="${MY_STRING//'%'/'%25'}"
-          MY_STRING="${MY_STRING//$'\n'/'%0A'}"
-          MY_STRING="${MY_STRING//$'\r'/'%0D'}"
-          echo "::set-output name=content::$MY_STRING"
+          echo "MY_STRING<<EOF" >> $GITHUB_ENV
+          echo "$MY_STRING" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           id: string_dev_env
       - name: Checkout
         uses: actions/checkout@v3
@@ -126,7 +125,7 @@ jobs:
           if [[ ${{ env.ENVIRONMENT }} == 'p' ]]; then
             echo NAV_DEKORATOREN_ENV=prod >> .env.production
           else
-            echo ${{ steps.string_dev_env.outputs.content }} >> .env.production
+            echo ${{ env.STRING_DEV_ENV }} >> .env.production
           fi
           cat .env.production
           docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
