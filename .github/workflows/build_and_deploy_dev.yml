@@ -107,7 +107,7 @@ jobs:
     steps:
       - name: build dev env string
         run: |
-          STRING_DEV_ENV=$(cat << EOF
+          MY_STRING=$(cat << EOF
           NAV_DEKORATOREN_ENV=dev
           NEXT_PUBLIC_GITHUB_BRANCH=${{ env.BRANCHNAME }}
           EOF
@@ -115,7 +115,7 @@ jobs:
           echo "MY_STRING<<EOF" >> $GITHUB_ENV
           echo "$MY_STRING" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          id: string_dev_env
+          id: my_string
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -125,7 +125,7 @@ jobs:
           if [[ ${{ env.ENVIRONMENT }} == 'p' ]]; then
             echo NAV_DEKORATOREN_ENV=prod >> .env.production
           else
-            echo ${{ env.STRING_DEV_ENV }} >> .env.production
+            echo ${{ env.MY_STRING }} >> .env.production
           fi
           cat .env.production
           docker build -t ${{ needs.calculateVersion.outputs.imageName }} .
