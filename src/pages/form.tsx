@@ -334,7 +334,6 @@ export default function Page() {
       {currentStep == 4 && <StepSummary {...commonFormProps} />}
       {currentStep == 0 && <p>Laster</p>}
       {showReceipt && <Receipt />}
-      {!showReceipt && <CancelButton />}
       {currentStep == 3 && <Guidance />}
       <AdminPanel {...commonFormProps} />
     </main>

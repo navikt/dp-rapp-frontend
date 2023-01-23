@@ -1,4 +1,4 @@
-import { Button, Panel } from "@navikt/ds-react";
+import { Button, Link, LinkPanel, Panel } from "@navikt/ds-react";
 import { Back, Next } from "@navikt/ds-icons";
 import { FormEventHandler } from "react";
 import styles from "./NavPanelWithButtons.module.css";
@@ -25,20 +25,6 @@ export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
     );
   }
 
-  let backButton = <div />;
-  if (props.backOnClick != undefined) {
-    backButton = (
-      <Button
-        icon={<Back aria-hidden />}
-        variant="secondary"
-        type="button"
-        onClick={props.backOnClick}
-      >
-        {props.backText}
-      </Button>
-    );
-  }
-
   let nextButton = <div />;
   if (props.nextOnClick != undefined) {
     nextButton = (
@@ -62,7 +48,7 @@ export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
         </div>
       )}
       <div className={styles.buttons}>
-        {backButton}
+        <Link href="/">Fortsett senere</Link>
         {nextButton}
       </div>
     </Panel>
