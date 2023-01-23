@@ -41,25 +41,29 @@ export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
   let nextButton = <div />;
   if (props.nextOnClick != undefined) {
     nextButton = (
-      <>
-        {props.nextDisabled && <p>Kan ikke sende meldekort før 14. februar</p>}
-        <Button
-          icon={<Next aria-hidden />}
-          iconPosition="right"
-          type="button"
-          onClick={props.nextOnClick}
-          disabled={props.nextDisabled}
-        >
-          {props.nextText}
-        </Button>
-      </>
+      <Button
+        icon={<Next aria-hidden />}
+        iconPosition="right"
+        type="button"
+        onClick={props.nextOnClick}
+        disabled={props.nextDisabled}
+      >
+        {props.nextText}
+      </Button>
     );
   }
 
   return (
     <Panel border className="navds-date__caption navds-link-panel__description">
-      {backButton}
-      {nextButton}
+      {props.nextDisabled && (
+        <div>
+          <p>Kan ikke sende meldekort før 24. desember!</p>
+        </div>
+      )}
+      <div>
+        {backButton}
+        {nextButton}
+      </div>
     </Panel>
   );
 }
