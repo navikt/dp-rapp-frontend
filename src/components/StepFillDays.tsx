@@ -7,6 +7,7 @@ import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 import ActivitySummary from "./ActivitySummary";
+import { MeldekortState } from "../models/Data";
 
 export default function StepFillDays(props: CommonFormProps) {
   const {
@@ -17,6 +18,7 @@ export default function StepFillDays(props: CommonFormProps) {
     prevStep,
     nextStep,
     showLoader,
+    mockKlarForInnsending,
   } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -66,7 +68,8 @@ export default function StepFillDays(props: CommonFormProps) {
       <NavPanelWithButtons
         backText="Forrige steg"
         backOnClick={prevStep}
-        nextText="Neste steg"
+        nextText="Send inn"
+        nextDisabled={mockKlarForInnsending === MeldekortState.IKKE_KLAR}
         nextOnClick={checkForm}
         showLoader={showLoader}
       />

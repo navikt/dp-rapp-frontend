@@ -13,14 +13,22 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ActivityType, Data, Day, SavedDates } from "../models/Data";
+import {
+  ActivityType,
+  Data,
+  Day,
+  MeldekortState,
+  SavedDates,
+} from "../models/Data";
 import { LoadedData } from "../models/LoadedData";
 import { fromStringToDate } from "../utils/date.utils";
 import CenteredLoader from "../components/CenteredLoader";
 import StepIntroduction from "../components/StepIntroduction";
 import Guidance from "../components/Guidance";
+import AdminPanel from "../components/AdminPanel";
 
 export type CommonFormProps = {
+  calculateStep: () => number;
   startDate: Date;
   endDate: Date;
   questionWork: boolean | null;
@@ -37,6 +45,8 @@ export type CommonFormProps = {
   setQuestionProceed: Dispatch<SetStateAction<boolean | null>>;
   questionConsent: boolean | undefined;
   setQuestionConsent: Dispatch<SetStateAction<boolean | undefined>>;
+  mockKlarForInnsending: MeldekortState;
+  setMockKlarForInnsending: Dispatch<SetStateAction<MeldekortState>>;
   prevStep: FormEventHandler;
   nextStep: FormEventHandler;
   send: FormEventHandler;
@@ -53,6 +63,10 @@ export default function Page() {
   // We have to add time (12:00) so as the date itself is not changed when converted from/to CET
   const startDate = new Date(2022, 11, 5, 12, 0);
   const endDate = new Date(2022, 11, 18, 12, 0);
+
+  // Dev variables for å mocke state
+  const [mockKlarForInnsending, setMockKlarForInnsending] =
+    useState<MeldekortState>(MeldekortState.KLAR);
 
   // Service variables
   const maxStep = 4;
@@ -268,8 +282,11 @@ export default function Page() {
   };
 
   const commonFormProps: CommonFormProps = {
+    calculateStep,
     startDate,
     endDate,
+    mockKlarForInnsending,
+    setMockKlarForInnsending,
     questionWork,
     setQuestionWork,
     questionMeasures,
@@ -299,6 +316,8 @@ export default function Page() {
     );
   }
 
+  //tester om jeg kan vise github branch, litt på gøy
+
   return (
     <main>
       <Heading level="1" size="xlarge">
@@ -317,6 +336,7 @@ export default function Page() {
       {showReceipt && <Receipt />}
       {!showReceipt && <CancelButton />}
       {currentStep == 3 && <Guidance />}
+      <AdminPanel {...commonFormProps} />
     </main>
   );
 }

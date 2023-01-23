@@ -1,12 +1,20 @@
-import { Heading, Radio, RadioGroup } from "@navikt/ds-react";
+import { Radio, RadioGroup } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import NavPanelWithButtons from "./NavPanelWithButtons";
 import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
+import { MeldekortState } from "../models/Data";
 
 export default function StepActivity(props: CommonFormProps) {
-  const { questionWork, setQuestionWork, prevStep, nextStep, showLoader } =
-    props;
+  const {
+    questionWork,
+    setQuestionWork,
+    prevStep,
+    nextStep,
+    showLoader,
+    calculateStep,
+    mockKlarForInnsending,
+  } = props;
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -22,6 +30,15 @@ export default function StepActivity(props: CommonFormProps) {
     if (questionWorkValidated()) {
       nextStep(event);
     }
+  };
+  const nesteKnapp = () => {
+    return calculateStep() === 4 ? "SEND INN" : "GÅ VIDERE";
+  };
+  const nesteKnappDisabled = () => {
+    return (
+      calculateStep() === 4 &&
+      mockKlarForInnsending === MeldekortState.IKKE_KLAR
+    );
   };
 
   // Render
@@ -42,13 +59,12 @@ export default function StepActivity(props: CommonFormProps) {
         <Radio value={true}>Ja</Radio>
         <Radio value={false}>Nei</Radio>
       </RadioGroup>
-
       <Spacer />
-
       <NavPanelWithButtons
         backText="Forrige steg"
         backOnClick={prevStep}
-        nextText="Neste steg"
+        nextText={nesteKnapp()}
+        nextDisabled={nesteKnappDisabled()}
         nextOnClick={checkForm}
         showLoader={showLoader}
       />
