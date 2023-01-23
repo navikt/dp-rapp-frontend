@@ -28,7 +28,7 @@ import Guidance from "../components/Guidance";
 import AdminPanel from "../components/AdminPanel";
 
 export type CommonFormProps = {
-  calculateStep: Function;
+  calculateStep: () => number;
   startDate: Date;
   endDate: Date;
   questionWork: boolean | null;
