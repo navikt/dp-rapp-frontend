@@ -32,7 +32,7 @@ export default function StepActivity(props: CommonFormProps) {
     }
   };
   const nesteKnapp = () => {
-    return calculateStep() === 4 ? "SEND INN" : "GÅ VIDERE";
+    return calculateStep() === 4 ? "Send inn" : "Gå videre";
   };
   const nesteKnappDisabled = () => {
     return (

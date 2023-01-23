@@ -105,7 +105,7 @@ export default function StepIntroduction(props: CommonFormProps) {
       <Spacer />
 
       <NavPanelWithButtons
-        nextText="Neste steg"
+        nextText={"Gå videre"}
         nextOnClick={checkForm}
         showLoader={showLoader}
       />

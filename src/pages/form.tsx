@@ -4,7 +4,6 @@ import StepActivity from "../components/StepActivity";
 import StepFillDays from "../components/StepFillDays";
 import StepSummary from "../components/StepSummary";
 import Receipt from "../components/Receipt";
-import CancelButton from "../components/CancelButton";
 import { format, getISOWeek } from "date-fns";
 import {
   Dispatch,
@@ -189,7 +188,7 @@ export default function Page() {
         shouldGoToStep = 3;
       }
     }
-    if (currentStep == 2 && !questionWork) {
+    if (currentStep == 2 && questionWork == false) {
       shouldGoToStep = 4;
     }
     return shouldGoToStep;
