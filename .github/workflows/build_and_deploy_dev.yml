@@ -17,7 +17,6 @@ on:
         default: ''
 
 env:
-  BRANCHNAME: ${{ github.ref }}
   REPONAME: ${{ github.event.repository.name }}
   APPNAME: ${{ github.event.repository.name }}
   ENVIRONMENT: ${{ github.event.inputs.environment }}
