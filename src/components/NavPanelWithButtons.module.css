@@ -1,0 +1,19 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel > * {
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}

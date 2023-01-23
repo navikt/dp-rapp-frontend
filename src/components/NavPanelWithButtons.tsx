@@ -1,6 +1,7 @@
-import { Button, Panel } from "@navikt/ds-react";
+import { Button, Link, LinkPanel, Panel } from "@navikt/ds-react";
 import { Back, Next } from "@navikt/ds-icons";
 import { FormEventHandler } from "react";
+import styles from "./NavPanelWithButtons.module.css";
 
 export type NavPanelWithSubmitProps = {
   backText?: string;
@@ -24,20 +25,6 @@ export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
     );
   }
 
-  let backButton = <div />;
-  if (props.backOnClick != undefined) {
-    backButton = (
-      <Button
-        icon={<Back aria-hidden />}
-        variant="secondary"
-        type="button"
-        onClick={props.backOnClick}
-      >
-        {props.backText}
-      </Button>
-    );
-  }
-
   let nextButton = <div />;
   if (props.nextOnClick != undefined) {
     nextButton = (
@@ -54,14 +41,14 @@ export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
   }
 
   return (
-    <Panel border className="navds-date__caption navds-link-panel__description">
+    <Panel border className={styles.panel}>
       {props.nextDisabled && (
-        <div>
+        <div className={styles.info}>
           <p>Kan ikke sende meldekort før 24. desember!</p>
         </div>
       )}
-      <div>
-        {backButton}
+      <div className={styles.buttons}>
+        <Link href="/">Fortsett senere</Link>
         {nextButton}
       </div>
     </Panel>
