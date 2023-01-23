@@ -22,6 +22,7 @@ import Guidance from "../components/Guidance";
 import AdminPanel from "../components/AdminPanel";
 
 export type CommonFormProps = {
+  calculateStep: Function;
   startDate: Date;
   endDate: Date;
   questionWork: boolean | null;
@@ -279,6 +280,7 @@ export default function Page() {
   };
 
   const commonFormProps: CommonFormProps = {
+    calculateStep,
     startDate,
     endDate,
     mockKlarForInnsending,

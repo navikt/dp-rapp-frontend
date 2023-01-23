@@ -8,40 +8,58 @@ export type NavPanelWithSubmitProps = {
   nextText?: string;
   nextOnClick?: FormEventHandler;
   showLoader?: boolean;
-}
+  nextDisabled?: boolean;
+};
 
 export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
   if (props.showLoader) {
     return (
-      <Panel border className="navds-date__caption navds-link-panel__description">
+      <Panel
+        border
+        className="navds-date__caption navds-link-panel__description"
+      >
         <div />
         <Button loading>Loading</Button>
       </Panel>
     );
   }
 
-  let backButton = <div />
+  let backButton = <div />;
   if (props.backOnClick != undefined) {
-    backButton = <Button icon={<Back aria-hidden />} variant="secondary" type="button" onClick={props.backOnClick}>
-      {props.backText}
-    </Button>
+    backButton = (
+      <Button
+        icon={<Back aria-hidden />}
+        variant="secondary"
+        type="button"
+        onClick={props.backOnClick}
+      >
+        {props.backText}
+      </Button>
+    );
   }
 
-  let nextButton = <div />
+  let nextButton = <div />;
   if (props.nextOnClick != undefined) {
-    nextButton = <Button icon={<Next aria-hidden />} iconPosition="right" type="button" onClick={props.nextOnClick}>
-      {props.nextText}
-    </Button>
+    nextButton = (
+      <>
+        {props.nextDisabled && <p>Kan ikke sende meldekort før 14. februar</p>}
+        <Button
+          icon={<Next aria-hidden />}
+          iconPosition="right"
+          type="button"
+          onClick={props.nextOnClick}
+          disabled={props.nextDisabled}
+        >
+          {props.nextText}
+        </Button>
+      </>
+    );
   }
 
   return (
     <Panel border className="navds-date__caption navds-link-panel__description">
-      {
-        backButton
-      }
-      {
-        nextButton
-      }
+      {backButton}
+      {nextButton}
     </Panel>
   );
 }
