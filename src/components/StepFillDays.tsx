@@ -4,9 +4,10 @@ import Spacer from "./Spacer";
 import ActivitySelector from "./ActivitySelector";
 import Error from "./Error";
 import NavPanelWithButtons from "./NavPanelWithButtons";
-import { CommonFormProps, MeldekortState } from "../pages/form";
+import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
 import ActivitySummary from "./ActivitySummary";
+import { MeldekortState } from "../models/Data";
 
 export default function StepFillDays(props: CommonFormProps) {
   const {

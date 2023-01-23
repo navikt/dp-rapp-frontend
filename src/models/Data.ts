@@ -6,21 +6,26 @@ export type Data = {
   questionVacation: boolean | null;
   days: Day[];
   questionProceed: boolean | null;
-}
+};
 
 export type Day = {
   date: Date;
   type: ActivityType;
   hours: number | null;
-}
+};
 
 export enum ActivityType {
   WORK = "WORK",
   ILLNESS = "ILLNESS",
   MEASURES = "MEASURES",
-  VACATION = "VACATION"
+  VACATION = "VACATION",
+}
+
+export enum MeldekortState {
+  KLAR = "KLAR FOR INNSENDING",
+  IKKE_KLAR = "IKKE KLAR FOR INNSENDING ENDA",
 }
 
 export type SavedDates = {
-  [key: number]: { type: ActivityType, hours: number | null };
-}
+  [key: number]: { type: ActivityType; hours: number | null };
+};

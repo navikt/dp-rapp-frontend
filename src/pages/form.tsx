@@ -13,7 +13,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { ActivityType, Data, Day, SavedDates } from "../models/Data";
+import {
+  ActivityType,
+  Data,
+  Day,
+  MeldekortState,
+  SavedDates,
+} from "../models/Data";
 import { LoadedData } from "../models/LoadedData";
 import { fromStringToDate } from "../utils/date.utils";
 import CenteredLoader from "../components/CenteredLoader";
@@ -47,10 +53,6 @@ export type CommonFormProps = {
   showLoader: boolean;
   error: string;
 };
-export enum MeldekortState {
-  KLAR = "KLAR FOR INNSENDING",
-  IKKE_KLAR = "IKKE KLAR FOR INNSENDING ENDA",
-}
 
 export default function Page() {
   // TODO: Get ID from the earliest meldekort and set it as currentId

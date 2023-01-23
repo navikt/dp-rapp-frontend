@@ -1,8 +1,9 @@
 import { Radio, RadioGroup } from "@navikt/ds-react";
 import Spacer from "./Spacer";
 import NavPanelWithButtons from "./NavPanelWithButtons";
-import { CommonFormProps, MeldekortState } from "../pages/form";
+import { CommonFormProps } from "../pages/form";
 import { FormEvent, useState } from "react";
+import { MeldekortState } from "../models/Data";
 
 export default function StepActivity(props: CommonFormProps) {
   const {
