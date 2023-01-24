@@ -32,7 +32,7 @@ export default function StepActivity(props: CommonFormProps) {
     }
   };
   const nesteKnapp = () => {
-    return calculateStep() === 4 ? "Send inn" : "Gå videre";
+    return calculateStep() === 4 ? "Send inn" : "Registrer aktivitet";
   };
   const nesteKnappDisabled = () => {
     return (
@@ -46,8 +46,8 @@ export default function StepActivity(props: CommonFormProps) {
   return (
     <>
       <RadioGroup
-        legend="Aktivitet siste 14 dager"
-        description="Har du i løpet av denne perioden: arbeidet, tatt utdanning, hatt fravær eller vært i utlandet, vært syk"
+        legend="Aktivitet i perioden"
+        description="Har du i løpet av perioden arbeidet, tatt utdanning, vært syk eller hatt ferie/utenlandsopphold?"
         onChange={(val: boolean) => setQuestionWork(val)}
         value={questionWork}
         error={

@@ -66,7 +66,7 @@ export default function StepSummary(props: CommonFormProps) {
       </Panel>
 
       <ConfirmationPanel
-        label="Ja, jeg samtykker."
+        label="Jeg bekrefter at jeg har lest og forstått veiledningstekstene"
         checked={questionConsent}
         onChange={() => setQuestionConsent((x) => !x)}
         error={
@@ -75,8 +75,15 @@ export default function StepSummary(props: CommonFormProps) {
           "Du må samtykke før du kan fortsette."
         }
       >
-        For å komme videre må du gi oss lov til å hente inn og bruke
-        opplysninger om deg.
+        <p>
+          Jeg er kjent med at hvis opplysningene jeg har oppgitt ikke er riktige
+          og fullstendige kan jeg miste retten til stønad fra NAV.
+        </p>
+        <p>
+          {" "}
+          Jeg er også klar over at jeg må betale tilbake det jeg har fått
+          feilaktig utbetalt.
+        </p>
       </ConfirmationPanel>
 
       <Spacer />
