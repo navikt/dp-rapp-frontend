@@ -7,7 +7,6 @@ import { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { ActivityType } from "../models/Data";
 import ActivitySummary from "./ActivitySummary";
-import styles from "./StepSummary.module.css";
 
 export default function StepSummary(props: CommonFormProps) {
   const {
@@ -56,11 +55,12 @@ export default function StepSummary(props: CommonFormProps) {
       </Heading>
 
       <Spacer />
+
       <Panel>
         <Heading spacing size="medium" level="4">
           Dette er det du har registrert for meldekortperioden:
         </Heading>
-        <BodyLong className={styles.summary}>
+        <BodyLong>
           <ActivitySummary savedDates={savedDates} />
         </BodyLong>
       </Panel>

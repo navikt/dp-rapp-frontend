@@ -1,5 +1,6 @@
-import styles from "./ActivitySelector.module.css";
+import styles from "./Activity.module.css";
 import { ActivityType, SavedDates } from "../models/Data";
+import { Panel } from "@navikt/ds-react";
 
 export type ActivitySummaryProps = {
   savedDates: SavedDates;
@@ -13,8 +14,7 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
   let measuresDays = 0;
   let vacationDays = 0;
   const hasActivity = () => {
-    if (workHours + illnessDays + measuresDays + vacationDays > 0) return true;
-    return false;
+    return workHours + illnessDays + measuresDays + vacationDays > 0;
   };
   for (const key in savedDates) {
     const currentData = savedDates[key];
@@ -79,12 +79,12 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
     </div>
   );
   return (
-    <>
+    <Panel className={styles.summary}>
       {hasActivity() && summaryWork}
       {hasActivity() && summaryIllness}
       {hasActivity() && summaryMeasures}
       {hasActivity() && summaryVacation}
       {!hasActivity() && summaryNothing}
-    </>
+    </Panel>
   );
 }

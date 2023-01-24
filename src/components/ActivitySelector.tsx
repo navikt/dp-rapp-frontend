@@ -1,4 +1,4 @@
-import styles from "./ActivitySelector.module.css";
+import styles from "./Activity.module.css";
 import {
   ChangeEvent,
   Dispatch,

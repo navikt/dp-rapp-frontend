@@ -315,8 +315,6 @@ export default function Page() {
     );
   }
 
-  //tester om jeg kan vise github branch, litt på gøy
-
   return (
     <main>
       <Heading level="1" size="xlarge">
@@ -326,7 +324,9 @@ export default function Page() {
         Uke {getISOWeek(startDate)} - {getISOWeek(endDate)} ({startDateStr} -{" "}
         {endDateStr})
       </Heading>
+
       <Divider />
+
       {currentStep == 1 && <StepIntroduction {...commonFormProps} />}
       {currentStep == 2 && <StepActivity {...commonFormProps} />}
       {currentStep == 3 && <StepFillDays {...commonFormProps} />}
@@ -334,6 +334,7 @@ export default function Page() {
       {currentStep == 0 && <p>Laster</p>}
       {showReceipt && <Receipt />}
       {currentStep == 3 && <Guidance />}
+
       <AdminPanel {...commonFormProps} />
     </main>
   );
