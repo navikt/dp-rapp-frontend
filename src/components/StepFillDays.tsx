@@ -68,7 +68,7 @@ export default function StepFillDays(props: CommonFormProps) {
       <NavPanelWithButtons
         backText="Forrige steg"
         backOnClick={prevStep}
-        nextText="Send inn"
+        nextText="Til innsending"
         nextDisabled={mockKlarForInnsending === MeldekortState.IKKE_KLAR}
         nextOnClick={checkForm}
         showLoader={showLoader}

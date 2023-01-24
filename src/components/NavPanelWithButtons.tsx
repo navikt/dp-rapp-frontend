@@ -44,7 +44,7 @@ export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
     <Panel border className={styles.panel}>
       {props.nextDisabled && (
         <div className={styles.info}>
-          <p>Kan ikke sende meldekort før 24. desember!</p>
+          <p>Meldekortet kan ikke sendes inn før i morgen!</p>
         </div>
       )}
       <div className={styles.buttons}>
