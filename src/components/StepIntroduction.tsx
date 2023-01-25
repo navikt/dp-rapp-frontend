@@ -22,38 +22,6 @@ export default function StepIntroduction(props: CommonFormProps) {
       </Heading>
       <Panel>
         <Heading spacing level="4" size="small">
-          Hvorfor må man rapportere?
-        </Heading>
-        <BodyShort>
-          <ul>
-            <li>
-              Du må rapportere slik at vi kan utbetale riktig sum med penger.
-            </li>
-            <li>
-              Du må opprettholde meldeplikten din som mottaker av dagpenger.
-            </li>
-          </ul>
-        </BodyShort>
-      </Panel>
-      <Panel>
-        <Heading spacing level="4" size="small">
-          Hva må man rapportere?
-        </Heading>
-        <BodyShort>
-          NAV trenger å vite en del informasjon, så det er viktig at man går inn
-          og leser seg opp på hva man skal rapportere. Mer info om hva og
-          hvordan finner man nederst på siden hvor man rapporterer
-          <p>Kort sagt så skal man rapportere:</p>
-          <ul>
-            <li>Timer man har arbeidet</li>
-            <li>Tiltak, kurs og utdanning</li>
-            <li>Sykdom</li>
-            <li>Ferie og annet fravær</li>
-          </ul>
-        </BodyShort>
-      </Panel>
-      <Panel>
-        <Heading spacing level="4" size="small">
           Hvordan rapporterer man?
         </Heading>
         <BodyShort>
@@ -81,6 +49,40 @@ export default function StepIntroduction(props: CommonFormProps) {
           </ul>
         </BodyShort>
       </Panel>
+
+      <Panel>
+        <Heading spacing level="4" size="small">
+          Hva må man rapportere?
+        </Heading>
+        <BodyShort>
+          NAV trenger å vite en del informasjon, så det er viktig at man går inn
+          og leser seg opp på hva man skal rapportere. Mer info om hva og
+          hvordan finner man nederst på siden hvor man rapporterer
+          <p>Kort sagt så skal man rapportere:</p>
+          <ul>
+            <li>Timer man har arbeidet</li>
+            <li>Tiltak, kurs og utdanning</li>
+            <li>Sykdom</li>
+            <li>Ferie og annet fravær</li>
+          </ul>
+        </BodyShort>
+      </Panel>
+      <Panel>
+        <Heading spacing level="4" size="small">
+          Hvorfor må man rapportere?
+        </Heading>
+        <BodyShort>
+          <ul>
+            <li>
+              Du må rapportere slik at vi kan utbetale riktig sum med penger.
+            </li>
+            <li>
+              Du må opprettholde meldeplikten din som mottaker av dagpenger.
+            </li>
+          </ul>
+        </BodyShort>
+      </Panel>
+
       <Panel>
         <BodyShort>
           Husk å sjekke ut informasjonen nederst på rapporteringssiden for hva
