@@ -115,7 +115,7 @@ export default function ActivitySelector(props: ActivitySelectorProps) {
       label="Antall timer"
       type="number"
       step="0.5"
-      value={selectedHours || 0}
+      value={selectedHours || ''}
       onChange={updateHours}
     />
   );
