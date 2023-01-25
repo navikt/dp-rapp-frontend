@@ -12,6 +12,7 @@ export default function StepIntroduction(props: CommonFormProps) {
   const checkForm = (event: FormEvent) => {
     setQuestionIllness(true);
     nextStep(event);
+    window.scrollTo(0, 0);
   };
   // Render
   return (

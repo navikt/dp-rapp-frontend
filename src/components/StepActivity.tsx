@@ -29,6 +29,7 @@ export default function StepActivity(props: CommonFormProps) {
 
     if (questionWorkValidated()) {
       nextStep(event);
+      window.scrollTo(0, 0);
     }
   };
   const nesteKnapp = () => {

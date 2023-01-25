@@ -32,6 +32,7 @@ export default function StepFillDays(props: CommonFormProps) {
   const checkForm = (event: FormEvent) => {
     setIsChecked(true);
     nextStep(event);
+    window.scrollTo(0, 0);
   };
 
   // Render

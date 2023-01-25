@@ -33,6 +33,8 @@ export default function StepSummary(props: CommonFormProps) {
     if (questionConsentValidated()) {
       send(event);
     }
+
+    window.scrollTo(0, 0);
   };
 
   //todo, oversette activityType til work

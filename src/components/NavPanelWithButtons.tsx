@@ -1,9 +1,9 @@
-import { Button, Link, LinkPanel, Panel } from "@navikt/ds-react";
-import { Back, Next } from "@navikt/ds-icons";
+import { Button, Link, Panel } from "@navikt/ds-react";
+import { Next } from "@navikt/ds-icons";
 import { FormEventHandler } from "react";
 import styles from "./NavPanelWithButtons.module.css";
 
-export type NavPanelWithSubmitProps = {
+export type NavPanelWithButtonsProps = {
   backText?: string;
   backOnClick?: FormEventHandler;
   nextText?: string;
@@ -12,7 +12,7 @@ export type NavPanelWithSubmitProps = {
   nextDisabled?: boolean;
 };
 
-export default function NavPanelWithSubmit(props: NavPanelWithSubmitProps) {
+export default function NavPanelWithButtons(props: NavPanelWithButtonsProps) {
   if (props.showLoader) {
     return (
       <Panel
