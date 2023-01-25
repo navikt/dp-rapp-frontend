@@ -44,7 +44,7 @@ export default function NavPanelWithButtons(props: NavPanelWithButtonsProps) {
     <Panel border className={styles.panel}>
       {props.nextDisabled && (
         <div className={styles.info}>
-          <p>Meldekortet kan ikke sendes inn før i morgen!</p>
+          <p>Meldekortet kan ikke sendes inn før neste uke!</p>
         </div>
       )}
       <div className={styles.buttons}>

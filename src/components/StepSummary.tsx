@@ -95,7 +95,7 @@ export default function StepSummary(props: CommonFormProps) {
       <NavPanelWithButtons
         backText="Forrige steg"
         backOnClick={prevStep}
-        nextText="Send"
+        nextText="Send inn"
         nextOnClick={checkForm}
         showLoader={showLoader}
       />
