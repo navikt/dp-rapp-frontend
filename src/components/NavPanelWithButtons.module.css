@@ -14,7 +14,25 @@
 }
 
 .buttons {
+    flex-direction: row-reverse;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+}
+@media (max-width: 768px){
+    .buttons {
+        justify-content: center;
+    }
+}
+@media (min-width: 769px){
+    .buttons {
+        justify-content: space-between;
+    }
+}
+
+
+.buttons > * {
+    text-decoration: none;
+    min-width: 225px;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }

@@ -24,7 +24,13 @@ export default function NavPanelWithButtons(props: NavPanelWithButtonsProps) {
       </Panel>
     );
   }
-
+  const backButton = (
+    <Link href={"/"}>
+      <Button variant={"secondary"} as={"a"}>
+        Lagre og fortsett senere
+      </Button>
+    </Link>
+  );
   let nextButton = <div />;
   if (props.nextOnClick != undefined) {
     nextButton = (
@@ -48,8 +54,8 @@ export default function NavPanelWithButtons(props: NavPanelWithButtonsProps) {
         </div>
       )}
       <div className={styles.buttons}>
-        <Link href="/">Fortsett senere</Link>
         {nextButton}
+        {backButton}
       </div>
     </Panel>
   );

@@ -25,6 +25,7 @@ import CenteredLoader from "../components/CenteredLoader";
 import StepIntroduction from "../components/StepIntroduction";
 import Guidance from "../components/Guidance";
 import AdminPanel from "../components/AdminPanel";
+import { FileSuccess } from "@navikt/ds-icons";
 
 export type CommonFormProps = {
   calculateStep: () => number;
@@ -88,6 +89,7 @@ export default function Page() {
   const [savedDates, setSavedDates] = useState<SavedDates>([]);
   const [questionProceed, setQuestionProceed] = useState<boolean | null>(null);
   const [questionConsent, setQuestionConsent] = useState<boolean>();
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -214,7 +216,10 @@ export default function Page() {
     if (!response.ok) {
       setError("Feil i vårt baksystem. Kunne ikke lagre data");
     }
-
+    // update lastsaved
+    else {
+      setLastSaved(new Date());
+    }
     // Hide loader
     setShowLoader(false);
   };
@@ -333,8 +338,15 @@ export default function Page() {
       {currentStep == 4 && <StepSummary {...commonFormProps} />}
       {currentStep == 0 && <p>Laster</p>}
       {showReceipt && <Receipt />}
+      {lastSaved && (
+        <p>
+          <>
+            <FileSuccess />
+            Lagret automatisk kl {format(lastSaved, "H:mm")}
+          </>
+        </p>
+      )}
       {currentStep == 3 && <Guidance />}
-
       <AdminPanel {...commonFormProps} />
     </main>
   );
