@@ -4,6 +4,7 @@ import { ActivityType, SavedDates } from "../models/Data";
 export type ActivitySummaryProps = {
   savedDates: SavedDates;
   children?: React.ReactNode;
+  center?: boolean;
 };
 
 export default function ActivitySummary(props: ActivitySummaryProps) {
@@ -76,8 +77,12 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
       Ingen aktivitet utenom å være arbeidssøker
     </div>
   );
+
+  const summaryStyle = props.center
+    ? styles.summary + " " + styles.center
+    : styles.summary;
   return (
-    <div className={styles.summary}>
+    <div className={summaryStyle}>
       {props.children}
       {hasActivity() && summaryWork}
       {hasActivity() && summaryIllness}

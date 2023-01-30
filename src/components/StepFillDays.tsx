@@ -51,7 +51,7 @@ export default function StepFillDays(props: CommonFormProps) {
         setSavedDates={setSavedDates}
       />
 
-      <ActivitySummary savedDates={savedDates}>
+      <ActivitySummary savedDates={savedDates} center>
         <h4>Sammenlagt for meldeperioden:</h4>
       </ActivitySummary>
 

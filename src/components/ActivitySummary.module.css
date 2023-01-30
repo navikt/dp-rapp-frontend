@@ -3,13 +3,14 @@
     flex-wrap: wrap;
     flex-direction: column;
     padding: 0;
+    padding-bottom: 1rem;
     row-gap: 0.5rem;
     column-gap: 0.5rem;
-    align-content: center;
 }
 
-.summary > h4 {
+.center {
     text-align: center;
+    align-content: center;
 }
 
 .summaryLine {
