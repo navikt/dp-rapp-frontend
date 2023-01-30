@@ -50,12 +50,10 @@ export default function StepFillDays(props: CommonFormProps) {
         savedDates={savedDates}
         setSavedDates={setSavedDates}
       />
-      <Panel className={styles.summary}>
-        <div className={styles.summaryHeader}>
-          Sammenlagt for meldeperioden:
-        </div>
-        <ActivitySummary savedDates={savedDates} />
-      </Panel>
+
+      <ActivitySummary savedDates={savedDates}>
+        <h4>Sammenlagt for meldeperioden:</h4>
+      </ActivitySummary>
 
       <div className={styles.summary}>
         <Error

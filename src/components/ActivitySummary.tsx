@@ -1,9 +1,9 @@
-import styles from "./Activity.module.css";
+import styles from "./ActivitySummary.module.css";
 import { ActivityType, SavedDates } from "../models/Data";
-import { Panel } from "@navikt/ds-react";
 
 export type ActivitySummaryProps = {
   savedDates: SavedDates;
+  children?: React.ReactNode;
 };
 
 export default function ActivitySummary(props: ActivitySummaryProps) {
@@ -43,9 +43,7 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
     summaryIllness = (
       <div className={styles.summaryLine + " " + styles.illness}>
         <div>Syk</div>
-        <div>
-          {illnessDays} {illnessDays == 1 ? "dag" : "dager"}
-        </div>
+        {illnessDays} {illnessDays == 1 ? "dag" : "dager"}
       </div>
     );
   }
@@ -79,12 +77,13 @@ export default function ActivitySummary(props: ActivitySummaryProps) {
     </div>
   );
   return (
-    <Panel className={styles.summary}>
+    <div className={styles.summary}>
+      {props.children}
       {hasActivity() && summaryWork}
       {hasActivity() && summaryIllness}
       {hasActivity() && summaryMeasures}
       {hasActivity() && summaryVacation}
       {!hasActivity() && summaryNothing}
-    </Panel>
+    </div>
   );
 }

@@ -58,14 +58,11 @@ export default function StepSummary(props: CommonFormProps) {
 
       <Spacer />
 
-      <Panel>
+      <ActivitySummary savedDates={savedDates}>
         <Heading spacing size="medium" level="4">
           Dette er det du har registrert for meldekortperioden:
         </Heading>
-        <BodyLong>
-          <ActivitySummary savedDates={savedDates} />
-        </BodyLong>
-      </Panel>
+      </ActivitySummary>
 
       <ConfirmationPanel
         label="Jeg bekrefter at jeg har lest og forstått veiledningstekstene"

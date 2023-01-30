@@ -25,11 +25,9 @@ export default function NavPanelWithButtons(props: NavPanelWithButtonsProps) {
     );
   }
   const backButton = (
-    <Link href={"/"}>
-      <Button variant={"secondary"} as={"a"}>
-        Lagre og fortsett senere
-      </Button>
-    </Link>
+    <Button variant={"secondary"} as={"a"} href={"/"}>
+      Lagre og fortsett senere
+    </Button>
   );
   let nextButton = <div />;
   if (props.nextOnClick != undefined) {
